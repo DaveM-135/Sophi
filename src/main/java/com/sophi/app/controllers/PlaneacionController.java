@@ -97,9 +97,13 @@ public class PlaneacionController {
 			for (ProyectoRecurso proyectoRecurso : listaRecursosAsignados) {
 				Recurso recurso = recursoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
 				Proyecto proyecto = proyectoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodProyecto());
-				
-				
 			}
+			
+			Proyecto setValPlanProy = proyectoService.findOne(codProyecto);
+			setValPlanProy.setValPlan(1L);
+			proyectoService.save(setValPlanProy);
+			
+			System.out.println("Proyecto: "+ setValPlanProy.getDescProyecto()+ " val plan: "+ setValPlanProy.getValPlan());
 			
 			
 			flash.addFlashAttribute("success", "Plan cargado con éxito");

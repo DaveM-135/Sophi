@@ -123,6 +123,9 @@ public class Proyecto implements Serializable  {
 	@Temporal(TemporalType.DATE)
 	private Date fecCierreEvaluacion;
 	
+	@Column(name= "val_plan")
+	private Long valPlan;
+	
 	@Column(name = "val_evaluar")
 	private Long valEvaluar;
 
@@ -369,6 +372,14 @@ public class Proyecto implements Serializable  {
 		this.fecCierreEvaluacion = fecCierreEvaluacion;
 	}
 	
+	public Long getValPlan() {
+		return valPlan;
+	}
+
+	public void setValPlan(Long valPlan) {
+		this.valPlan = valPlan;
+	}
+
 	public Long getValEvaluar() {
 		return valEvaluar;
 	}

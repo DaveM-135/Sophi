@@ -244,6 +244,14 @@ public class PreventaProyectoController {
 			detalleProyectoContactoService.save(dpc);
 			proyectoService.save(proyecto);
 		}
+		
+		if(proyecto.getValPlan() == null) {
+			proyecto.setValPlan(0L);
+			proyectoService.save(proyecto);
+		}
+		
+		System.out.println("ValPlan con 0");
+		
 		flash.addFlashAttribute("success", "Complemento guardado con éxito");
 		return "redirect:/preventaProyectoConsulta/"+codProyecto+"/"+proyecto.getCodEstatusProyecto()+"/"+proyecto.getCodCliente();
     }
@@ -714,7 +722,6 @@ public class PreventaProyectoController {
 		model.addAttribute("recursosLider", listaRecursosLider);
 		model.addAttribute("recursosAprobador", listaRecursosAprobador);
 		model.addAttribute("tecTam", listaDISel.size());
-			
 		model.addAttribute("clasificacionesProyecto", clasificacionproyectoService.findAll());
 		return "preventaProyectoConsulta";
     }
