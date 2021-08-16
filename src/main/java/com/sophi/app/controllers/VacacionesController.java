@@ -244,7 +244,7 @@ public class VacacionesController {
 		
 		for(ProyectoRecurso proyectorecurso: listaProyectoRecurso) {
 			Proyecto proyecto = proyectoService.findByCodProyecto(proyectorecurso.getProyectoRecursoId().getCodProyecto());
-			//proyecto.setCodRecursoAprobadorBKP(recursoBKP);
+			proyecto.setCodRecursoAprobadorBKP(0L);
 			proyectoService.save(proyecto);
 		}
 		
