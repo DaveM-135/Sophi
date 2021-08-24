@@ -130,12 +130,12 @@
 					<p id="confirmacionSolicitud">
 						<!-- texto de confirmacion -->
 					</p>
-					<div sec:authorize="hasRole('ROLE_APROB')" id="asignarBKP">
-					<p>Escoge un recurso c&oacute;mo BKP: </p>
+					<!--<div sec:authorize="hasRole('ROLE_APROB')" id="asignarBKP">
+					<p>Escoge un recurso BKP: </p>
 					<select name="recurso_bkp" class="custom-select" id="filterRecursoBKP">
 			        	<option th:each="aprobadorbkp:${listaAprobadores}" th:value="${aprobadorbkp.codRecurso}" th:text="${aprobadorbkp.descRecurso} + ' ' + ${aprobadorbkp.descApellidoPaterno}"></option>
 			    	</select>
-					</div>
+					</div>-->
 				</div>
 				<div class="modal-footer" id="btn-control">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -179,9 +179,9 @@
   $(document).ready(function() {
 	  $("#mensajeInfo").html($("#infoProyectos").val());
 	  
-	  if($("#valAprobador").val() != 1){
+	  /*if($("#valAprobador").val() != 1){
 		  $("#asignarBKP").hide();
-	  }
+	  }*/
   });
   
   function verDetalleSolicitud(verId){
@@ -209,7 +209,7 @@
 						usr:$("#authGetName").val(),
 						totalSolicitud:$("#conteoSolicitados").text(),
 						aprobadores:$("#aprobadores").val(),
-						recursoBKP: $("#filterRecursoBKP").val()
+						/*recursoBKP: $("#filterRecursoBKP").val()*/
 				},
 				success: function(result){
 					window.location.href = "https://sophitech.herokuapp.com" + result;
