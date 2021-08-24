@@ -131,7 +131,7 @@ public class EmailController {
 	
 	
 	//CRON Viernes 10:00 hora mexico
-	@Scheduled(cron="0 0 10 * * FRI", zone="America/Mexico_City")
+	//@Scheduled(cron="0 0 10 * * FRI", zone="America/Mexico_City")
 	public void enviaRecordatorios() {
 		List<Recurso> listRecursos = new ArrayList<Recurso>();
 		listRecursos = recursoService.findRecursosActivos();
@@ -156,7 +156,7 @@ public class EmailController {
 	}
 	
 	//CRON Miercoles 13:15 hora mexico
-	@Scheduled(cron="0 0 11 * * MON", zone="America/Mexico_City")
+	//@Scheduled(cron="0 0 11 * * MON", zone="America/Mexico_City")
 	public void enviaAvisoHrsRechazdas() {
 		List<DetalleRecursoHoras> listDetalle = new ArrayList<DetalleRecursoHoras>();
 
@@ -194,7 +194,7 @@ public class EmailController {
 	
 	
 	
-	@Scheduled(cron="0 0 10 * * MON", zone="America/Mexico_City")
+	//@Scheduled(cron="0 0 10 * * MON", zone="America/Mexico_City")
 	public void enviaRecordatoriosParaAprobacion() {
 		List<Long> proyectos = new ArrayList<Long>();
 		List<Recurso> aprobadores = new ArrayList<Recurso>();
@@ -239,7 +239,7 @@ public class EmailController {
 	}
 	
 	
-	@Scheduled(cron="0 0 13 * * MON", zone="America/Mexico_City")
+	//@Scheduled(cron="0 0 13 * * MON", zone="America/Mexico_City")
 	public void enviaEstatusDeAprobacion() {
 		List<Long> recursos = new ArrayList<Long>();
 
@@ -338,7 +338,7 @@ public class EmailController {
 	
 	
 	//Enviar resumen de horas aprobadas (por proyecto y enviado al aprobador)
-	@Scheduled(cron="0 0 19 * * MON", zone="America/Mexico_City")
+	//@Scheduled(cron="0 0 19 * * MON", zone="America/Mexico_City")
 	public void enviaEstatusDeAprobacionPorProyecto() {
 		List<Long> proyectos = new ArrayList<Long>();
 		
@@ -427,7 +427,7 @@ public class EmailController {
 	
 	
 	//CRON Viernes 10:00 hora mexico
-	@Scheduled(cron="0 0 10 * * THU", zone="America/Mexico_City")
+	//@Scheduled(cron="0 0 10 * * THU", zone="America/Mexico_City")
 	public void enviaRecordatoriosForecast() {
 		List<Recurso> listRecursos = new ArrayList<Recurso>();
 		//solo recursos del area Servicios
@@ -484,7 +484,7 @@ public class EmailController {
 	}
 	
 	//CRON Diario 12:00 hora mexico
-	@Scheduled(cron="0 0 12 * * *", zone="America/Mexico_City")
+	//@Scheduled(cron="0 0 12 * * *", zone="America/Mexico_City")
 	public void enviaRecordatorioCierreProyecto() {
 		List<Proyecto> listaProyectos = new ArrayList<>();
 		listaProyectos = proyectoService.findListaProyectosPorCerrar(new Utiles().getFechaActual());
@@ -511,7 +511,7 @@ public class EmailController {
 	
 	
 	//CRON Lunes 11:00 hora mexico
-	@Scheduled(cron="0 0 11 * * MON", zone="America/Mexico_City")
+	//@Scheduled(cron="0 0 11 * * MON", zone="America/Mexico_City")
 	public void enviaResumenForecastAprobadores() {
 		List<Recurso> listaAprobadores = new ArrayList<>();
 		

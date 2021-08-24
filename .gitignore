@@ -30,3 +30,7 @@ build/
 ### VS Code ###
 .vscode/
 /bin/
+src/main/java/com/sophi/app/controllers/EmailController.java
+src/main/java/com/sophi/app/controllers/VacacionesController.java
+src/main/resources/application.properties
+src/main/resources/templates/formSolicitudVacaciones.html

@@ -198,7 +198,7 @@ public class VacacionesController {
 										@RequestParam String usr,
 										@RequestParam Long totalSolicitud,
 										@RequestParam String aprobadores,
-										//@RequestParam Long recursoBKP,
+										@RequestParam Long recursoBKP,
 										Model model) {
 		
 		List<DetalleSolicitud> detallesSolicitud = new ArrayList<>();
@@ -237,14 +237,20 @@ public class VacacionesController {
 		recursoVacacionesService.save(recursoVacaciones);
 		
 		System.out.println(aprobadores);
-		//System.out.println("Recurso BKP: "+recursoBKP);
+		System.out.println("Recurso BKP: "+recursoBKP);
 		
 		List<ProyectoRecurso> listaProyectoRecurso = new ArrayList<ProyectoRecurso>();
 		listaProyectoRecurso = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(codRecurso);
 		
 		for(ProyectoRecurso proyectorecurso: listaProyectoRecurso) {
 			Proyecto proyecto = proyectoService.findByCodProyecto(proyectorecurso.getProyectoRecursoId().getCodProyecto());
-			proyecto.setCodRecursoAprobadorBKP(0L);
+			if(recursoBKP == null) {
+				proyecto.setCodRecursoAprobadorBKP(0L);
+			}
+			
+			else {
+				proyecto.setCodRecursoAprobadorBKP(recursoBKP);
+			}
 			proyectoService.save(proyecto);
 		}
 		
