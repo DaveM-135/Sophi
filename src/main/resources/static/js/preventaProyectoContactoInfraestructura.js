@@ -69,7 +69,14 @@ $(document).ready(function() {
 });
 
 function enviarCostoRecurso(){
-	$('#costoRecursoProyectoForm').submit();
+	$.ajax({
+		type: "POST",
+		url: "/formCostoRecursoProyecto",
+		data: $("#costoRecursoProyectoForm").serialize(),
+		success: function(){
+			$("#costoRecursosModal").modal('hide');
+		}
+	});
 }
 
 function cargaformRecursosProyecto(){

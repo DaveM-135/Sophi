@@ -30,9 +30,9 @@ console.log(ids);
 		success: function(){
 			document.getElementById("aceptarAsignacionBtn").disabled = false;
 			document.getElementById("aceptarAsignacionBtnName").innerHTML = 'Aceptar';
-			location.reload();
+			//location.reload();
+			$("#modalAsignacion").modal('hide');
 		}
 	});
-	
 }
 

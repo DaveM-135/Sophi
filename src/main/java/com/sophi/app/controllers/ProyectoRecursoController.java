@@ -84,6 +84,10 @@ public class ProyectoRecursoController {
 		List<ProyectoRecurso> listadoRecursos = new ArrayList<ProyectoRecurso>();
 		listadoRecursos = formRecursosProyecto.getListaRecursosProyecto();
 		
+		for (ProyectoRecurso proyectoRecurso: listadoRecursos) {
+			System.out.println(proyectoRecurso.getNombreRecurso()+": "+proyectoRecurso.getImpCostoRecurso()+": "+proyectoRecurso.getValHorasRecurso());
+		}
+		
 		float costoProyecto = 0;
 		float totalHoras = 0;
 		
