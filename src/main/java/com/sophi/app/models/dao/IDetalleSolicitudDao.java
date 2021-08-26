@@ -11,5 +11,8 @@ public interface IDetalleSolicitudDao extends CrudRepository<DetalleSolicitud, L
 	
 	@Query(value = "FROM DetalleSolicitud d WHERE d.solicitudVacaciones.codSolicitud = ?1 ")
 	public List<DetalleSolicitud> findByCodSolicitud(Long codSolicitud);
+	
+	@Query(value = "FROM DetalleSolicitud d")
+	public List<DetalleSolicitud> findAll();
 
 }
