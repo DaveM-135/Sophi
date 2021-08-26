@@ -373,6 +373,10 @@ public class AprobacionVacacionesController {
     	Long codRecurso = recursoService.findByDescCorreoElectronico(mail).getCodRecurso();
     	SolicitudVacaciones solicitud = null;
     	solicitud = solicitudVacacionesService.findById(codSolicitud);
+    	
+    	List<Proyecto> listaProyectoRecursoBKP = new ArrayList<Proyecto>();
+		listaProyectoRecursoBKP = proyectoService.findListaProyectosRecursoAprobadorTodos(solicitud.getCodRecurso());
+    	
     	if (solicitud != null) {
     		solicitud.setFecRechazo(new Utiles().getFechaActual());
     		solicitud.setFecCancelacion(null);
@@ -388,6 +392,13 @@ public class AprobacionVacacionesController {
     		}
     		
     		solicitudVacacionesService.save(solicitud);
+    		
+    		if(listaProyectoRecursoBKP != null) {
+    			for(Proyecto proyecto: listaProyectoRecursoBKP) {
+    				proyecto.setCodRecursoAprobadorBKP(null);
+    				proyectoService.save(proyecto);
+    			}
+    		}
     		
     		//Mail Notificacion INICIO 
     		Recurso recurso = recursoService.findOne(solicitud.getCodRecurso());
@@ -408,8 +419,6 @@ public class AprobacionVacacionesController {
     		System.out.println(response.getMessage());
     		//Mail Notificacion FIN 
     		
-    		
-    		
     		return "ok";
     	} else {
     		return "noOK";
@@ -424,6 +433,10 @@ public class AprobacionVacacionesController {
     	Long codRecurso = recursoService.findByDescCorreoElectronico(mail).getCodRecurso();
     	SolicitudVacaciones solicitud = null;
     	solicitud = solicitudVacacionesService.findById(codSolicitud);
+    	
+    	List<Proyecto> listaProyectoRecursoBKP = new ArrayList<Proyecto>();
+		listaProyectoRecursoBKP = proyectoService.findListaProyectosRecursoAprobadorTodos(solicitud.getCodRecurso());
+		
     	if (solicitud != null) {
     		solicitud.setFecCancelacion(new Utiles().getFechaActual());
     		solicitud.setCodRecursoAprobador(codRecurso);
@@ -437,6 +450,13 @@ public class AprobacionVacacionesController {
     		}
     		
     		solicitudVacacionesService.save(solicitud);
+    		
+    		if(listaProyectoRecursoBKP != null) {
+    			for(Proyecto proyecto: listaProyectoRecursoBKP) {
+    				proyecto.setCodRecursoAprobadorBKP(null);
+    				proyectoService.save(proyecto);
+    			}
+    		}
     		
     		//Mail Notificacion INICIO 
     		Recurso recurso = recursoService.findOne(solicitud.getCodRecurso());
@@ -457,9 +477,6 @@ public class AprobacionVacacionesController {
     		System.out.println(response.getMessage());
     		//Mail Notificacion FIN 
     		
-    		
-    		
-    		
     		return "ok";
     	} else {
     		return "noOK";
@@ -472,6 +489,10 @@ public class AprobacionVacacionesController {
     public String cancelarSolicitud(@RequestParam(value = "codSolicitud") Long codSolicitud) {
     	SolicitudVacaciones solicitud = null;
     	solicitud = solicitudVacacionesService.findById(codSolicitud);
+    	
+    	List<Proyecto> listaProyectoRecursoBKP = new ArrayList<Proyecto>();
+		listaProyectoRecursoBKP = proyectoService.findListaProyectosRecursoAprobadorTodos(solicitud.getCodRecurso());
+    	
     	if (solicitud != null) {
     		RecursoVacaciones recursoVacaciones = null;
     		recursoVacaciones = recursoVacacionesService.findById(solicitud.getCodRecurso());
@@ -480,6 +501,14 @@ public class AprobacionVacacionesController {
     			recursoVacacionesService.save(recursoVacaciones);
     		}
     		solicitudVacacionesService.delete(solicitud);
+    		
+    		if(listaProyectoRecursoBKP != null) {
+    			for(Proyecto proyecto: listaProyectoRecursoBKP) {
+    				proyecto.setCodRecursoAprobadorBKP(null);
+    				proyectoService.save(proyecto);
+    			}
+    		}
+    		
     		return "ok";
     	} else {
     		return "noOK";

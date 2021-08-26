@@ -32,6 +32,7 @@ import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.entity.RecursoVacaciones;
 import com.sophi.app.models.entity.Rol;
 import com.sophi.app.models.entity.SolicitudVacaciones;
+import com.sophi.app.models.service.IDetalleSolicitudService;
 import com.sophi.app.models.service.IDiaFestivoService;
 import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
@@ -68,6 +69,9 @@ public class VacacionesController {
 	
 	@Autowired
 	private IRolService rolService;
+	
+	@Autowired
+	private IDetalleSolicitudService detalleSolicitudService;
 
 	@GetMapping({"/misVacaciones/{mail}"})
 	public String listadoVacaciones(@PathVariable String mail, Model model) {
@@ -198,7 +202,7 @@ public class VacacionesController {
 										@RequestParam String usr,
 										@RequestParam Long totalSolicitud,
 										@RequestParam String aprobadores,
-										//@RequestParam Long recursoBKP,
+										@RequestParam Long recursoBKP,
 										Model model) {
 		
 		List<DetalleSolicitud> detallesSolicitud = new ArrayList<>();
@@ -237,15 +241,16 @@ public class VacacionesController {
 		recursoVacacionesService.save(recursoVacaciones);
 		
 		System.out.println(aprobadores);
-		//System.out.println("Recurso BKP: "+recursoBKP);
+		System.out.println("Recurso BKP: "+recursoBKP);
 		
-		List<ProyectoRecurso> listaProyectoRecurso = new ArrayList<ProyectoRecurso>();
-		listaProyectoRecurso = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(codRecurso);
-		
-		for(ProyectoRecurso proyectorecurso: listaProyectoRecurso) {
-			Proyecto proyecto = proyectoService.findByCodProyecto(proyectorecurso.getProyectoRecursoId().getCodProyecto());
-			proyecto.setCodRecursoAprobadorBKP(0L);
-			proyectoService.save(proyecto);
+		if(recursoBKP != 0) {
+			List<Proyecto> listaProyectoRecursoBKP = new ArrayList<Proyecto>();
+			listaProyectoRecursoBKP = proyectoService.findListaProyectosRecursoAprobadorTodos(codRecurso);
+			
+			for(Proyecto proyecto: listaProyectoRecursoBKP) {
+				proyecto.setCodRecursoAprobadorBKP(recursoBKP);
+				proyectoService.save(proyecto);
+			}
 		}
 		
 		for (String mailAprobador : aprobadores.split(",")) {
@@ -271,7 +276,7 @@ public class VacacionesController {
 		}
 		
 		//Mail Notificacion INICIO recurso BKP
-		/*Recurso recursobackup = recursoService.findOne(recursoBKP);
+		Recurso recursobackup = recursoService.findOne(recursoBKP);
 		MailRequest requestbkp = new MailRequest();
 		System.out.println(recursobackup.getDescRecurso());
 		requestbkp.setName(recursobackup.getDescRecurso());
@@ -283,7 +288,7 @@ public class VacacionesController {
 		modelBKP.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-banca.png\">");
 		modelBKP.put("pie", "");
 		MailResponse response = service.sendEmailEvaluador(requestbkp, modelBKP);
-		System.out.println(response.getMessage());*/
+		System.out.println(response.getMessage());
 		//Mail Notificacion FIN recurso BKP
 		
 		return "/misVacaciones/"+usr;
@@ -397,11 +402,70 @@ public class VacacionesController {
 		return "listaVacaciones :: listaDetalleVacaciones";
 	}
 	
-	/*@Scheduled(cron="0 0 6 * * *", zone="America/Mexico_City")
+	@Scheduled(cron="0 0 7 * * *", zone="America/Mexico_City")
+	//@Scheduled(fixedDelay = 5000)
 	public void cambioRecursoBKP() {
-		System.out.println(new Utiles().getFechaActual());
-		DetalleSolicitud detalleSolicitud = new DetalleSolicitud();
-		detalleSolicitud.getFe
-	}*/
+		System.out.println("Entrando a cambiar rol aprob por BKP y/o viceversa");
+		Long codSolicitud, codRecurso, codRecursoAprob, codRecursoAprobBKP;
+		
+		List<DetalleSolicitud> listaDetalleSolicitud = new ArrayList<DetalleSolicitud>();
+		listaDetalleSolicitud = detalleSolicitudService.findAll();
+		
+		List<DetalleSolicitud> listaDetalleSolicitudAux = new ArrayList<DetalleSolicitud>();
+		SolicitudVacaciones solicitudVacaciones;
+		
+		List<DetalleSolicitud> listaSolicitudAprob = new ArrayList<DetalleSolicitud>();
+		List<Proyecto> listaProyecto = new ArrayList<Proyecto>();
+		
+		for(DetalleSolicitud detalleSolicitud: listaDetalleSolicitud) {
+			if(detalleSolicitud.getFecDiaSolicitado().equals(new Utiles().getFechaActual()) || (int)((new Utiles().getFechaActual().getTime() - detalleSolicitud.getFecDiaSolicitado().getTime())/(1000 * 60 * 60 * 24)) == 1) {
+				codSolicitud = detalleSolicitud.getSolicitudVacaciones().getCodSolicitud();
+				System.out.println("Solicitud No.: "+codSolicitud);
+				listaDetalleSolicitudAux = detalleSolicitudService.findByCodSolicitud(codSolicitud);
+				
+				for(DetalleSolicitud detalleSolicitudAux: listaDetalleSolicitudAux) {
+					solicitudVacaciones = solicitudVacacionesService.findById(codSolicitud);
+					codRecurso = solicitudVacaciones.getCodRecurso();
+					System.out.println("Recurso: "+codRecurso);
+					
+					if(solicitudVacaciones.getFecAprobacion() != null && solicitudVacaciones.getFecRechazo() == null && solicitudVacaciones.getFecCancelacion() == null) {
+						System.out.println(detalleSolicitudAux.getSolicitudVacaciones().getCodSolicitud()+": "+detalleSolicitudAux.getFecDiaSolicitado());
+						
+						listaSolicitudAprob = detalleSolicitudService.findByCodSolicitud(codSolicitud);
+						System.out.println("Primer elemento: "+listaSolicitudAprob.get(0).getCodDetalleSolicitud()+": "+listaSolicitudAprob.get(0).getFecDiaSolicitado());
+						System.out.println("Último elemento: "+listaSolicitudAprob.get(listaSolicitudAprob.size()-1).getCodDetalleSolicitud()+": "+listaSolicitudAprob.get(listaSolicitudAprob.size()-1).getFecDiaSolicitado());						
+						
+						if(listaSolicitudAprob.get(0).getFecDiaSolicitado().equals(new Utiles().getFechaActual())) {
+							listaProyecto = proyectoService.findListaProyectosRecursoAprobadorTodos(codRecurso);
+							for(Proyecto listaProyectos: listaProyecto) {
+								codRecursoAprob = listaProyectos.getCodRecursoAprobador();
+								codRecursoAprobBKP = listaProyectos.getCodRecursoAprobadorBKP();
+								
+								listaProyectos.setCodRecursoAprobadorBKP(codRecursoAprob);
+								listaProyectos.setCodRecursoAprobador(codRecursoAprobBKP);
+								proyectoService.save(listaProyectos);
+								System.out.println("Terminó de hacer switch inicio");
+							}
+							System.out.println("Salió for cuando inicia periodo vacacional");
+						}
+						//(int)((new Utiles().getFechaActual().getTime() - listaSolicitudAprob.get(listaSolicitudAprob.size()-1).getFecDiaSolicitado().getTime())/(1000 * 60 * 60 * 24)) == 1
+						else {
+							listaProyecto = proyectoService.findListaProyectosRecursoAprobadorBKPTodos(codRecurso);
+							for(Proyecto listaProyectos: listaProyecto) {
+								codRecursoAprobBKP = listaProyectos.getCodRecursoAprobadorBKP();
+								
+								listaProyectos.setCodRecursoAprobadorBKP(null);
+								listaProyectos.setCodRecursoAprobador(codRecursoAprobBKP);
+								proyectoService.save(listaProyectos);
+								System.out.println("Terminó de hacer switch fin");
+							}
+							System.out.println("Salió for cuando termina periodo vacacional");
+						}
+					}
+				}
+			}
+		}
+		
+	}
 	
 }

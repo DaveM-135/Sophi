@@ -38,6 +38,8 @@ public interface IProyectoService {
 	
 	public List<Proyecto> findListaProyectosRecursoAprobadorTodos(Long codRecursoAprobador);
 	
+	public List<Proyecto> findListaProyectosRecursoAprobadorBKPTodos(Long codRecursoAprobadorBKP);
+	
 	public List<Proyecto> findListaProyectosRecursoLiderTodos(Long codRecursoLider);
 	
 	public List<Proyecto> findListaProyectosPorCerrar(Date fecFinProyecto);

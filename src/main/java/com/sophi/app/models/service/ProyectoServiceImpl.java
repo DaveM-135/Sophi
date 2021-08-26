@@ -102,6 +102,11 @@ public class ProyectoServiceImpl implements IProyectoService {
 	public List<Proyecto> findListaProyectosRecursoAprobadorTodos(Long codRecursoAprobador) {
 		return proyectoDao.findListaProyectosRecursoAprobadorTodos(codRecursoAprobador);
 	}
+	
+	@Override
+	public List<Proyecto> findListaProyectosRecursoAprobadorBKPTodos(Long codRecursoAprobadorBKP) {
+		return proyectoDao.findListaProyectosRecursoAprobadorBKPTodos(codRecursoAprobadorBKP);
+	}
 
 	@Override
 	public List<Proyecto> findListaProyectosRecursoLiderTodos(Long codRecursoLider) {

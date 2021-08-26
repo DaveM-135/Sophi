@@ -47,6 +47,9 @@ public interface IProyectoDao extends CrudRepository<Proyecto, Long> {
 	@Query("FROM Proyecto Pr WHERE Pr.codRecursoAprobador = ?1  OR Pr.codRecursoLider = ?1")
 	List<Proyecto> findListaProyectosRecursoAprobadorTodos(Long codRecursoAprobador);
 	
+	@Query("FROM Proyecto Pr WHERE Pr.codRecursoAprobadorBKP = ?1")
+	List<Proyecto> findListaProyectosRecursoAprobadorBKPTodos(Long codRecursoAprobadorBKP);
+	
 	@Query("FROM Proyecto Pr WHERE Pr.codRecursoLider = ?1")
 	List<Proyecto> findListaProyectosRecursoLiderTodos(Long codRecursoLider);
 	

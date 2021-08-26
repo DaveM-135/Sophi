@@ -9,5 +9,7 @@ public interface IDetalleSolicitudService {
 	public DetalleSolicitud findById(Long codDetalleSolicitud);
 	
 	public List<DetalleSolicitud> findByCodSolicitud(Long codSolicitud);
+	
+	public List<DetalleSolicitud> findAll();
 
 }

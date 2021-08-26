@@ -28,4 +28,9 @@ public class DetalleSolicitudServiceImpl  implements IDetalleSolicitudService{
 		return detalleSolicitudDao.findByCodSolicitud(codSolicitud);
 	}
 
+	@Override
+	public List<DetalleSolicitud> findAll() {
+		return detalleSolicitudDao.findAll();
+	}
+
 }
