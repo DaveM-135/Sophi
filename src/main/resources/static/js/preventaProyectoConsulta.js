@@ -96,6 +96,7 @@ $(document).ready(function() {
 		$('#thv').hide();
 		$('#fi').hide();
 		$('#ff').hide();
+		$("#evaluado").hide();
 		$('#complementoProyecto').hide();
 	} 
 	
@@ -134,6 +135,8 @@ $(document).ready(function() {
 		$('#thv').show('500');
 		$('#fi').show('500');
 		$('#ff').show('500');
+		$("#evaluado").show();
+		$("#presupuesto").hide();
 		//$('#complementoProyecto').show('500');
 		$('#codEstatusProyecto').val(2);
 		$('#btnEnviar').val("Guardar y continuar");

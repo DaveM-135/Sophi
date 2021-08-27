@@ -64,5 +64,10 @@ public class DetalleProyectoContactoServiceImpl implements IDetalleProyectoConta
 	public Long findTotalProyectosResponsable(Long codContacto) {
 		return detalleProyectoContactoDao.findTotalProyectosResponsable(codContacto);
 	}
+	
+	@Override
+	public void actualizaEstatusProyectoDetalleProyectoContactoByCodProyecto(Long codProyecto, Long codEstatusProyecto) {
+		detalleProyectoContactoDao.actualizaEstatusProyectoDetalleProyectoContactoByCodProyecto(codProyecto, codEstatusProyecto);;
+	}
 
 }

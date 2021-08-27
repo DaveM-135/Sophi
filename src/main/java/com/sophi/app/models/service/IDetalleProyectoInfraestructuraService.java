@@ -19,5 +19,7 @@ public interface IDetalleProyectoInfraestructuraService {
 	public List<DetalleProyectoInfraestructura> findByDetalleProyectoInfraestructuraIdCodProyecto(Long codProyecto);
 	
 	public List<DetalleProyectoInfraestructura> findByDetalleProyectoInfraestructuraIdCodProyectoAndDetalleProyectoInfraestructuraIdCodEstatusProyectoAndDetalleProyectoInfraestructuraIdCodCliente(Long codProyecto,Long codEstatusProyecto,Long codCliente);
+
+	public void actualizaEstatusProyectoDetalleProyectoInfraestructuraByCodProyecto(Long codProyecto, Long codEstatusProyecto);
 	
 }

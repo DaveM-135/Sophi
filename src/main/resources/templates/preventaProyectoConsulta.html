@@ -165,6 +165,20 @@
 										maxlength="100" readonly="readonly" required>
 									</div>
 								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0" id="fi">
+										<label for="fechaInicio">Fecha inicio</label> <input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{fecIncioProyecto}" type="date"
+										class="form-control" id="fechaInicio">
+									</div>
+									<div class="col-sm-6 mb-3 mb-sm-0" id="ff">
+										<label for="fechaFin">Fecha fin</label> <input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{fecFinProyecto}" type="date"
+										class="form-control" id="fechaFin">
+									</div>
+								</div>
 							</div>
 							<div class="col-sm-6 mb-3 mb-sm-0">
 								<label for="descripcionProyecto">Descripci&oacute;n </label> <br>
@@ -179,7 +193,7 @@
 						</div>
 
 						<div class="form-group row">
-							<div class="col-sm-3 mb-3 mb-sm-0"
+							<div class="col-sm-3 mb-3 mb-sm-0" id="presupuesto"
 								th:if="${proyecto.codEstatusProyecto == 1 or proyecto.codEstatusProyecto == 3}">
 								<label for="presupuesto">Presupuesto</label>
 								<div class="input-group">
@@ -245,6 +259,16 @@
 									</select>
 								</div>
 							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0" id="evaluado">
+								<label for="evaluar">&iquest;Ser&aacute; evaluado?</label>
+								<div class="input-group">
+									<p>No&nbsp;&nbsp;&nbsp;</p><label class="switch">
+						  			<input id="vactivo" type="checkbox"/>
+						  			<span class="slider round"></span>
+									</label>
+									<input id="result" type="hidden" th:field="*{valEvaluar}"/><p>&nbsp;&nbsp;&nbsp;S&iacute;</p>
+								</div>
+							</div>
 						</div>
 
 						<div class="form-group row">
@@ -260,17 +284,131 @@
 										th:selected="${tipoFacturacion.codTipoFacturacion==proyecto.codTipoFacturacion}" />
 								</select>
 							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0" id="thv">
+								<label for="totalHoras">Horas vendidas</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i
+											class="far fa-clock"></i></span>
+									</div>
+									<input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{valTotalHorasVendidas}" type="text"
+										maxlength="10"
+										onkeypress="return event.charCode >= 46 && event.charCode <= 57"
+										class="form-control" id="totalHoras"
+										placeholder="Total de horas vendidas"
+										onchange="try{setCustomValidity('')}catch(e){}" min="0"
+										max="99999999">
+								</div>
+							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0" id="pp">
+								<label for="precio">Precio del proyecto</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i
+											class="fas fa-dollar-sign"></i></span>
+									</div>
+									<input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{impPrecioPropuesta}" type="text" maxlength="15"
+										onkeypress="return event.charCode >= 46 && event.charCode <= 57"
+										class="form-control" id="precio"
+										placeholder="Precio del proyecto"
+										oninvalid="setCustomValidity('Precio inválido')"
+										onchange="try{setCustomValidity('')}catch(e){}" min=0
+										max=9999999 step="any">
+								</div>
+							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0" id="pr">
+								<label for="riesgo">Porcentaje de riesgo</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><b>%</b></span>
+									</div>
+
+									<input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{valPorcentajeRiesgo}" type="text"
+										class="form-control" id="riesgo" placeholder="Porcentaje"
+										oninvalid="setCustomValidity('Porcentaje inv&aacute;lido')"
+										onchange="try{setCustomValidity('')}catch(e){}" min=0
+										onkeyup="calculoPrecio(); return false;"
+										max=100>
+								</div>
+							</div>
+					
+						</div>
+
+						<div class="form-group row">
+							<div class="col-sm-3 mb-3 mb-sm-0" id="pm">
+								<label for="riesgo">Porcentaje de margen</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><b>%</b></span>
+									</div>
+									<input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{valPorcentajeMargen}" type="text"
+										class="form-control" id="margen" placeholder="Margen"
+										oninvalid="setCustomValidity('Margen inv&aacute;lido')"
+										onchange="try{setCustomValidity('')}catch(e){}" min=0
+										onkeyup="calculoPrecio(); return false;"
+										max=100>
+								</div>
+							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0" id="ig">
+								<label for="riesgo">Gasto</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i
+											class="fas fa-dollar-sign"></i></span>
+									</div>
+									<input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{impGastoProyecto}" type="text" maxlength="15"
+										onkeypress="return event.charCode >= 46 && event.charCode <= 57"
+										class="form-control" id="gasto"
+										placeholder="Gasto del proyecto"
+										oninvalid="setCustomValidity('Gasto inválido')"
+										onchange="try{setCustomValidity('')}catch(e){}" min=0
+										max=9999999 step="any">
+								</div>
+							</div>							
+							<div class="col-sm-3 mb-3 mb-sm-0" id="thp">
+								<label for="thorasProyecto">Horas planeadas</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i
+											class="far fa-clock"></i></span>
+									</div>
+									<input th:field="*{valTotalHorasProyecto}" type="text"
+										maxlength="10" class="form-control" id="thorasProyecto"
+										placeholder="Total de horas planeadas del proyecto" readonly
+										pattern="^-?\d+$">
+								</div>
+							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0" id="cp">
+								<label for="costoProyecto">Costo planeado</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i
+											class="fas fa-dollar-sign"></i></span>
+									</div>
+									<input th:field="*{impCostoProyecto}" type="text"
+										maxlength="10" class="form-control" id="costoProyecto"
+										placeholder="Costo planeado del proyecto" readonly>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-12 mb-3 mb-sm-0" id="pc">
+								<span id="totalProyecto" style="font-size: 18px; color: #6E707E; font-weight: 600;">
+								</span>
+							</div>
 						</div>
 					</div>
-	                
-	                
-	                
-	                
-	                
-
-	                
-	                
-	                
+					
 					<div class="card-body" th:if="${proyecto.codEstatusProyecto == 2 OR proyecto.codEstatusProyecto == 3}">
 						<div class="form-group row">
 							<div class="col-sm-6 mb-3 mb-sm-0">

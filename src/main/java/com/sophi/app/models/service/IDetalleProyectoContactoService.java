@@ -24,5 +24,7 @@ public interface IDetalleProyectoContactoService {
 	public void borrarByCodProyectoAndCodEstatusProyectoAndCodCliente(Long codProyecto,Long codEstatusProyecto, Long codCliente);
 	
 	public Long findTotalProyectosResponsable(Long codContacto);
+
+	public void actualizaEstatusProyectoDetalleProyectoContactoByCodProyecto(Long codProyecto, Long codEstatusProyecto);
 	
 }

@@ -792,8 +792,12 @@ public class PreventaProyectoController {
 		
 		//Long clienteProyecto = proyectoService.findByCodProyecto(proyecto.getCodProyecto()).getCodCliente();
 		Long clienteProyecto = proyecto.getCodCliente();
+		Long codEstatusProyecto = proyecto.getCodEstatusProyecto();
+		Long codProyecto = proyecto.getCodProyecto();
 		
 		proyecto.setCodCliente(clienteProyecto);
+		
+		System.out.println("Estatus del proyecto actual: "+codEstatusProyecto);
 		
 		if(result.hasErrors()) {
 			flash.addFlashAttribute("error", "Error al guardar preventa/proyecto");
@@ -814,8 +818,17 @@ public class PreventaProyectoController {
 				
 		detalleClienteAreaComercialService.save(dcac);
 		
-		
 //		proyecto.setValTotalHorasProyecto((proyecto.getValTotalHorasProyecto() == "" || proyecto.getValTotalHorasProyecto() == null) ? "0" : proyecto.getValTotalHorasProyecto());
+		
+		if(codEstatusProyecto == 2) {
+			//actualizo los registros que tienen el id del proyecto a estatus 2 o 3
+			detalleProyectoContactoService.actualizaEstatusProyectoDetalleProyectoContactoByCodProyecto(codProyecto, codEstatusProyecto);
+			
+			//hago lo mismo que en el paso anterior
+			detalleProyectoInfraestructuraService.actualizaEstatusProyectoDetalleProyectoInfraestructuraByCodProyecto(codProyecto, codEstatusProyecto);
+			
+			System.out.println("Actualizó los estatus");
+		}
 		
 		//guardo proyecto
 		

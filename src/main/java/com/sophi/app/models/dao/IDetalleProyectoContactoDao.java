@@ -36,4 +36,9 @@ public interface IDetalleProyectoContactoDao extends CrudRepository<DetalleProye
 	public List<DetalleProyectoContacto> findByDetalleProyectoContactoIdCodProyecto(Long codProyecto);
 	
 	public List<DetalleProyectoContacto> findByDetalleProyectoContactoIdCodProyectoAndDetalleProyectoContactoIdCodEstatusProyectoAndDetalleProyectoContactoIdCodCliente(Long codProyecto,Long codEstatusProyecto,Long codCliente);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE DETALLE_PROYECTOS_CONTACTOS SET cod_estatus_proyecto = ?2 WHERE cod_proyecto = ?1", nativeQuery = true)
+	void actualizaEstatusProyectoDetalleProyectoContactoByCodProyecto(Long codProyecto, Long codEstatusProyecto);
 }

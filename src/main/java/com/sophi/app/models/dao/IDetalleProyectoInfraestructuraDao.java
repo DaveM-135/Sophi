@@ -30,4 +30,9 @@ public interface IDetalleProyectoInfraestructuraDao extends CrudRepository<Detal
 	public List<DetalleProyectoInfraestructura> findByDetalleProyectoInfraestructuraIdCodProyecto(Long codProyecto);
 	
 	public List<DetalleProyectoInfraestructura> findByDetalleProyectoInfraestructuraIdCodProyectoAndDetalleProyectoInfraestructuraIdCodEstatusProyectoAndDetalleProyectoInfraestructuraIdCodCliente(Long codProyecto,Long codEstatusProyecto,Long codCliente);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE DETALLE_PROYECTOS_INFRAESTRUCTURAS SET cod_estatus_proyecto=?2 WHERE cod_proyecto=?1", nativeQuery = true)
+	void actualizaEstatusProyectoDetalleProyectoInfraestructuraByCodProyecto(Long codProyecto, Long codEstatusProyecto);
 }
