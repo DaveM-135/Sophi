@@ -101,6 +101,8 @@ public class AprobacionVacacionesController {
     @Autowired
     private IDetalleSolicitudService detalleSolicitudService;
     
+    Long codRecursoSesion;
+    
     @RequestMapping(value = "/aprobacionVacaciones/{email}", method = RequestMethod.GET)
     public String aprobacionVacaciones(Model model, @PathVariable(value = "email") String email){
     	//Obtiene el codigo del recurso solicitante
@@ -150,8 +152,8 @@ public class AprobacionVacacionesController {
     	
 //    	Agregar proyecto admin
 //    	listaProyecto.add(proyectoService.findOne(1L));
-
-        
+    	codRecursoSesion = codRecurso;
+        model.addAttribute("r", codRecurso);
         model.addAttribute("proyectos", listaProyecto);
         return "aprobacionVacaciones";
     }
@@ -192,7 +194,7 @@ public class AprobacionVacacionesController {
 					RecursoVacaciones recursoVacaciones = recursoVacacionesService.findById(codR);
 					Recurso recurso = recursoService.findOne(recursoVacaciones.getCodRecurso());
 					
-						if (recurso.getValActivo().equals(1L)) {
+						if (recurso.getValActivo().equals(1L) && !recurso.getCodRecurso().equals(codRecursoSesion)) {
 						
 							recursoVacaciones.setNombreRecurso(recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno());
 							
@@ -216,7 +218,7 @@ public class AprobacionVacacionesController {
 				for (ProyectoRecurso proyectoRecurso : listProyectoRecurso) {
 					RecursoVacaciones recursoVacaciones = recursoVacacionesService.findById(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
 					Recurso recurso = recursoService.findOne(recursoVacaciones.getCodRecurso());
-					if (recurso.getValActivo().equals(1L)) {
+					if (recurso.getValActivo().equals(1L) && !recurso.getCodRecurso().equals(codRecursoSesion)) {
 						recursoVacaciones.setNombreRecurso(recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno());
 						
 						List<SolicitudVacaciones> listaSolicitudes = new ArrayList<>();

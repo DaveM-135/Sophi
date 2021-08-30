@@ -251,6 +251,29 @@ public class VacacionesController {
 				proyecto.setCodRecursoAprobadorBKP(recursoBKP);
 				proyectoService.save(proyecto);
 			}
+			
+			//Mail Notificacion INICIO recurso BKP
+			DateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
+			Recurso recursobackup = recursoService.findOne(recursoBKP);
+			Recurso recurso = recursoService.findOne(codRecurso);
+			MailRequest requestbkp = new MailRequest();
+			System.out.println(recursobackup.getDescRecurso());
+			requestbkp.setName(recursobackup.getDescRecurso());
+			requestbkp.setSubject("Asignación de Recurso Backup");
+			requestbkp.setTo(recursobackup.getDescCorreoElectronico());
+			
+			Map<String, Object> modelBKP = new HashMap<String, Object>();
+			modelBKP.put("nombreRecurso", requestbkp.getName());
+			if(detallesSolicitud.size() > 1) {
+				modelBKP.put("mensaje", "<h3>\""+ recurso.getDescRecurso() + " te ha asignado como recurso backup los días del "+dt.format(detallesSolicitud.get(0).getFecDiaSolicitado())+" al "+dt.format(detallesSolicitud.get(detallesSolicitud.size()-1).getFecDiaSolicitado())+"\"</h3>.");
+			} else {
+				modelBKP.put("mensaje", "<h3>\""+ recurso.getDescRecurso() + " te ha asignado como recurso backup para el día "+dt.format(detallesSolicitud.get(0).getFecDiaSolicitado())+"\"</h3>.");
+			}
+			modelBKP.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-banca.png\">");
+			modelBKP.put("pie", "");
+			MailResponse response = service.sendEmailBKP(requestbkp, modelBKP);
+			System.out.println(response.getMessage());
+			//Mail Notificacion FIN recurso BKP
 		}
 		
 		for (String mailAprobador : aprobadores.split(",")) {
@@ -275,31 +298,46 @@ public class VacacionesController {
 		//Mail Notificacion FIN 
 		}
 		
-		//Mail Notificacion INICIO recurso BKP
-		Recurso recursobackup = recursoService.findOne(recursoBKP);
-		MailRequest requestbkp = new MailRequest();
-		System.out.println(recursobackup.getDescRecurso());
-		requestbkp.setName(recursobackup.getDescRecurso());
-		requestbkp.setSubject("Recurso Backup");
-		requestbkp.setTo(recursobackup.getDescCorreoElectronico());
-		Map<String, Object> modelBKP = new HashMap<String, Object>();
-		modelBKP.put("nombreRecurso", requestbkp.getName());
-		modelBKP.put("mensaje", "<h3>\""+ recursoVacaciones.getNombreRecurso() + " te ha asignado como recurso backup\"</h3>.");
-		modelBKP.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-banca.png\">");
-		modelBKP.put("pie", "");
-		MailResponse response = service.sendEmailEvaluador(requestbkp, modelBKP);
-		System.out.println(response.getMessage());
-		//Mail Notificacion FIN recurso BKP
-		
 		return "/misVacaciones/"+usr;
 	}
 	
 	
-	@GetMapping({"/validarDiaLaboral"})
+	@GetMapping({"/validarDiaLaboralVacacionesAprobador"})
 	@ResponseBody
-	public String validarDiaLaboral(@RequestParam Long codDia, Model model) {
+	public String validarDiaLaboralVacacionesAprobador(@RequestParam Long codDia, @RequestParam Long codRecurso, Model model) {
 		List<DiaFestivo> diasFestivos = null;
 		diasFestivos = diaFestivoService.findEsNoLaboral(codDia);
+		
+		List<DetalleSolicitud> listDS = new ArrayList<DetalleSolicitud>();
+		listDS = detalleSolicitudService.findAll();
+		
+		int año, mes, dia, codFechaSolicitado;
+		Long codRecursoAprob;
+		
+		List<Proyecto> listproyecto = new ArrayList<Proyecto>();
+		List<ProyectoRecurso> listPR = new ArrayList<ProyectoRecurso>();
+		//List<SolicitudVacaciones> listsv = new ArrayList<SolicitudVacaciones>();
+		Recurso recurso = new Recurso();
+		
+		for(DetalleSolicitud ds: listDS) {
+			año = (ds.getFecDiaSolicitado().getYear()+1900)*10000;
+			mes = (ds.getFecDiaSolicitado().getMonth()+1)*100;
+			dia = ds.getFecDiaSolicitado().getDate();
+			codFechaSolicitado = año+mes+dia;
+			
+			if(codFechaSolicitado == codDia) {
+				codRecursoAprob = ds.getSolicitudVacaciones().getCodRecurso();
+				listproyecto = proyectoService.findListaProyectosRecursoAprobadorTodos(codRecursoAprob);
+				listPR = proyectoRecursoService.findProyectoRecursoActivo(codRecurso);
+				//listsv = solicitudVacacionesService.findByCodRecurso(codRecursoAprob);
+				
+				if(listproyecto != null && listPR != null && ds.getSolicitudVacaciones().getFecAprobacion() != null && ds.getSolicitudVacaciones().getFecCancelacion() == null) {
+					recurso = recursoService.findOne(codRecursoAprob);
+					return recurso.getDescRecurso()+" pidió este día de vacaciones";
+				}
+			}
+		}
+		
 		if (diasFestivos.size() > 0 ) {
 			String desc = "";
 			for (DiaFestivo df : diasFestivos) {
@@ -311,8 +349,6 @@ public class VacacionesController {
 		}
 		
 	}
-	
-	
 	
 	@GetMapping("/controlVacaciones")
 	public String controlVacaciones(Model model) {
@@ -402,8 +438,8 @@ public class VacacionesController {
 		return "listaVacaciones :: listaDetalleVacaciones";
 	}
 	
-	@Scheduled(cron="0 0 7 * * *", zone="America/Mexico_City")
 	//@Scheduled(fixedDelay = 5000)
+	@Scheduled(cron="0 0 6 * * *", zone="America/Mexico_City")
 	public void cambioRecursoBKP() {
 		System.out.println("Entrando a cambiar rol aprob por BKP y/o viceversa");
 		Long codSolicitud, codRecurso, codRecursoAprob, codRecursoAprobBKP;

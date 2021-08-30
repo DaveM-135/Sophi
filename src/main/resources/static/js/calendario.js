@@ -217,12 +217,15 @@ renderCalendar(month, year)
 	            if(agrega(eventDate)){
 	            	if (!(eventDay == "Sabado" || eventDay == "Domingo")){
 	            		$.ajax({
-	            			url: "/validarDiaLaboral",
-	            			data: {codDia:eventDate},
+	            			url: "/validarDiaLaboralVacacionesAprobador",
+	            			data: {codDia:eventDate,
+								   codRecurso: $("#codRecurso").val()},
 	            			success: function(result){
-	            				if( result == "0"){
+	            				if( result === "0"){
 	    	            			showEvent(eventDay + ' ' +todaysDate, eventDate );
-	    	            		} else {
+	    	            		} else if(result !== "0"){
+									alert(result);
+								} else {
 	    	            			alert("Feriado Sophitech: "+ result);
 	    	            		}
 	            			}
@@ -240,6 +243,33 @@ renderCalendar(month, year)
         })
         $(document).on('click', '.hide', function(){
             $('#event').addClass('d-none');
+        })
+		
+		$(document).on('click', '.showEvent', function(){
+            $('.showEvent').removeClass('active');
+            $('#event').removeClass('d-none');
+            $(this).addClass('active');
+            let todaysDate = $(this).text() +' '+ (months[month]) +' '+ year;
+            let eventDay = days[new Date(year, month, $(this).text()).getDay()];
+//            let eventDate = completar($(this).text()) + completar((month + 1).toString()) + year;
+            let eventDate = year + completar((month + 1).toString()) +  completar($(this).text());
+//            alert(eventDate);
+            var hoy = $("#hoy").val();
+//            console.log("hoy: " + hoy +" - select: " + eventDate);
+			if (!(eventDay == "Sabado" || eventDay == "Domingo")){
+				$.ajax({
+					url: "/validarVacacionesAprobador",
+		            data: {codDia:eventDate,
+						  codRecurso: $("#codRecurso").val()},
+		            success: function(result){
+		            	if( result !== eventDate){
+							console.log("Se puede pedir el día de vacaciones");
+		    	        } else {
+							alert(result);
+		    	        }
+		            }
+		        });	
+			}
         })
     })
 
