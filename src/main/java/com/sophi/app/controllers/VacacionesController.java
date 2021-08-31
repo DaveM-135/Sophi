@@ -439,7 +439,7 @@ public class VacacionesController {
 	}
 	
 	//@Scheduled(fixedDelay = 5000)
-	@Scheduled(cron="0 0 6 * * *", zone="America/Mexico_City")
+	@Scheduled(cron="0 0 0 ? * 1,2,3,4,5", zone="America/Mexico_City")
 	public void cambioRecursoBKP() {
 		System.out.println("Entrando a cambiar rol aprob por BKP y/o viceversa");
 		Long codSolicitud, codRecurso, codRecursoAprob, codRecursoAprobBKP;
@@ -474,12 +474,14 @@ public class VacacionesController {
 						if(listaSolicitudAprob.get(0).getFecDiaSolicitado().equals(new Utiles().getFechaActual())) {
 							listaProyecto = proyectoService.findListaProyectosRecursoAprobadorTodos(codRecurso);
 							for(Proyecto listaProyectos: listaProyecto) {
-								codRecursoAprob = listaProyectos.getCodRecursoAprobador();
-								codRecursoAprobBKP = listaProyectos.getCodRecursoAprobadorBKP();
-								
-								listaProyectos.setCodRecursoAprobadorBKP(codRecursoAprob);
-								listaProyectos.setCodRecursoAprobador(codRecursoAprobBKP);
-								proyectoService.save(listaProyectos);
+								if(listaProyectos.getCodEstatusProyecto() != 3) {
+									codRecursoAprob = listaProyectos.getCodRecursoAprobador();
+									codRecursoAprobBKP = listaProyectos.getCodRecursoAprobadorBKP();
+									
+									listaProyectos.setCodRecursoAprobadorBKP(codRecursoAprob);
+									listaProyectos.setCodRecursoAprobador(codRecursoAprobBKP);
+									proyectoService.save(listaProyectos);
+								}
 								System.out.println("Terminó de hacer switch inicio");
 							}
 							System.out.println("Salió for cuando inicia periodo vacacional");
@@ -488,11 +490,13 @@ public class VacacionesController {
 						else {
 							listaProyecto = proyectoService.findListaProyectosRecursoAprobadorBKPTodos(codRecurso);
 							for(Proyecto listaProyectos: listaProyecto) {
-								codRecursoAprobBKP = listaProyectos.getCodRecursoAprobadorBKP();
-								
-								listaProyectos.setCodRecursoAprobadorBKP(null);
-								listaProyectos.setCodRecursoAprobador(codRecursoAprobBKP);
-								proyectoService.save(listaProyectos);
+								if(listaProyectos.getCodEstatusProyecto() != 3) {
+									codRecursoAprobBKP = listaProyectos.getCodRecursoAprobadorBKP();
+									
+									listaProyectos.setCodRecursoAprobadorBKP(null);
+									listaProyectos.setCodRecursoAprobador(codRecursoAprobBKP);
+									proyectoService.save(listaProyectos);
+								}
 								System.out.println("Terminó de hacer switch fin");
 							}
 							System.out.println("Salió for cuando termina periodo vacacional");
