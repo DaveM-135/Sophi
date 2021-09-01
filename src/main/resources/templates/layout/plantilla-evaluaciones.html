@@ -73,7 +73,7 @@
 									</td>
 									<td>
 										<a th:if="${recurso.valEstatus} < 3" th:id="${recurso.codEvaluacionDesempeno}+'-'+${recurso.codRecurso}" href="#" onclick="verEvaluadores(this.id); return false;" class="badge badge-info">Configurar evaluadores <i class="fas fa-cog"></i></a>
-										<a  th:if="${recurso.evaluacionDesempeno.valEstatus} == 2" th:id="${recurso.codEvaluacionDesempeno}  + '-' + ${recurso.codRecurso}" onclick="descargarResultados(this.id); return false;" href="#" class="badge badge-info">Resultados <i class="fas fa-download"></i></a>
+										<a th:if="${recurso.evaluacionDesempeno.valEstatus} == 2" th:id="${recurso.codEvaluacionDesempeno}  + '-' + ${recurso.codRecurso}" onclick="descargarResultados(this.id);" href="#" class="badge badge-info">Resultados <i class="fas fa-download"></i></a>
 									</td>
 								</tr>
 							</tbody>

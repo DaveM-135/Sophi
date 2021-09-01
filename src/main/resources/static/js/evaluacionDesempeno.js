@@ -215,11 +215,6 @@ function verDetalleCompetencias(id){
 	});
 }
 
-
-
-
-
-
 // Admin de evaluaciones 
 
 function actualizarPage(){
@@ -233,6 +228,21 @@ function verDetalleEvaluacion(cod){
 	$("#divDetalleEvaluacion").load(url, function (){
 		$("#modalDetalleEvaluacion").modal('toggle');
 		jsRemoveWindowLoad();
+	});
+}
+
+function descargarResultados(id){
+	var id_array = id.split('-');
+	var id_eval = id_array[0];
+	var id_recurso = id_array[1];
+
+	$.ajax({
+		type: "GET",
+		url: "/descargarResultadosEvalDesempeno",
+		data: {codEvalDesc: id_eval, codRecurso: id_recurso},
+		success: function(link){
+			window.open(link);
+		}
 	});
 }
 
