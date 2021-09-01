@@ -315,7 +315,7 @@
   function actualizarEncuesta(id){
 	  var idConcepto = id.substring(13);
 	  var valEvaluacion = $("#evalEncuesta_"+idConcepto).val();
-	  if(valEvaluacion.length < 0){
+	  if(valEvaluacion.length > 0){
 		  $("#saveEncuesta_"+idConcepto).hide();
 		  $("#wait_"+idConcepto).show();
 		  $.ajax({
