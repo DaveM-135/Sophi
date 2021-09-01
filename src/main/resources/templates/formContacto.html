@@ -53,7 +53,7 @@
 	                    <input type="text" th:field="*{descContacto}" class="form-control" th:errorClass="'form-control alert-danger'" required/>
 	                    <small class="form-text text-danger" th:if="${#fields.hasErrors('descContacto')}" th:errors="*{descContacto}"></small>
 					</div>
-					<div class="form-group col-12 col-md-4">
+					<div id="switch_activo" class="form-group col-12 col-md-4">
 				    	<label class="col-form-label">Activo</label><br>
 				    	<label class="switch">
 						  <input id="vactivo" type="checkbox"/>
@@ -172,9 +172,14 @@
   <script th:src="@{/js/phone.js}"></script>
   <script th:src="@{/js/url.js}"></script>
   <script th:src="@{/js/switch.js}"></script>
-  
-  
-
+  <script type="text/javascript">
+  	if($("#descContacto").val() === ''){
+  		$("#switch_activo").hide();
+  	}
+  	else{
+  		$("#switch_activo").show();
+  	}
+  </script>
 </body>
 
 </html>

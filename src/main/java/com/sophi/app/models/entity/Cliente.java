@@ -86,6 +86,9 @@ public class Cliente implements Serializable {
 	public void prePersist() {
 		fecRegistro = new Date();
 	}
+	
+	@Column(name = "val_activo")
+	private Long valActivo;
 
 	public Long getCodCliente() {
 		return codCliente;
@@ -210,7 +213,14 @@ public class Cliente implements Serializable {
 	public void setSector(Sector sector) {
 		this.sector = sector;
 	}
-	
+
+	public Long getValActivo() {
+		return valActivo;
+	}
+
+	public void setValActivo(Long valActivo) {
+		this.valActivo = valActivo;
+	}
 	
 	
 }

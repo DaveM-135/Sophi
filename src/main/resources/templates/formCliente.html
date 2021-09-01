@@ -56,6 +56,14 @@
 	                                            <input id="gpo_empresarial" type="text" maxlength="500" th:field="*{descGrupoEmpresarial}" class="form-control" th:errorClass="form-control alert-danger"/>
 	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descGrupoEmpresarial')}" th:errors="*{descGrupoEmpresarial}"></small>
 	                                        </div>
+	                                        <div id="switch_activo" class="form-group col-md-2">
+										    	<label class="col-form-label">Activo</label><br>
+										    	<label class="switch">
+												  <input id="vactivo" type="checkbox"/>
+												  <span class="slider round"></span>
+												</label>
+												<input id="result" type="hidden" th:field="*{valActivo}"/>
+										    </div>
                                         </div>
                                         <div class="row">
 	                                        <div class="form-group col-12 col-md-8">
@@ -150,6 +158,15 @@
   
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
   <script th:src="@{/js/fecregact.js}"></script>
+  <script th:src="@{/js/switch.js}"></script>
+  <script type="text/javascript">
+  	if($("#Nombre").val() === '' && typeof($("#codigoCliente").val()) === "undefined"){
+  		$("#switch_activo").hide();
+  	}
+  	else{
+  		$("#switch_activo").show();
+  	}
+  </script>
 
 </body>
 

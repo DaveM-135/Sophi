@@ -89,6 +89,7 @@ public class ClienteController {
 			model.addAttribute("sectoresList",sectores);
 			return "formCliente";
 		}
+		cliente.setValActivo(1L);
 		clienteService.save(cliente);
 		status.setComplete();
 		flash.addFlashAttribute("success", "Cliente guardado con éxito");
@@ -116,10 +117,23 @@ public class ClienteController {
 		return "formCliente";
 	}
 	
-	@GetMapping(value = "/listaClientes/{id}")
-    public String eliminarCliente(Model model, @PathVariable(value = "id") long codCliente) {
+	@GetMapping(value = "/desactivarCliente/{id}")
+    public String desactivarCliente(Model model, @PathVariable(value = "id") Long codCliente) {
 		System.out.println(codCliente);
-        clienteService.delete(codCliente);
+        //clienteService.delete(codCliente);
+		Cliente cliente = clienteService.findOne(codCliente);
+		cliente.setValActivo(0L);
+		clienteService.save(cliente);
+        return "redirect:/listaClientes";
+    }
+	
+	@GetMapping(value = "/activarCliente/{id}")
+    public String activarCliente(Model model, @PathVariable(value = "id") Long codCliente) {
+		System.out.println(codCliente);
+        //clienteService.delete(codCliente);
+		Cliente cliente = clienteService.findOne(codCliente);
+		cliente.setValActivo(1L);
+		clienteService.save(cliente);
         return "redirect:/listaClientes";
     }
 	

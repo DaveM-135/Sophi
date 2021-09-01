@@ -29,6 +29,21 @@
               <i class="fas fa-plus fa-sm text-white-50"></i> Nuevo
             </a>
           </div>
+          <div class="d-flex flex-row">
+			<label style="padding-right: 15px;">Ver:</label>
+            <div class="custom-control custom-radio" style="padding-right: 15px;  cursor: pointer;">
+              <input type="radio" id="radioActivos" name="customRadio" class="custom-control-input" style="cursor: pointer;" checked="checked">
+              <label class="custom-control-label" for="radioActivos" style="cursor: pointer;">Activos</label>
+            </div>
+            <div class="custom-control custom-radio" style="padding-right: 15px; cursor: pointer;">
+              <input type="radio" id="radioBajas" name="customRadio" class="custom-control-input" style="cursor: pointer;">
+              <label class="custom-control-label" for="radioBajas" style="cursor: pointer;">Bajas</label>
+            </div>
+            <div class="custom-control custom-radio" style="padding-right: 15px; cursor: pointer;">
+              <input type="radio" id="radioTodos" name="customRadio" class="custom-control-input" style="cursor: pointer;" >
+              <label class="custom-control-label" for="radioTodos" style="cursor: pointer;">Todos</label>
+            </div>
+			</div>
           
 <!--           <p class="mb-4">Encuentra aqu&iacute; el listado de todos tus clientes registrados en <b>Sophitech</b>, podr&aacute;s registrar un nuevo cliente y gestionar los datos existentes.</p> -->
 
@@ -52,18 +67,19 @@
 	                 </thead>
 	                 <tbody>
 	                 	<tr th:each="cliente: ${clientes}">
-	                 		<td th:text="${cliente.descGrupoEmpresarial}" style="width:12%;"></td>
-                            <td th:text="${cliente.descCliente}" style="width:12%;"></td>
-                            <td th:text="${cliente.descDireccionFiscal}" style="width:40%;"></td>
-                            <td th:text="${cliente.descRFC}"></td>
-                            <td th:text="${cliente.sector.descSector}"></td>
-                            <td style="width:9%;">
+	                 		<td th:attr="name=${cliente.valActivo == 1} ? 'activo' : 'baja'" th:text="${cliente.descGrupoEmpresarial}" style="width:12%;"></td>
+                            <td th:attr="name=${cliente.valActivo == 1} ? 'activo' : 'baja'" th:text="${cliente.descCliente}" style="width:12%;"></td>
+                            <td th:attr="name=${cliente.valActivo == 1} ? 'activo' : 'baja'" th:text="${cliente.descDireccionFiscal}" style="width:40%;"></td>
+                            <td th:attr="name=${cliente.valActivo == 1} ? 'activo' : 'baja'" th:text="${cliente.descRFC}"></td>
+                            <td th:attr="name=${cliente.valActivo == 1} ? 'activo' : 'baja'" th:text="${cliente.sector.descSector}"></td>
+                            <td th:attr="name=${cliente.valActivo == 1} ? 'activo' : 'baja'" style="width:9%;">
 <!-- 						<div class="btn-group btn-group-sm" role="group" aria-label="Basic example"> -->
 <!-- 							<a type="button" class="btn btn-info" th:href="@{/dataCliente/} + ${cliente.codCliente}" data-toggle="tooltip" title="Ver"><i class="far fa-address-book"></i></a> -->
 <!-- 							<a type="button" class="btn btn-info" th:href="@{/formCliente/} + ${cliente.codCliente}" data-toggle="tooltip" title="Editar"><i class="far fa-edit"></i></a> -->
 								<a th:href="@{/dataCliente/} + ${cliente.codCliente}" class="badge badge-info">Ver  <i class="far fa-address-book"></i></a>
 								<a th:href="@{/formCliente/} + ${cliente.codCliente}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
-								<a sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="eliminar([[${cliente.codCliente}]])" href="#" class="badge badge-danger borrar">Eliminar  <i class="fas fa-trash-alt"></i></a>
+								<a th:if="${cliente.valActivo == 1}"sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="desactivar([[${cliente.codCliente}]])" href="#" class="badge badge-danger borrar">Desactivar  <i class="bi bi-toggle-off"></i></a>
+								<a th:if="${cliente.valActivo == 0}"sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="activar([[${cliente.codCliente}]])" href="#" class="badge badge-secondary">Activar  <i class="bi bi-toggle-on"></i></a>
 <!-- 						</div> th:if="${cliente.detalleProyectoContacto == null}" -->
 							</td>
                             
@@ -102,23 +118,45 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
-				<!--Modal Eliminar -->
-                <div id="eliminarRegistro" class="modal fade" data-backdrop="static" data-keyboard="false"
+				<!--Modal Desactivar -->
+                <div id="desactivarRegistro" class="modal fade" data-backdrop="static" data-keyboard="false"
                     tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Eliminar contacto</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">Desactivar Cliente</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                &iquest;Est&aacute; seguro que desea eliminar este cliente?
+                                &iquest;Est&aacute; seguro que desea desactivar este cliente?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <a href="#!" class="btn btn-primary" onclick="eliminarRegistro();">Eliminar</a>
+                                <a href="#!" class="btn btn-primary" onclick="desactivarRegistro();">Desactivar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--Modal Activar -->
+                <div id="activarRegistro" class="modal fade" data-backdrop="static" data-keyboard="false"
+                    tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Activar Cliente</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                &iquest;Est&aacute; seguro que desea activar este cliente?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <a href="#!" class="btn btn-primary" onclick="activarRegistro();">Activar</a>
                             </div>
                         </div>
                     </div>
@@ -145,7 +183,28 @@
   <script th:src="@{/js/demo/datatables-demo.js}"></script>
   
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
-  <script th:src="@{/js/eliminarCliente.js}"></script>
+  <script th:src="@{/js/activar_desactivar_Cliente.js}"></script>
+  <script type="text/javascript">
+  $(function() {
+	  	
+	  $("td[name = 'baja']").hide();
+      $("td[name = 'activo']").show();
+	  
+	  
+	    $("#radioTodos").click(function(){
+	        $("td[name = 'baja']").show();
+	        $("td[name = 'activo']").show();
+	    });
+	    $("#radioActivos").click(function(){
+	        $("td[name = 'baja']").hide();
+	        $("td[name = 'activo']").show();
+	    });
+	    $("#radioBajas").click(function(){
+	        $("td[name = 'activo']").hide();
+	        $("td[name = 'baja']").show();
+	    });
+	})
+  </script>
 
 </body>
 
