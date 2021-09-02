@@ -89,7 +89,6 @@ public class ClienteController {
 			model.addAttribute("sectoresList",sectores);
 			return "formCliente";
 		}
-		cliente.setValActivo(1L);
 		clienteService.save(cliente);
 		status.setComplete();
 		flash.addFlashAttribute("success", "Cliente guardado con éxito");
