@@ -423,20 +423,16 @@ public class DesempenoController {
 	public String descargarResultadosEvalDesempeno(@RequestParam Long codEvalDesc, @RequestParam Long codRecurso) {
 		StringBuilder link = new StringBuilder();
 		
-		Recurso recurso = recursoService.findOne(codRecurso);
-		EvaluacionDesempeno ed = evaluacionDesempenoService.findById(codEvalDesc);
-		
-		String nombre_recurso = recurso.getDescRecurso()+" "+recurso.getDescApellidoPaterno();
-		String eval_desc = ed.getDescEvaluacionDesempeno();
-		
 		link.append("https://analytics.guay.digital/MicroStrategy/servlet/mstrWeb?");
 		link.append("Server=35.231.31.201&Project=Plataforma+Sophitech&Port=0&evt=3069&");
 		link.append("src=mstrWeb.3069&executionMode=3&documentID=4711493948652505FD92A3B0827135CD&");
 		link.append("hiddensections=header,path,dockTop,dockLeft,footer&");
 		link.append("valuePromptAnswers=");
-		link.append(eval_desc.replace(" ", "%20"));
+		link.append(codEvalDesc);
 		link.append("%5e");
-		link.append(nombre_recurso.replace(" ", "%20"));
+		link.append(codRecurso);
+		link.append("%5e");
+		link.append(codRecurso);
 		link.append("&uid=desarrollo&pwd=plataforma2020");
 		
 		return link.toString();

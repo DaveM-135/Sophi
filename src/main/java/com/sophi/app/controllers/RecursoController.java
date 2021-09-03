@@ -236,7 +236,8 @@ public class RecursoController {
 	public String guardarRecurso(@ModelAttribute Recurso recurso, Model model ,SessionStatus status) {
 		InputStream imgPath = null;
 		try {
-			URL url = new URL("https://sophitech.herokuapp.com/img/defaultUser.png");
+			//URL url = new URL("https://sophitech.herokuapp.com/img/defaultUser.png");
+			URL url = new URL("https://sophitech.herokuapp.com/img/fotos_nuevas/7_300x288.jpg");
 			imgPath = url.openStream ();
 			byte[] bytesFotoPerfil = IOUtils.toByteArray(imgPath);
 			recurso.setFoto(bytesFotoPerfil);
