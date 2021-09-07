@@ -151,6 +151,11 @@
   
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
   <script th:src="@{/js/fecregact.js}"></script>
+  <script type="text/javascript">
+  	if($("#valActivo").val() === ''){
+  		$("#valActivo").val('1');
+  	}
+  </script>
 
 </body>
 
