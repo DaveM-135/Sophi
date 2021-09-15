@@ -433,6 +433,8 @@ public class DesempenoController {
 		link.append(codRecurso);
 		link.append("%5e");
 		link.append(codRecurso);
+		link.append("%5e");
+		link.append(codEvalDesc);
 		link.append("&uid=desarrollo&pwd=plataforma2020");
 		
 		return link.toString();
