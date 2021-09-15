@@ -73,11 +73,14 @@ public class AprobacionHorasProyectoController {
     @Autowired
     private IRolService rolService;
     
+    Long codRecursoSesion;
+    
     @RequestMapping(value = "/aprobacionHorasProyecto/{email}", method = RequestMethod.GET)
     public String aprobacionHorasProyecto(Model model, @PathVariable(value = "email") String email){
     	//Obtiene el codigo del recurso solicitante
     	Long codRecurso = null;
     	codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
+    	codRecursoSesion = codRecurso;
     	
     	List<Rol> roles = new ArrayList<Rol>();
     	List<String> cadenaRol = new ArrayList<String>();
@@ -164,12 +167,14 @@ public class AprobacionHorasProyectoController {
 			if (todos.equals("si")) {
 				HashSet<Long> recursosUnicos = new HashSet<Long>();
 				for (ProyectoRecurso proyectoRecurso : listProyectoRecurso) {
-					recursosUnicos.add(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
+					if(!proyectoRecurso.getProyectoRecursoId().getCodRecurso().equals(codRecursoSesion)) {
+						recursosUnicos.add(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
+					}
 				}
 				if(recursosUnicos.size()>0) {
 					for (Long codR : recursosUnicos) {
 					Recurso recursoTmp = recursoService.findOne(codR);
-						if(recursoTmp.getCodAreaRecurso().equals(1L) && recursoTmp.getValActivo().equals(1L)) {
+						if(recursoTmp.getCodAreaRecurso().equals(1L) && recursoTmp.getValActivo().equals(1L) && !codR.equals(codRecursoSesion)) {
 							DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHorasTodos(codR, inicio, fin);
 							detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
 							detalle.setLink(recursoTmp.getCodRecurso());
@@ -183,7 +188,7 @@ public class AprobacionHorasProyectoController {
 			} else {
 				for (ProyectoRecurso proyectoRecurso : listProyectoRecurso) {
 					Recurso recursoTmp = recursoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
-					if(recursoTmp.getCodAreaRecurso().equals(1L) && recursoTmp.getValActivo().equals(1L)) {
+					if(recursoTmp.getCodAreaRecurso().equals(1L) && recursoTmp.getValActivo().equals(1L) && !recursoTmp.getCodRecurso().equals(codRecursoSesion)) {
 						DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHoras(proyectoRecurso.getProyectoRecursoId().getCodRecurso(), proyectoRecurso.getProyectoRecursoId().getCodProyecto(), inicio, fin);
 						detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
 						detalle.setLink(recursoTmp.getCodRecurso());
