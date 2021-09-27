@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	if($("cancelado").prop("checked", true)){
+	if($("#cancelado").prop("checked", true)){
 		$("input").prop("disabled", true);
 		$("textarea").prop("disabled", true);
 		$("select").prop("disabled", true);
