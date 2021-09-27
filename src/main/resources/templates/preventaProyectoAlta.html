@@ -86,23 +86,27 @@
                 		<div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
                      <label for="nombreProyecto">Nombre del proyecto</label>
-                    <input type="text" th:field="*{descProyecto}" class="form-control" id="nombreProyecto" placeholder="Nombre de proyecto"  oninvalid="setCustomValidity('Campo invÃ¡lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="35" required>
+                    <input type="text" th:field="*{descProyecto}" class="form-control" id="nombreProyecto" oninvalid="setCustomValidity('Campo invÃ¡lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="35" required>
                     <br>
                     <label for="codigoProyecto">C&oacute;digo de proyecto</label>
-                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="C&oacute;digo de proyecto" oninvalid="setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="100" readonly="readonly" required>
+                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" oninvalid="setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="100" readonly="readonly" required>
+                  </div>
+                  <div class="col-sm-4 mb-3 mb-sm-0">
+                    <label for="nombreCortoProyecto">Nombre corto del proyecto</label> 
+					<input type="text" th:field="*{descCortaProyecto}" class="form-control" id="nombreCortoProyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="20" required>
                   </div>
                   <div class="col-sm-4 mb-3 mb-sm-0">
                   	<label for="descripcionProyecto">Descripci&oacute;n </label>
                   	<br>
-                  	<textarea th:field="*{descProyectoTexto}" class="form-control" rows="5" id="descripcionProyecto" placeholder="Descripci&oacute;n del proyecto" maxlength="500" required></textarea>
+                  	<textarea th:field="*{descProyectoTexto}" class="form-control" rows="5" id="descripcionProyecto" maxlength="500" required></textarea>
                   </div>
                   <div class="col-sm-4" id="fi">
                     <label for="fechaInicio">Fecha inicio</label>
-                    <input th:field="*{fecIncioProyecto}" type="date" class="form-control" id="fechaInicio">
+                    <input th:field="*{fecIncioProyecto}" type="date" class="form-control" id="fechaInicio" required>
                   </div>
                   <div class="col-sm-4" id="ff">
                     <label for="fechaFin">Fecha fin</label>
-                    <input th:field="*{fecFinProyecto}" type="date" class="form-control" id="fechaFin">
+                    <input th:field="*{fecFinProyecto}" type="date" class="form-control" id="fechaFin" required>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -112,7 +116,7 @@
                     	<div class="input-group-prepend">
 							<span class="input-group-text">%</span>
 						</div>
-						<input th:field="*{valPorcentajeRiesgo}" type="number" class="form-control" id="riesgo" placeholder="Porcentaje %">
+						<input th:field="*{valPorcentajeRiesgo}" type="number" class="form-control" id="riesgo">
 						</div>
                   </div>
                 </div>
@@ -124,12 +128,12 @@
 <!--                       </select> -->
 <!--                   </div> -->
 				<div class="col-sm-4">
-                    <label for="presupuesto">Presupuesto</label>
+                    <label for="presupuesto">Presupuesto (MXN)</label>
                     <div class="input-group">
                     	<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
 						</div>
-                    <input th:field="*{impPresupuesto}" type="text" maxlength="15" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" step="any">
+                    <input th:field="*{impPresupuesto}" type="text" maxlength="15" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="presupuesto" oninvalid="setCustomValidity('Presupuesto inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" step="any">
                     </div>
                     <small class="form-text text-danger" th:if="${#fields.hasErrors('impPresupuesto')}" th:errors="*{impPresupuesto}"></small>
                   </div>
@@ -141,18 +145,18 @@
                   </div>
                   <div class="col-sm-4" id="thv">
                     <label for="totalHoras">Total de horas vendidas</label>
-                    <input th:field="*{valTotalHorasVendidas}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="totalHoras" placeholder="Total de horas vendidas">
+                    <input th:field="*{valTotalHorasVendidas}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="totalHoras">
                   </div>
                   <div class="col-sm-4" id="thp">
                     <label for="thorasProyecto">Total de horas proyecto</label>
-                    <input th:field="*{valTotalHorasProyecto}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="thorasProyecto" placeholder="Total de horas proyecto" disabled>
+                    <input th:field="*{valTotalHorasProyecto}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="thorasProyecto" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
                   
                   <div class="col-sm-4" id="pp">
                     <label for="precio">Precio del proyecto</label>
-                    <input th:field="*{impPrecioPropuesta}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="precio" placeholder="Precio del proyecto">
+                    <input th:field="*{impPrecioPropuesta}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="precio">
                   </div>
                   <div class="col-sm-4" id="cp">
                     <label for="costoProyecto">Costo de proyecto</label>
@@ -160,7 +164,7 @@
                     	<div class="input-group-prepend">
 							<span class="input-group-text">$</span>
 						</div>
-                    <input th:field="*{impCostoProyecto}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="costoProyecto" placeholder="Costo de proyecto" disabled>
+                    <input th:field="*{impCostoProyecto}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="costoProyecto" disabled>
                   	</div>
                   </div>
                 </div>

@@ -78,6 +78,18 @@
 								<input class="codCliente" type="hidden" th:value="${proyecto.codCliente}"/>
 							</td>
 						</tr>
+						<tr th:if="${proyecto.codEstatusProyecto == 4}">
+							<td th:text="${proyecto.descProyecto}"></td>
+							<td>N/A</td>
+							<td>N/A</td>
+							<td th:text="${proyecto.nombreRecursoLider}"></td>
+							<td th:text="${proyecto.nombreRecursoAprobador}"></td>
+							<td style="color: #8D4738; font-weight: bold;">Cancelado</td>
+							<td>
+								<a th:href="@{/preventaProyectoConsulta/}+${proyecto.codProyecto}+'/'+${proyecto.codEstatusProyecto}+'/'+${proyecto.codCliente}" class="badge badge-success">Detalle  <i class="far fa-edit"></i></a>
+								<input class="codCliente" type="hidden" th:value="${proyecto.codCliente}"/>
+							</td>
+						</tr>
 					</th:block>
 				</tbody>
 			</table>

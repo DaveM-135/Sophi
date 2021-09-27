@@ -95,6 +95,37 @@
                       <input th:field="*{codEstatusProyecto}"  class="form-check-input" type="radio" name="inlineRadioOptions" id="cierre" value="3" disabled>
                       <label class="form-check-label" for="cerrado">Cerrado</label>
                     </div>
+                    <div class="form-check form-check-inline">
+                      <input th:field="*{codEstatusProyecto}"  class="form-check-input" type="radio" name="inlineRadioOptions" id="cancelado" value="4" data-toggle="modal" data-target="#modalPreventaACancelado">
+                      <label class="form-check-label" for="cancelado">Cancelado</label>
+                    </div>
+                  </div>
+<!--                   <div class="col-sm-3"> -->
+<!--                   </div> -->
+<!--                   <div class="col-sm-4">  -->
+<!--                   </div> -->
+                </div>
+                <div class="form-group row" th:if="${proyecto.codEstatusProyecto == 4}">
+                  <div class="col-sm-12 mb-3 mb-sm-0">
+                  <div class="form-check form-check-inline">
+                  <label>Estatus: </label>
+                  </div>
+                    <div class="form-check form-check-inline">
+                      <input th:field="*{codEstatusProyecto}" class="form-check-input" type="radio" name="inlineRadioOptions" id="preventa" value="1" disabled>
+                      <label class="form-check-label" for="preventa" >Preventa</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input th:field="*{codEstatusProyecto}"  class="form-check-input" type="radio" name="inlineRadioOptions" id="proyecto" value="2" disabled>
+                      <label class="form-check-label" for="proyecto">Proyecto</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input th:field="*{codEstatusProyecto}"  class="form-check-input" type="radio" name="inlineRadioOptions" id="cierre" value="3" disabled>
+                      <label class="form-check-label" for="cerrado">Cerrado</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input th:field="*{codEstatusProyecto}"  class="form-check-input" type="radio" name="inlineRadioOptions" id="cancelado" value="4" disabled checked>
+                      <label class="form-check-label" for="cancelado">Cancelado</label>
+                    </div>
                   </div>
 <!--                   <div class="col-sm-3"> -->
 <!--                   </div> -->
@@ -151,7 +182,7 @@
 										<label for="nombreProyecto">Nombre del proyecto</label> 
 										<input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
 										type="text" th:field="*{descProyecto}" class="form-control"
-										id="nombreProyecto" placeholder="Nombre de proyecto"
+										id="nombreCortoProyecto"
 										oninvalid="setCustomValidity('Campo inválido')"
 										onchange="try{setCustomValidity('')}catch(e){}"
 										maxlength="100" required>
@@ -159,10 +190,20 @@
 									<div class="col-sm-3 mb-3 mb-sm-0">
 										<label for="codigoProyecto">C&oacute;digo</label> <input th:field="*{descCodigoProyecto}"
 										type="text" class="form-control" id="codigoProyecto"
-										placeholder="Código de proyecto"
 										oninvalid="setCustomValidity('Campo inv&aacute;lido')"
 										onchange="try{setCustomValidity('')}catch(e){}"
 										maxlength="100" readonly="readonly" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-md-6 mb-3 mb-sm-0">
+										<label for="nombreCortoProyecto">Nombre corto del proyecto</label> 
+										<input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										type="text" th:field="*{descCortaProyecto}" class="form-control"
+										id="nombreCortoProyecto"
+										oninvalid="setCustomValidity('Campo inválido')"
+										onchange="try{setCustomValidity('')}catch(e){}"
+										maxlength="20" required>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -185,7 +226,6 @@
 								<textarea th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
 								th:field="*{descProyectoTexto}" class="form-control" rows="5" style="height: 125px;"
 								id="descripcionProyecto"
-								placeholder="Descripci&oacute;n del proyecto"
 								oninvalid="setCustomValidity('Campo inválido')"
 								onchange="try{setCustomValidity('')}catch(e){}"
 								maxlength="500" required></textarea>
@@ -206,7 +246,6 @@
 									th:field="*{impPresupuesto}" type="text" maxlength="15"
 									onkeypress="return event.charCode >= 46 && event.charCode <= 57"
 									class="form-control" id="presupuesto"
-									placeholder="Presupuesto"
 									oninvalid="setCustomValidity('Presupuesto inv&aacute;lido')"
 									onchange="try{setCustomValidity('')}catch(e){}" min=0
 									max=9999999 step="any">
@@ -297,13 +336,12 @@
 										maxlength="10"
 										onkeypress="return event.charCode >= 46 && event.charCode <= 57"
 										class="form-control" id="totalHoras"
-										placeholder="Total de horas vendidas"
 										onchange="try{setCustomValidity('')}catch(e){}" min="0"
 										max="99999999">
 								</div>
 							</div>
 							<div class="col-sm-3 mb-3 mb-sm-0" id="pp">
-								<label for="precio">Precio del proyecto</label>
+								<label for="precio">Precio del proyecto (MXN)</label>
 								<div class="input-group">
 									<div class="input-group-prepend">
 										<span class="input-group-text"><i
@@ -314,7 +352,6 @@
 										th:field="*{impPrecioPropuesta}" type="text" maxlength="15"
 										onkeypress="return event.charCode >= 46 && event.charCode <= 57"
 										class="form-control" id="precio"
-										placeholder="Precio del proyecto"
 										oninvalid="setCustomValidity('Precio inválido')"
 										onchange="try{setCustomValidity('')}catch(e){}" min=0
 										max=9999999 step="any">
@@ -330,7 +367,7 @@
 									<input
 										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
 										th:field="*{valPorcentajeRiesgo}" type="text"
-										class="form-control" id="riesgo" placeholder="Porcentaje"
+										class="form-control" id="riesgo"
 										oninvalid="setCustomValidity('Porcentaje inv&aacute;lido')"
 										onchange="try{setCustomValidity('')}catch(e){}" min=0
 										onkeyup="calculoPrecio(); return false;"
@@ -350,7 +387,7 @@
 									<input
 										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
 										th:field="*{valPorcentajeMargen}" type="text"
-										class="form-control" id="margen" placeholder="Margen"
+										class="form-control" id="margen"
 										oninvalid="setCustomValidity('Margen inv&aacute;lido')"
 										onchange="try{setCustomValidity('')}catch(e){}" min=0
 										onkeyup="calculoPrecio(); return false;"
@@ -358,7 +395,7 @@
 								</div>
 							</div>
 							<div class="col-sm-3 mb-3 mb-sm-0" id="ig">
-								<label for="riesgo">Gasto</label>
+								<label for="riesgo">Gasto (MXN)</label>
 								<div class="input-group">
 									<div class="input-group-prepend">
 										<span class="input-group-text"><i
@@ -369,7 +406,6 @@
 										th:field="*{impGastoProyecto}" type="text" maxlength="15"
 										onkeypress="return event.charCode >= 46 && event.charCode <= 57"
 										class="form-control" id="gasto"
-										placeholder="Gasto del proyecto"
 										oninvalid="setCustomValidity('Gasto inválido')"
 										onchange="try{setCustomValidity('')}catch(e){}" min=0
 										max=9999999 step="any">
@@ -383,21 +419,18 @@
 											class="far fa-clock"></i></span>
 									</div>
 									<input th:field="*{valTotalHorasProyecto}" type="text"
-										maxlength="10" class="form-control" id="thorasProyecto"
-										placeholder="Total de horas planeadas del proyecto" readonly
-										pattern="^-?\d+$">
+										maxlength="10" class="form-control" id="thorasProyecto" readonly pattern="^-?\d+$">
 								</div>
 							</div>
 							<div class="col-sm-3 mb-3 mb-sm-0" id="cp">
-								<label for="costoProyecto">Costo planeado</label>
+								<label for="costoProyecto">Costo planeado (MXN)</label>
 								<div class="input-group">
 									<div class="input-group-prepend">
 										<span class="input-group-text"><i
 											class="fas fa-dollar-sign"></i></span>
 									</div>
 									<input th:field="*{impCostoProyecto}" type="text"
-										maxlength="10" class="form-control" id="costoProyecto"
-										placeholder="Costo planeado del proyecto" readonly>
+										maxlength="10" class="form-control" id="costoProyecto" readonly>
 								</div>
 							</div>
 						</div>
@@ -409,15 +442,14 @@
 						</div>
 					</div>
 					
-					<div class="card-body" th:if="${proyecto.codEstatusProyecto == 2 OR proyecto.codEstatusProyecto == 3}">
+					<div class="card-body" th:if="${proyecto.codEstatusProyecto == 2 OR proyecto.codEstatusProyecto == 3 OR proyecto.codEstatusProyecto == 4}">
 						<div class="form-group row">
 							<div class="col-sm-6 mb-3 mb-sm-0">
 								<div class="form-group row">
 									<div class="col-sm-9 mb-3 mb-sm-0">
 										<label for="nombreProyecto">Nombre del proyecto</label> 
 										<input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
-										type="text" th:field="*{descProyecto}" class="form-control"
-										id="nombreProyecto" placeholder="Nombre de proyecto"
+										type="text" th:field="*{descProyecto}" class="form-control" id="nombreProyecto"
 										oninvalid="setCustomValidity('Campo inválido')"
 										onchange="try{setCustomValidity('')}catch(e){}"
 										maxlength="100" required>
@@ -425,10 +457,20 @@
 									<div class="col-sm-3 mb-3 mb-sm-0">
 										<label for="codigoProyecto">C&oacute;digo</label> <input th:field="*{descCodigoProyecto}"
 										type="text" class="form-control" id="codigoProyecto"
-										placeholder="Código de proyecto"
 										oninvalid="setCustomValidity('Campo inv&aacute;lido')"
 										onchange="try{setCustomValidity('')}catch(e){}"
 										maxlength="100" readonly="readonly" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-md-6 mb-3 mb-sm-0">
+										<label for="nombreCortoProyecto">Nombre corto del proyecto</label> 
+										<input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										type="text" th:field="*{descCortaProyecto}" class="form-control"
+										id="nombreCortoProyecto"
+										oninvalid="setCustomValidity('Campo inválido')"
+										onchange="try{setCustomValidity('')}catch(e){}"
+										maxlength="20" required>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -436,13 +478,13 @@
 										<label for="fechaInicio">Fecha inicio</label> <input
 										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
 										th:field="*{fecIncioProyecto}" type="date"
-										class="form-control" id="fechaInicio">
+										class="form-control" id="fechaInicio" required>
 									</div>
 									<div class="col-sm-6 mb-3 mb-sm-0" id="ff">
 										<label for="fechaFin">Fecha fin</label> <input
 										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
 										th:field="*{fecFinProyecto}" type="date"
-										class="form-control" id="fechaFin">
+										class="form-control" id="fechaFin" required>
 									</div>
 								</div>
 							</div>
@@ -451,7 +493,6 @@
 								<textarea th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
 								th:field="*{descProyectoTexto}" class="form-control" rows="5" style="height: 125px;"
 								id="descripcionProyecto"
-								placeholder="Descripci&oacute;n del proyecto"
 								oninvalid="setCustomValidity('Campo inválido')"
 								onchange="try{setCustomValidity('')}catch(e){}"
 								maxlength="500" required></textarea>
@@ -461,7 +502,7 @@
 						<div class="form-group row">
 							<div class="col-sm-3 mb-3 mb-sm-0"
 								th:if="${proyecto.codEstatusProyecto == 1 or proyecto.codEstatusProyecto == 3}">
-								<label for="presupuesto">Presupuesto</label>
+								<label for="presupuesto">Presupuesto (MXN)</label>
 								<div class="input-group">
 									<div class="input-group-prepend">
 										<span class="input-group-text">
@@ -472,7 +513,6 @@
 									th:field="*{impPresupuesto}" type="text" maxlength="15"
 									onkeypress="return event.charCode >= 46 && event.charCode <= 57"
 									class="form-control" id="presupuesto"
-									placeholder="Presupuesto"
 									oninvalid="setCustomValidity('Presupuesto inv&aacute;lido')"
 									onchange="try{setCustomValidity('')}catch(e){}" min=0
 									max=9999999 step="any">
@@ -563,13 +603,12 @@
 										maxlength="10"
 										onkeypress="return event.charCode >= 46 && event.charCode <= 57"
 										class="form-control" id="totalHoras"
-										placeholder="Total de horas vendidas"
 										onchange="try{setCustomValidity('')}catch(e){}" min="0"
 										max="99999999">
 								</div>
 							</div>
 							<div class="col-sm-3 mb-3 mb-sm-0" id="pp">
-								<label for="precio">Precio del proyecto</label>
+								<label for="precio">Precio del proyecto (MXN)</label>
 								<div class="input-group">
 									<div class="input-group-prepend">
 										<span class="input-group-text"><i
@@ -580,7 +619,6 @@
 										th:field="*{impPrecioPropuesta}" type="text" maxlength="15"
 										onkeypress="return event.charCode >= 46 && event.charCode <= 57"
 										class="form-control" id="precio"
-										placeholder="Precio del proyecto"
 										oninvalid="setCustomValidity('Precio inválido')"
 										onchange="try{setCustomValidity('')}catch(e){}" min=0
 										max=9999999 step="any">
@@ -596,7 +634,7 @@
 									<input
 										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
 										th:field="*{valPorcentajeRiesgo}" type="text"
-										class="form-control" id="riesgo" placeholder="Porcentaje"
+										class="form-control" id="riesgo"
 										oninvalid="setCustomValidity('Porcentaje inv&aacute;lido')"
 										onchange="try{setCustomValidity('')}catch(e){}" min=0
 										onkeyup="calculoPrecio(); return false;"
@@ -616,7 +654,7 @@
 									<input
 										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
 										th:field="*{valPorcentajeMargen}" type="text"
-										class="form-control" id="margen" placeholder="Margen"
+										class="form-control" id="margen"
 										oninvalid="setCustomValidity('Margen inv&aacute;lido')"
 										onchange="try{setCustomValidity('')}catch(e){}" min=0
 										onkeyup="calculoPrecio(); return false;"
@@ -624,7 +662,7 @@
 								</div>
 							</div>
 							<div class="col-sm-3 mb-3 mb-sm-0" id="ig">
-								<label for="riesgo">Gasto</label>
+								<label for="riesgo">Gasto (MXN)</label>
 								<div class="input-group">
 									<div class="input-group-prepend">
 										<span class="input-group-text"><i
@@ -635,7 +673,6 @@
 										th:field="*{impGastoProyecto}" type="text" maxlength="15"
 										onkeypress="return event.charCode >= 46 && event.charCode <= 57"
 										class="form-control" id="gasto"
-										placeholder="Gasto del proyecto"
 										oninvalid="setCustomValidity('Gasto inválido')"
 										onchange="try{setCustomValidity('')}catch(e){}" min=0
 										max=9999999 step="any">
@@ -649,21 +686,18 @@
 											class="far fa-clock"></i></span>
 									</div>
 									<input th:field="*{valTotalHorasProyecto}" type="text"
-										maxlength="10" class="form-control" id="thorasProyecto"
-										placeholder="Total de horas planeadas del proyecto" readonly
-										pattern="^-?\d+$">
+										maxlength="10" class="form-control" id="thorasProyecto" readonly pattern="^-?\d+$">
 								</div>
 							</div>
 							<div class="col-sm-3 mb-3 mb-sm-0" id="cp">
-								<label for="costoProyecto">Costo planeado</label>
+								<label for="costoProyecto">Costo planeado (MXN)</label>
 								<div class="input-group">
 									<div class="input-group-prepend">
 										<span class="input-group-text"><i
 											class="fas fa-dollar-sign"></i></span>
 									</div>
 									<input th:field="*{impCostoProyecto}" type="text"
-										maxlength="10" class="form-control" id="costoProyecto"
-										placeholder="Costo planeado del proyecto" readonly>
+										maxlength="10" class="form-control" id="costoProyecto" readonly>
 								</div>
 							</div>
 						</div>
@@ -736,6 +770,24 @@
     </div>
   </div>
   
+  <!-- Modal Cancelado-->
+  <div class="modal fade" id="modalPreventaACancelado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cancelar preventa</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="modal-body">Cambiar&aacute;s el estatus de la preventa a cancelado, esta operaci&oacute;n no se podr&aacute; recuperar. ¿Est&aacute;s de acuerdo?</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal" id="cancelarCancelado" >Cancelar</button>
+          <a class="btn btn-primary" data-dismiss="modal" href="" id="aceptarCancelado">Aceptar</a>
+        </div>
+      </div>
+    </div>
+  </div>
   
   <!-- Modal Cerrado-->
   <div class="modal fade" id="modalProyectoACerrado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

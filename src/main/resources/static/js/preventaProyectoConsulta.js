@@ -1,5 +1,11 @@
 $(document).ready(function() {
 	
+	if($("cancelado").prop("checked", true)){
+		$("input").prop("disabled", true);
+		$("textarea").prop("disabled", true);
+		$("select").prop("disabled", true);
+	}
+	
 	$("#presupuesto").on({
 		"focus": function(event) {
 					$(event.target).select();
@@ -80,6 +86,8 @@ $(document).ready(function() {
 					});
 		  		}
 	});
+	
+	$("#btnPreventaCancelado").hide();
 
 	$('#undo_redo').multiselect();
 	
@@ -141,6 +149,15 @@ $(document).ready(function() {
 		$('#codEstatusProyecto').val(2);
 		$('#btnEnviar').val("Guardar y continuar");
  	});
+ 	
+ 	$("#aceptarCancelado").click(function(){
+		console.log("Entra a cancelar la preventa");
+		$( "#preventa" ).prop( "disabled", true );
+		$( "#proyecto" ).prop( "disabled", true );
+		$( "#cierre" ).prop( "disabled", true );
+		$( "#cancelado" ).prop( "disabled", false);
+		$("#btnEnviar").val("Guardar y Salir");
+	});
 	
 	$( "#aceptarCierre" ).click(function() {
 		$( "#proyecto" ).prop( "disabled", true );
@@ -152,6 +169,10 @@ $(document).ready(function() {
  	});
   
 	$( "#cancelarProyecto" ).click(function() {
+		$( "#preventa" ).prop( "checked", true );
+	});
+	
+	$( "#cancelarCancelado" ).click(function() {
 		$( "#preventa" ).prop( "checked", true );
 	});
 	
@@ -248,7 +269,7 @@ function calculoPrecio(){
 	
 //	console.log(precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2}));
 	if (precioTotal != Number.Nan) {
-		$("#totalProyecto").html("Precio calculado: $" + precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2}));
+		$("#totalProyecto").html("Precio final: $" + precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2})+" (MXN)");
 	}
 	
 	
@@ -268,12 +289,13 @@ function guardarTodo(){
 	var codEstatusProyecto;
 	
 	var checkBox = document.getElementById("proyecto");
-	if (checkBox.checked == false){
-		//alert("1");
-    	var codEstatusProyecto=1;
-	}else{
-		//alert("2");
-		var codEstatusProyecto=2;
+	var checkCancelado = $("#cancelado");
+	if (checkBox.checked === false){
+    	codEstatusProyecto=1;
+	}else if(checkBox.checked === true){
+		codEstatusProyecto=2;
+	}else if(checkCancelado.checked === true){
+		codEstatusProyecto=4;
 	}
 	
 	var areaComercial=$('#areaComercial').val();

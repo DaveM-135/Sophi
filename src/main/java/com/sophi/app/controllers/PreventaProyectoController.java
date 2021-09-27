@@ -362,7 +362,7 @@ public class PreventaProyectoController {
 		}
 		
 		proyectoService.save(proyecto);
-		flash.addFlashAttribute("success", "Recurso guardado con éxito");
+		flash.addFlashAttribute("success", "Proyecto guardado con éxito");
 		return "preventaProyectoLista";
 	}
 	
@@ -798,6 +798,7 @@ public class PreventaProyectoController {
 		proyecto.setCodCliente(clienteProyecto);
 		
 		System.out.println("Estatus del proyecto actual: "+codEstatusProyecto);
+		System.out.println("Area comercial: "+proyecto.getCodAreaComercial());
 		
 		if(result.hasErrors()) {
 			flash.addFlashAttribute("error", "Error al guardar preventa/proyecto");
@@ -821,7 +822,17 @@ public class PreventaProyectoController {
 //		proyecto.setValTotalHorasProyecto((proyecto.getValTotalHorasProyecto() == "" || proyecto.getValTotalHorasProyecto() == null) ? "0" : proyecto.getValTotalHorasProyecto());
 		
 		if(codEstatusProyecto == 2) {
-			//actualizo los registros que tienen el id del proyecto a estatus 2 o 3
+			//actualizo los registros que tienen el id del proyecto a estatus 2
+			detalleProyectoContactoService.actualizaEstatusProyectoDetalleProyectoContactoByCodProyecto(codProyecto, codEstatusProyecto);
+			
+			//hago lo mismo que en el paso anterior
+			detalleProyectoInfraestructuraService.actualizaEstatusProyectoDetalleProyectoInfraestructuraByCodProyecto(codProyecto, codEstatusProyecto);
+			
+			System.out.println("Actualizó los estatus");
+		}
+		
+		if(codEstatusProyecto == 4) {
+			//actualizo los registros que tienen el id del proyecto a estatus 4
 			detalleProyectoContactoService.actualizaEstatusProyectoDetalleProyectoContactoByCodProyecto(codProyecto, codEstatusProyecto);
 			
 			//hago lo mismo que en el paso anterior
@@ -840,12 +851,16 @@ public class PreventaProyectoController {
 			proyecto.setFecCambioEstatus(new Utiles().getFechaActual());
 		}
 		
+		if(proyecto.getCodEstatusProyecto().equals(4L) && proyecto.getFecCambioEstatus() != null) {
+			proyecto.setFecCambioEstatus(new Utiles().getFechaActual());
+		}
+		
 		proyectoService.save(proyecto);
 		
-		flash.addFlashAttribute("success", "Recurso guardado con éxito");
+		flash.addFlashAttribute("success", "Proyecto guardado con éxito");
 		
 		//redirijo dependiendo
-		if(proyecto.getCodEstatusProyecto() == 3) {
+		if(proyecto.getCodEstatusProyecto() == 3 || proyecto.getCodEstatusProyecto() == 4) {
 			List<Proyecto> listaProyectoTodo = proyectoService.findAll();
 			flash.addFlashAttribute("success", "Información actualizada con éxito");
 			model.addAttribute("proyectos", listaProyectoTodo);
