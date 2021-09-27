@@ -89,7 +89,7 @@
 							</div>
 						</div>
 						<div class="card-body text-secondary" style="padding-top: 0px;" id="cardTrayectoriaNivel">
-						<div  th:fragment="fragmentTrayectoriaNivel">
+						<div th:fragment="fragmentTrayectoriaNivel">
 							<div class="row" th:each="nivel : ${listaTrayectoriaNivel}">
 							    <div class="col-12">
 							        <div class="progress_bar">
@@ -105,6 +105,12 @@
 							            </div>
 							        </div>
 								</div>
+							</div>
+							<div class="pro-bar">
+								<p>Referencia</p>
+								<span th:style="'background-color: red;'">R</span>&nbsp;&nbsp;&nbsp;<span>B&aacute;sico</span><br />
+								<span th:style="'background-color: yellow;'">Y</span>&nbsp;&nbsp;&nbsp;<span>Intermedio</span><br />
+								<span th:style="'background-color: green;'">G</span>&nbsp;&nbsp;&nbsp;<span>Avanzado</span><br />
 							</div>
 						</div>
 						</div>
