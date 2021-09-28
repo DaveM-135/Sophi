@@ -269,7 +269,7 @@ function calculoPrecio(){
 	
 //	console.log(precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2}));
 	if (precioTotal != Number.Nan) {
-		$("#totalProyecto").html("Precio final: $" + precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2})+" (MXN)");
+		$("#totalProyecto").html("Precio calculado: $" + precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2})+" (MXN)");
 	}
 	
 	
