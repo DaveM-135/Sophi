@@ -10,12 +10,12 @@
 				<div class="row p-2">
 					<div class="card cardTR">
 						<div class="card-header" style="color: #898796;">
-							<div class="d-flex justify-content-between">
+							<!--<div class="d-flex justify-content-between">
 								<span>Proyectos</span> <i class="fa fa-plus" style="cursor: pointer;" aria-hidden="true" onclick="openModalRegistrarTrayectoriaProyecto();"></i>
-							</div>
+							</div>-->
 						</div>
 						<div class="card-body text-secondary" style="padding: 0px;" id="cardTrayectoriaProyecto">
-							<div  th:fragment="fragmentTrayectoriaProyecto" class="overflow">
+							<div th:fragment="fragmentTrayectoriaProyecto" class="overflow">
 									<ul class="timeline">
 										<li th:each="trayectoriaProyecto : ${listaTrayectoriaProyectos}">
 											<div class="d-flex justify-content-between" style="font-size: 12px; color: gray;">
@@ -27,10 +27,10 @@
 												<div>
 													<small th:each="detalleConocimientoProyecto : ${trayectoriaProyecto.detalleConocimientosProyecto}"><span class="badge badge-pill badge-info"  th:text="${detalleConocimientoProyecto.conocimiento.descConocimiento}"></span>&nbsp;</small>
 												</div>
-												<div style="font-size: 12px; font-weight:100;  color: gray;">
+												<!--<div style="font-size: 12px; font-weight:100;  color: gray;">
 													<i class="fas fa-edit dg-edit-escolar" th:id="${trayectoriaProyecto.codTrayectoriaProyecto}" onclick="editarTrayectoriaProyecto(this.id);" style="cursor: pointer;"></i>
 													<i class="fas fa-trash-alt dg-edit-escolar" th:id="${trayectoriaProyecto.codTrayectoriaProyecto}" onclick="borrarTrayectoriaProyecto(this.id);" style="cursor: pointer;"></i>
-												</div>
+												</div>-->
 											</div> 
 										</li>
 									</ul>
@@ -108,9 +108,9 @@
 							</div>
 							<div class="pro-bar">
 								<p>Referencia</p>
-								<span th:style="'background-color: red;'">R</span>&nbsp;&nbsp;&nbsp;<span>B&aacute;sico</span><br />
-								<span th:style="'background-color: yellow;'">Y</span>&nbsp;&nbsp;&nbsp;<span>Intermedio</span><br />
-								<span th:style="'background-color: green;'">G</span>&nbsp;&nbsp;&nbsp;<span>Avanzado</span><br />
+								<svg width="25" height="25"><circle cx="12.5" cy="12.5" r="10" stroke="black" stroke-width="4" fill="red" /></svg>&nbsp;&nbsp;&nbsp;<span>B&aacute;sico</span><br />
+								<svg width="25" height="25"><circle cx="12.5" cy="12.5" r="10" stroke="black" stroke-width="4" fill="yellow" /></svg>&nbsp;&nbsp;&nbsp;<span>Intermedio</span><br />
+								<svg width="25" height="25"><circle cx="12.5" cy="12.5" r="10" stroke="black" stroke-width="4" fill="green" /></svg>&nbsp;&nbsp;&nbsp;<span>Avanzado</span><br />
 							</div>
 						</div>
 						</div>

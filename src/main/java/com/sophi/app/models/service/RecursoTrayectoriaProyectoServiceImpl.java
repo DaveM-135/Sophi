@@ -1,5 +1,6 @@
 package com.sophi.app.models.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,18 @@ public class RecursoTrayectoriaProyectoServiceImpl implements IRecursoTrayectori
 	@Transactional
 	public void delete(Long codRecursoTrayectoriaProyecto) {
 		recursoTrayectoriaProyectoDao.deleteById(codRecursoTrayectoriaProyecto);
+	}
+	
+	@Override
+	@Transactional
+	public void insertOne(Long codRecurso, String descProyecto, String descActividades, Date fecInicioParticipacion, Date fecFinParticipacion, String descCliente) {
+		recursoTrayectoriaProyectoDao.insertOne(codRecurso, descProyecto, descActividades, fecInicioParticipacion, fecFinParticipacion, descCliente);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Long> findCodTrayectoriaProyectoByDescProyecto(String descProyecto) {
+		return recursoTrayectoriaProyectoDao.findCodTrayectoriaProyectoByDescProyecto(descProyecto);
 	}
 
 }

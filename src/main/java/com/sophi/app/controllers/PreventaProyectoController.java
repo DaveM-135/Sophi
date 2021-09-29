@@ -42,20 +42,24 @@ import com.sophi.app.models.entity.DetalleProyectoInfraestructuraId;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.ProyectoRecurso;
 import com.sophi.app.models.entity.Recurso;
+import com.sophi.app.models.entity.RecursoTrayectoriaProyecto;
 import com.sophi.app.models.entity.Rol;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IAgendaService;
 import com.sophi.app.models.service.IAreaComercialService;
 import com.sophi.app.models.service.IClasificacionProyectoService;
 import com.sophi.app.models.service.IClienteService;
+import com.sophi.app.models.service.IConocimientoService;
 import com.sophi.app.models.service.IDetalleClienteAreaComercialService;
 import com.sophi.app.models.service.IDetalleClienteInfraestructuraService;
+import com.sophi.app.models.service.IDetalleConocimientoProyectoService;
 import com.sophi.app.models.service.IDetalleInfraestructuraService;
 import com.sophi.app.models.service.IDetalleProyectoContactoService;
 import com.sophi.app.models.service.IDetalleProyectoInfraestructuraService;
 import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
+import com.sophi.app.models.service.IRecursoTrayectoriaProyectoService;
 import com.sophi.app.models.service.IRolService;
 import com.sophi.app.models.service.ITipoFacturacionService;
 import com.sophi.app.models.service.ITipoProyectoService;
@@ -114,6 +118,15 @@ public class PreventaProyectoController {
 	
 	@Autowired
 	private IActividadService actividadService;
+	
+	@Autowired
+	private IRecursoTrayectoriaProyectoService recursoTrayectoriaProyectoService;
+	
+	@Autowired
+	private IConocimientoService conocimientoService;
+	
+	@Autowired
+	private IDetalleConocimientoProyectoService detalleConocimientoProyectoService;
 	
 	@RequestMapping(value = "/preventaProyecto", method = RequestMethod.GET)
 	public String listarRecursos(Map<String, Object> modelP, Model model) {
@@ -829,6 +842,47 @@ public class PreventaProyectoController {
 			detalleProyectoInfraestructuraService.actualizaEstatusProyectoDetalleProyectoInfraestructuraByCodProyecto(codProyecto, codEstatusProyecto);
 			
 			System.out.println("Actualizó los estatus");
+		}
+		
+		//Si el proyecto pasa a estatus 3, se llenará automáticamente la trayectoria del recurso
+		if(codEstatusProyecto == 3) {
+			System.out.println("Entra a cambiar a estatus 3 y llenar las tablas de trayectoria y conocimiento");
+			List<ProyectoRecurso> listPR = new ArrayList<ProyectoRecurso>();
+			Cliente cliente = new Cliente();
+			
+			listPR = proyectoRecursoService.findByProyectoRecursoIdCodProyecto(codProyecto);
+			cliente = clienteService.findOne(clienteProyecto);
+			
+			System.out.println("Tamaño de la lista: "+listPR.size());
+			
+			if(listPR.size() != 0) {
+				for(ProyectoRecurso PR: listPR) {
+					System.out.println("Datos: "+PR.getProyectoRecursoId().getCodRecurso()+", "+proyecto.getDescProyecto()+", "+proyecto.getDescProyectoTexto()+", "+PR.getFecInicioAsignacion()+", "+PR.getFecFinAsignacion()+", "+cliente.getDescCliente());
+					if(PR.getFecInicioAsignacion()!=null && PR.getFecFinAsignacion()!=null) {
+						recursoTrayectoriaProyectoService.insertOne(PR.getProyectoRecursoId().getCodRecurso(), proyecto.getDescProyecto(), proyecto.getDescProyectoTexto(), PR.getFecInicioAsignacion(), PR.getFecFinAsignacion(), cliente.getDescCliente());
+					}
+				}
+			}
+			
+			System.out.println("Salió de recurso trayectoria proyectos");
+			
+			List<DetalleProyectoInfraestructura> listDPI = new ArrayList<DetalleProyectoInfraestructura>();
+			listDPI = detalleProyectoInfraestructuraService.findByDetalleProyectoInfraestructuraIdCodProyecto(codProyecto);
+			
+			List<Long> codTrayectoriaProyecto = recursoTrayectoriaProyectoService.findCodTrayectoriaProyectoByDescProyecto(proyecto.getDescProyecto());
+			
+			System.out.println("Tamaño de la lista: "+listDPI.size());
+			
+			if(listDPI.size() != 0 && codTrayectoriaProyecto.size() != 0) {
+				for(Long CTP: codTrayectoriaProyecto) {					
+					for(DetalleProyectoInfraestructura DPI: listDPI) {
+						System.out.println("Datos: "+CTP+", "+DPI.getDetalleProyectoInfraestructuraId().getCodDetalleInfraestructura());
+						detalleConocimientoProyectoService.insertOneDCP(CTP, DPI.getDetalleProyectoInfraestructuraId().getCodDetalleInfraestructura());
+					}
+				}
+			}
+			
+			System.out.println("Terminó de cambiar a estatus 3 y llenar las tablas de trayectoria y conocimiento");
 		}
 		
 		if(codEstatusProyecto == 4) {

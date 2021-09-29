@@ -23,5 +23,8 @@ public interface IDetalleConocimientoProyectosDao extends CrudRepository<Detalle
 	@Query(value = "select distinct(cod_conocimiento) from DETALLE_CONOCIMIENTOS_PROYECTOS where cod_trayectoria_proyecto in (select rtp.cod_trayectoria_proyecto from RECURSOS_TRAYECTORIA_PROYECTOS rtp where rtp.cod_recurso = ?1)", nativeQuery = true)
 	public List<Long> findConocimientosDistintosPorRecurso(Long codRecurso);
 	
+	@Modifying
+	@Query(value = "INSERT INTO DETALLE_CONOCIMIENTOS_PROYECTOS (cod_trayectoria_proyecto, cod_conocimiento) VALUES (?1, ?2)", nativeQuery = true)
+	public void insertOneDCP(Long codTrayectoriaProyecto, Long codConocimiento);
 	
 }

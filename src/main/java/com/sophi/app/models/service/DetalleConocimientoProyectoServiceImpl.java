@@ -56,5 +56,11 @@ public class DetalleConocimientoProyectoServiceImpl implements IDetalleConocimie
 	public List<Long> conocimientosDistintosPorRecurso(Long codRecurso) {
 		return detalleConocimientoProyectoDao.findConocimientosDistintosPorRecurso(codRecurso);
 	}
+	
+	@Override
+	@Transactional
+	public void insertOneDCP(Long codTrayectoriaProyecto, Long codConocimiento) {
+		detalleConocimientoProyectoDao.insertOneDCP(codTrayectoriaProyecto, codConocimiento);
+	}
 
 }

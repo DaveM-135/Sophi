@@ -20,6 +20,6 @@ public interface IDetalleConocimientoProyectoService {
 	
 	public List<Long> conocimientosDistintosPorRecurso(Long codRecurso);
 	
-	
+	public void insertOneDCP(Long codTrayectoriaProyecto, Long codConocimiento);
 
 }
