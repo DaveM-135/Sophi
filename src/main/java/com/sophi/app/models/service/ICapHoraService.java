@@ -43,4 +43,6 @@ public interface ICapHoraService {
 	
 	public List<String> findProyectosByCodRecursoAndFechaInicioAndFechaFin(Long codRecurso, Date fechaInicio, Date fechaFin);
 	
+	public void copiarRegistroCapHora(Long codActividad, Long codRecurso, String descComentarioDetalle, Date fecInicioActividad, Date fecRegistro, Long codProyecto, float valDuracionReportada, float valDuracionValidada, float valDuracionRechazada, Long valRechazo, Long codCliente, Long valNuevaActividad, Long codEstatusProyecto);
+	
 }

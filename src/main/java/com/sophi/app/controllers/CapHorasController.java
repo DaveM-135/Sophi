@@ -163,7 +163,26 @@ public class CapHorasController {
 		}
 	}
 	
-	
+	@GetMapping(value="/cargarActividadPrimariaCopia/{codRecurso}/{codProyecto}")
+	public String cargarActividadPrimariaCopia(@PathVariable Long codRecurso, @PathVariable Long codProyecto, Model model){
+		if(codProyecto.equals(1L)) {
+			Tarea tarea = tareaService.findOne(1L);
+			HashMap<Long, String> actividadesPrimariasList = new HashMap<Long, String>(); 
+			actividadesPrimariasList.put(tarea.getCodTarea(), tarea.getDescTarea());
+			model.addAttribute("actividadesPrimariasNoPlan", actividadesPrimariasList);
+			return "layout/capHora :: listActividadesPrimariasNoPlanCopia";
+		}else {
+			List<String> listaActividadesPrimarias = new ArrayList<String>();
+			Proyecto proyecto = proyectoService.findByCodProyecto(codProyecto);
+			if(!proyecto.getCodEstatusProyecto().equals(2L)) {
+				listaActividadesPrimarias.add(PREVENTA);
+			}
+			listaActividadesPrimarias.addAll(actividadService.findListaActividadesPrimariasByRecursoProyecto(codRecurso, codProyecto));
+			listaActividadesPrimarias.add(OTRA);
+			model.addAttribute("actividadesPrimariasList", listaActividadesPrimarias);
+			return "layout/capHora :: listActividadesPrimariasCopia";
+		}
+	}
 	
 	@GetMapping(value="/cargarActividadSecundaria/{codRecurso}/{codProyecto}/{descPrimaria}")
 	public String cargarActividadSecundaria(@PathVariable Long codRecurso, @PathVariable Long codProyecto,@PathVariable String descPrimaria,  Model model){
@@ -203,6 +222,24 @@ public class CapHorasController {
 		}
 	}
 	
+	@GetMapping(value="/cargarActividadSecundariaCopia/{codRecurso}/{codProyecto}/{descPrimaria}")
+	public String cargarActividadSecundariaCopia(@PathVariable Long codRecurso, @PathVariable Long codProyecto,@PathVariable String descPrimaria,  Model model){
+		if(codProyecto.equals(1L)) {
+			List<Subtarea> actividadesSecundariasList = subtareaService.findByCodTarea(1L);
+			model.addAttribute("actividadesSecundariasNoPlan", actividadesSecundariasList);
+			return "layout/capHora :: listActividadesSecundariasNoPlanCopia";
+		} else if (descPrimaria.equalsIgnoreCase(PREVENTA)) {
+			model.addAttribute("actividadesSecundariasListFuera", subtareaService.findByCodTarea(2L));
+			return "layout/capHora :: listActividadesSecundariasFueraCopia";
+		} else if (descPrimaria.equalsIgnoreCase(OTRA)){
+//			model.addAttribute("actividadesSecundariasListFuera", subtareaService.findFueraDePlan());
+			model.addAttribute("actividadesSecundariasListFuera", tareaService.findTareaFueraPlan());
+			return "layout/capHora :: listActividadesSecundariasFueraOtraCopia";
+		} else {
+			model.addAttribute("actividadesSecundariasList", actividadService.findListaActividadesByRecursoProyectoPrimaria(codRecurso, codProyecto, descPrimaria));
+			return "layout/capHora :: listActividadesSecundariasCopia";
+		}
+	}
 	
 	@GetMapping(value="/cargarDetActividad/{codActividad}/{fecCaptura}")
 	public String cargarDetActividad(@PathVariable Long codActividad, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date fecCaptura, Model model){
@@ -315,6 +352,14 @@ public class CapHorasController {
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
 		return "Registro guardado con éxito";
+	}
+	
+	@PostMapping(value="/formCopiaCapHora", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public void copiarCapHora(@Valid CapHora capHora) {
+		System.out.println("Copiando registro: "+ capHora.getCodCapHora());
+		capHoraService.copiarRegistroCapHora(capHora.getCodActividad(), capHora.getCodRecurso(), capHora.getDescComentarioDetalle(), capHora.getFecInicioActividad(), capHora.getFecRegistro(), capHora.getCodProyecto(), capHora.getValDuracionReportada(), 0, 0, 0L, capHora.getCodCliente(), capHora.getValNuevaActividad(), capHora.getCodEstatusProyecto());
+		System.out.println("Terminó de copiar");
 	}
 	
 	
@@ -443,6 +488,119 @@ public class CapHorasController {
 		model.addAttribute("capHora", capHora);
 		
 		return "layout/capHora :: editDetActividades";
+	}
+	
+	@GetMapping(value="/copiaCaptura/{codCaptura}")
+	public String copiaCaptura(@PathVariable Long codCaptura, Model model) {
+		
+		CapHora capHora = capHoraService.findOne(codCaptura);
+		
+		Long codProyecto = capHora.getCodProyecto();
+		Long codRecurso = capHora.getCodRecurso();
+		
+		//Carga proyectos del recurso
+		List<Long> proyectoListId = new ArrayList<Long>();
+		HashMap<Long, String> proyectoList = new HashMap<Long, String>(); 
+		proyectoListId = actividadService.findListaProyectoByRecurso(capHora.getCodRecurso());
+		if (proyectoListId.size() > 0) {
+			for (Long id : proyectoListId) {
+				Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 2L);
+				if(proyecto == null) {
+					proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 1L);
+					if(proyecto != null){
+						proyectoList.put(id, proyecto.getDescProyecto());
+					}
+				} else if(proyecto != null){
+					proyectoList.put(id, proyecto.getDescProyecto());
+				}
+			}
+		} 
+		
+		List<ProyectoRecurso> proyectosRecurso = new ArrayList<ProyectoRecurso>();
+		proyectosRecurso = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(capHora.getCodRecurso());
+		if (proyectosRecurso.size() > 0) {
+			for (ProyectoRecurso proyectoRecurso : proyectosRecurso) {
+				Long idProyect = proyectoRecurso.getProyectoRecursoId().getCodProyecto();
+				Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(idProyect, 2L);
+				if (proyecto == null) {
+					proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(idProyect, 1L);
+					if (proyecto != null) {
+						proyectoList.put(idProyect,proyecto.getDescProyecto());
+					}
+				} else if (proyecto != null) {
+					proyectoList.put(idProyect,proyecto.getDescProyecto());
+				}
+				
+			}
+		}
+		
+		Proyecto proyecto = proyectoService.findByCodProyecto(1L);
+		proyectoList.put(proyecto.getCodProyecto(),proyecto.getDescProyecto());
+
+		
+		//carga fase o actividad primaria
+		if(codProyecto.equals(1L)) {
+			Tarea tarea = tareaService.findOne(1L);
+			List<String> actividadesPrimariasList = new ArrayList<String>();
+			actividadesPrimariasList.add(tarea.getDescTarea());
+			model.addAttribute("actividadesPrimarias", actividadesPrimariasList);
+		}else {
+			List<String> actividadesPrimariasList = new ArrayList<String>();
+			Proyecto proy = proyectoService.findByCodProyecto(codProyecto);
+			if(proy.getCodEstatusProyecto().equals(1L)) {
+				actividadesPrimariasList.add(PREVENTA);
+			}
+			actividadesPrimariasList.addAll(actividadService.findListaActividadesPrimariasByRecursoProyecto(codRecurso, codProyecto));
+			actividadesPrimariasList.add(OTRA);
+			model.addAttribute("actividadesPrimarias", actividadesPrimariasList);
+		}
+		
+		
+		//Carga actividad secundaria apartir de codActividad y valNuevaActividad
+		if(capHora.getValNuevaActividad().equals(0L)) {
+			List<Actividad> listaActividadesSecundarias = new ArrayList<>();
+			String actividadPrimaria = actividadService.findOne(capHora.getCodActividad()).getDescActividadPrimaria();
+			listaActividadesSecundarias = actividadService.findListaActividadesByRecursoProyectoPrimaria(capHora.getCodRecurso(), capHora.getCodProyecto(), actividadPrimaria);
+			HashMap<Long, String> listadoActividadesSecundarias = new HashMap<>();
+			for (Actividad actividad : listaActividadesSecundarias) {
+				listadoActividadesSecundarias.put(actividad.getCodActividad(), actividad.getDescActividadSecundaria());
+			}
+			model.addAttribute("actividadesSecundarias", listadoActividadesSecundarias);
+			model.addAttribute("actividadPrimariaSelec", actividadPrimaria);
+			model.addAttribute("otra","0");
+		} else {
+			if(codProyecto.equals(1L)) {
+				
+				Tarea tarea = tareaService.findOne(1L);
+				
+				model.addAttribute("actividadPrimariaSelec", tarea.getDescTarea());
+				
+				List<Tarea> listadoActividadesSecundarias = new ArrayList<>();
+				listadoActividadesSecundarias.add(tarea);
+				model.addAttribute("actividadesSecundarias", listadoActividadesSecundarias);
+				model.addAttribute("otra","1");
+			} else {
+				model.addAttribute("actividadPrimariaSelec", OTRA);
+				model.addAttribute("otra","1");
+//				List<Subtarea> listaActividadesSecundarias = new ArrayList<>();
+//				listaActividadesSecundarias = subtareaService.findFueraDePlan();
+//				HashMap<Long, String> listadoActividadesSecundarias = new HashMap<>();
+//				for (Subtarea subtarea : listaActividadesSecundarias) {
+//					listadoActividadesSecundarias.put(subtarea.getCodSubtarea(), subtarea.getDescSubtarea());
+//				}
+				List<Tarea> listadoActividadesSecundarias = new ArrayList<>();
+				listadoActividadesSecundarias = tareaService.findTareaFueraPlan();
+				model.addAttribute("actividadesSecundarias", listadoActividadesSecundarias);
+				
+			}
+	
+		}
+		
+		
+		model.addAttribute("proyectoList", proyectoList);
+		model.addAttribute("capHora", capHora);
+		
+		return "layout/capHora :: copiaDetActividades";
 	}
 	
 	@RequestMapping(value="/getReporteHorasCapturadasXLSX")

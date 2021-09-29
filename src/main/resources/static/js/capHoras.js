@@ -116,6 +116,10 @@ function clicProyectoEdit(){
 	cargarActividadesPrimariasProyectoEdit();
 }
 
+function clicProyectoCopia(){
+	cargarActividadesPrimariasProyectoCopia();
+}
+
 function semanaInicioFin(fecha){
 
 var curr = new Date(fecha);
@@ -160,6 +164,11 @@ function clicProyectoEdit(){
 	$("#resultListActividadesPrimariasEdit").load(url);
 }
 
+function clicProyectoCopia(){
+	var url="/cargarActividadPrimariaCopia/"+$("#valCodRecurso").val()+"/"+$("#selectProyectoCopia").val();
+	$("#resultListActividadesPrimariasCopia").load(url);
+}
+
 
 function filtraActPorFase(){
 	cargarActividadesSecundariasProyecto();
@@ -167,6 +176,10 @@ function filtraActPorFase(){
 
 function filtraActPorFaseEdit(){
 	cargarActividadesSecundariasProyectoEdit();
+}
+
+function filtraActPorFaseCopia(){
+	cargarActividadesSecundariasProyectoCopia();
 }
 
 function cargarActividadesSecundariasProyecto(){
@@ -179,6 +192,10 @@ function cargarActividadesSecundariasProyectoEdit(){
 	$("#codActividad").load(url);
 }
 
+function cargarActividadesSecundariasProyectoCopia(){
+	var url="/cargarActividadSecundariaCopia/"+$("#valCodRecurso").val()+"/"+$("#selectProyectoCopia").val()+"/"+encodeURIComponent($("#selectActividadPrimariaCopia").val());
+	$("#codActividad").load(url);
+}
 
 function altaCapHoraActividad(){
 	var fech = $("#semanaDias .active span").text();
@@ -269,6 +286,24 @@ async function validaFormEdit(){
 	}
 }
 
+async function validaFormCopia(){
+	$.ajax({
+	    type: "POST",
+	    url: "/formCopiaCapHora",
+	    data: $("#formCopiaCapHoraActividad").serialize(),
+		success: function(){
+			$('#capHoraModalCopiar').modal('hide');
+	    }
+	});
+	$("#detalleHorasCapturadas").html('<div class="spinner-grow text-muted"></div>');
+	await sleep(1000);
+			    
+	var fech = $("#semanaDias .active span").text().split("-");
+	fh = new Date(+fech[2], fech[1]-1, +fech[0]);
+	semanaInicioFin(fh);
+	cargaActividadDia();
+}
+
 function formatoFechaLarga(fecha) {
 	var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo",
 			"Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre",
@@ -337,6 +372,13 @@ function editCaptura(codCaptura){
 	$('#capHoraModalEdit').modal('show');
 //	$('#selectProyectoEdit').prop('selected', false);
 //	$('#selectActividadSecundariaEdit').prop('selected', false);
+}
+
+function copiaCaptura(codCaptura){
+	var url="/copiaCaptura/"+codCaptura;
+	$("#formCopiarCaptura").html('<div class="spinner-grow text-muted"></div>');
+	$("#formCopiarCaptura").load(url);
+	$('#capHoraModalCopiar').modal('show');
 }
 
 function no_refresh(capHora){	

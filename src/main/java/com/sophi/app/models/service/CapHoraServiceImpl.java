@@ -114,7 +114,10 @@ public class CapHoraServiceImpl implements ICapHoraService {
 		return capHoraDao.findProyectosByCodRecursoAndFechaInicioAndFechaFin(codRecurso, fechaInicio, fechaFin);
 	}
 	
-	
-
+	@Override
+	@Transactional
+	public void copiarRegistroCapHora(Long codActividad, Long codRecurso, String descComentarioDetalle, Date fecInicioActividad, Date fecRegistro, Long codProyecto, float valDuracionReportada, float valDuracionValidada, float valDuracionRechazada, Long valRechazo, Long codCliente, Long valNuevaActividad, Long codEstatusProyecto) {
+		capHoraDao.copiarRegistroCapHora(codActividad, codRecurso, descComentarioDetalle, fecInicioActividad, fecRegistro, codProyecto, valDuracionReportada, valDuracionValidada, valDuracionRechazada, valRechazo, codCliente, valNuevaActividad, codEstatusProyecto);
+	}
 
 }

@@ -3,6 +3,7 @@ package com.sophi.app.models.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -67,4 +68,8 @@ public interface ICapHoraDao extends CrudRepository<CapHora, Long>{
 			+ " FROM Proyecto p WHERE p.codRecursoAprobador <> ?1 AND p.codProyecto IN ( SELECT DISTINCT(codProyecto) FROM CapHora c"
 			+ " WHERE c.codRecurso = ?1 AND c.fecInicioActividad BETWEEN ?2 AND ?3)")
 	List<String> findProyectosByCodRecursoAndFechaInicioAndFechaFin(Long codRecurso, Date fechaInicio, Date fechaFin);
+	
+	@Modifying
+	@Query(value = "INSERT INTO RECURSOS_CAP_HORAS (cod_actividad, cod_recurso, desc_comentario_detalle, fec_inicio_actividad, fec_registro, cod_proyecto, val_duracion_reportada, val_duracion_validada, val_duracion_rechazada, val_rechazo, cod_cliente, val_nueva_actividad, cod_estatus_proyecto) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)", nativeQuery = true)
+	void copiarRegistroCapHora(Long codActividad, Long codRecurso, String descComentarioDetalle, Date fecInicioActividad, Date fecRegistro, Long codProyecto, float valDuracionReportada, float valDuracionValidada, float valDuracionRechazada, Long valRechazo, Long codCliente, Long valNuevaActividad, Long codEstatusProyecto);
 }

@@ -170,8 +170,9 @@
 						<i class='far fa-clock'></i><b><span th:text="'&nbsp;' + ${horaCapturada.valDuracionReportada+ '&nbsp;&nbsp;&nbsp;'}"></span></b>  <i class='far fa-check-circle'></i><b><span th:text="'&nbsp;'+${horaCapturada.valDuracionValidad} "></span></b><br>
 						<span th:if="${horaCapturada.valRechazo == 1}" th:title="${horaCapturada.descRechazo}" style="cursor: help;" class="badge badge-warning" >Rechazada <i class='fas fa-exclamation-triangle'></i></span>
 						<a th:if="${horaCapturada.fecValidacion == null}" href="#!" th:onclick="'editCaptura(\'' + ${horaCapturada.codCapHora} + '\');'" class="badge badge-primary">Editar  <i class="far fa-edit"></i></a>
-						<a th:if="${horaCapturada.fecValidacion == null}" href="#!" th:onclick="'delCaptura(\'' + ${horaCapturada.codCapHora} + '\');'" class="badge badge-danger borrar">Eliminar  <i class="fas fa-trash-alt"></i></a>
+						<a th:if="${horaCapturada.fecValidacion == null}" href="#!" th:onclick="'delCaptura(\'' + ${horaCapturada.codCapHora} + '\');'" class="badge badge-danger borrar">Eliminar  <i class="fas fa-trash-alt"></i></a>						
 						<span th:if="${horaCapturada.fecValidacion != null}" class="badge badge-success">Validada  <i class="far fa-check-circle"></i></span>
+						<a href="#!" th:onclick="'copiaCaptura(\'' + ${horaCapturada.codCapHora} + '\');'" class="badge badge-secondary">Copiar  <i class="bi bi-clipboard"></i></a>
 					</td>
 				</tr>
 			</tbody> 
@@ -257,6 +258,80 @@
 				<div class="form-group col-12 col-md-12">
 					<label style="font-size: 14px;" class="col-form-label">Detalle</label> <input type="text" id="descDetalleHoraEdit" th:field="*{descComentarioDetalle}" maxlength="500" class="form-control required"  style="font-size: 14px; padding: 0px 10px;"/>
 					<div id="divDescDetalleHoraEdit"></div>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<div th:fragment="copiaDetActividades">
+		<form id="formCopiaCapHoraActividad" th:action="@{/formCopiaCapHora}" 
+			th:Object="${capHora}" method="post" onsubmit="return no_refresh(Object.values(this));">
+			<div class="row">
+				<div class="form-group col-12 col-md-12">
+					<label style="font-size: 14px;" class="col-form-label">Proyecto </label>
+					<!-- <h6 style="font-weight: 600; font-size: 14px;" th:text="${capHora.descProyecto}"></h6> -->
+					<select th:field="*{codProyecto}" class="custom-select" id="selectProyectoCopia" onchange="clicProyectoCopia(); return false;" style="font-size: 14px; padding: 0px 10px;">
+						<option th:each="entry : ${proyectoList}" th:value="${entry.key}" th:text="${entry.value}" th:selected="${entry.value == capHora.descProyecto}"></option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-12 col-md-12">
+				<div id="resultListActividadesPrimariasCopia">
+					<label style="font-size: 14px;" class="col-form-label">Fase </label>
+					<select  class="custom-select" id="selectActividadPrimariaCopia" onclick="filtraActPorFaseCopia(); return false;" style="font-size: 14px; padding: 0px 10px;">
+						<option th:each="actividadPrimaria : ${actividadesPrimarias}" th:value="${actividadPrimaria}" th:text="${actividadPrimaria}" th:selected="${actividadPrimaria == actividadPrimariaSelec}"></option>
+					</select>
+				</div>
+				</div>
+			</div>
+			
+			
+			<div th:if="${otra == '1'}" class="row" >
+				<div class="form-group col-12 col-md-12" id="resultListActividadesSecundarioasCopia">
+					<label style="font-size: 14px;" class="col-form-label">Actividades </label>
+					<!-- <h6 style="font-weight: 600; font-size: 14px;" th:text="${capHora.descActividadSecundaria}"></h6> -->
+					<select th:field="*{codActividad}" class="custom-select"  style="font-size: 14px; padding: 0px 10px;">
+						<optgroup  th:each="tarea : ${actividadesSecundarias}" th:label="${tarea.descTarea}">
+							<option id="optActividades" th:each="actividad : ${tarea.subtareas}" th:value="${actividad.codSubtarea}" th:text="${actividad.descSubtarea}"></option>
+						</optgroup>
+<!-- 						<option th:each="entry : ${actividadesSecundarias}" th:value="${entry.key}" th:text="${entry.value}" th:selected="${entry.value == capHora.codActividad}"></option> -->
+					</select>
+				</div>
+			</div>
+			
+			<div th:unless="${otra == '1'}" class="row">
+				<div class="form-group col-12 col-md-12"  id="resultListActividadesSecundarioasCopia">
+					<label style="font-size: 14px;" class="col-form-label">Actividades </label>
+					<!-- <h6 style="font-weight: 600; font-size: 14px;" th:text="${capHora.descActividadSecundaria}"></h6> -->
+					<select th:field="*{codActividad}" class="custom-select" style="font-size: 14px; padding: 0px 10px;">
+<!-- 						<optgroup  th:each="tarea : ${actividadesSecundarias}" th:label="${tarea.descTarea}"> -->
+<!-- 							<option th:each="actividad : ${tarea.subtareas}" th:value="${actividad.codSubtarea}" th:text="${actividad.descSubtarea}"></option> -->
+<!-- 						</optgroup> -->
+						<option id="optActividades" th:each="entry : ${actividadesSecundarias}" th:value="${entry.key}" th:text="${entry.value}" th:selected="${entry.value == capHora.codActividad}"></option>
+					</select>
+				</div>
+			</div>
+			
+			
+			
+			<div class="row">
+				<div class="form-group col-6 col-md-6">
+					<label style="font-size: 14px;" class="col-form-label">Fecha</label> <input type="date" id="descFechaHora" th:field="*{fecInicioActividad}" class="form-control required"  style="font-size: 14px; padding: 0px 10px;"/>
+					<div id="divDescFechaHora"></div>
+				</div>
+				<div class="form-group col-6 col-md-3">
+					<label style="font-size: 14px;" class="col-form-label">Horas</label>
+<!-- 					<input step="0.5" type="number" id="valHoraCapEdit" min="0.5" max="24" th:field="*{valDuracionReportada}" onchange="handleChange(this);" class="form-control"  style="font-size: 14px; padding: 0px 10px;" pattern="/(^\d*\.{0,1}\d{0,1})$/)"/> -->
+					<input step="0.5" type="number" id="valHoraCapCopia" min="0.5" max="24" th:field="*{valDuracionReportada}" onkeypress="return false;" class="form-control"  style="font-size: 14px; padding: 0px 10px;" />
+					<div id="divValHoraCapCopia"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-12 col-md-12">
+					<label style="font-size: 14px;" class="col-form-label">Detalle</label> <input type="text" id="descDetalleHoraCopia" th:field="*{descComentarioDetalle}" maxlength="500" class="form-control required"  style="font-size: 14px; padding: 0px 10px;"/>
+					<div id="divDescDetalleHoraCopia"></div>
 				</div>
 			</div>
 		</form>
