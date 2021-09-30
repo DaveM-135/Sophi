@@ -58,6 +58,30 @@
           <span>Inicio</span></a>
       </li>
       
+       <!-- Divider -->
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider my-0">
+
+      <!-- Heading Proyecto -->
+      <!-- <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
+        Recursos
+      </div> -->
+
+      <!-- Nav Item - Recursos Collapse Menu -->
+      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
+          <i class="fas fa-fw fa-id-card"></i>
+          <span>Gesti&oacute;n de recursos</span>
+        </a>
+        <div id="collapseRecursos" class="collapse" aria-labelledby="menuRecursos" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+             <a class="collapse-item" th:href="@{/perfiles}">Perfiles</a>
+            <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
+            <a class="collapse-item" th:href="@{/controlVacaciones}">Control de vacaciones</a>
+          </div>
+        </div>
+      </li>
+      
       <!-- Divider -->
       <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-divider my-0">
 
@@ -144,73 +168,6 @@
           </div>
         </div>
       </li>
-
- 
-      
-       <!-- Divider -->
-      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider my-0">
-
-      <!-- Heading Proyecto -->
-      <!-- <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
-        Recursos
-      </div> -->
-
-      <!-- Nav Item - Recursos Collapse Menu -->
-      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
-          <i class="fas fa-fw fa-id-card"></i>
-          <span>Gesti&oacute;n de recursos</span>
-        </a>
-        <div id="collapseRecursos" class="collapse" aria-labelledby="menuRecursos" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Ver:</h6>
-             <a class="collapse-item" th:href="@{/perfiles}">Perfiles</a>
-            <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
-            <a class="collapse-item" th:href="@{/controlVacaciones}">Control de vacaciones</a>
-          </div>
-        </div>
-      </li>
-      
-      <!-- Divider -->
-      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider my-0">
-
-      <!-- Heading Proyecto -->
-      <!-- <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
-        Encuestas
-      </div> -->
-
-      <!-- Nav Item - Recursos Collapse Menu -->
-      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEncuestas" aria-expanded="true" aria-controls="collapseEncuestas">
-<!--           <i class="fas fa-fw fa-id-card"></i> -->
-          <i class="far fa-question-circle"></i>
-          <span>Gesti&oacute;n de encuestas</span>
-        </a>
-        <div id="collapseEncuestas" class="collapse" aria-labelledby="menuEncuestas" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" th:href="@{/flashClima}">Flash clima</a>
-          </div>
-        </div>
-      </li>
-      
-      
-       <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"  class="sidebar-divider my-0">
-
-      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item">
-        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCapacitacion" aria-expanded="true" aria-controls="collapseCapacitacion">
-          <i class="fas fa-laptop-code"></i>
-          <span>Gesti&oacute;n de capacitaci&oacute;n</span>
-        </a>
-        <div id="collapseCapacitacion" class="collapse" aria-labelledby="menuCapacitacion" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Ver:</h6>
-            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="collapse-item" th:href="@{/capacitaciones/}">Capacitaciones</a>
-          </div>
-        </div>
-      </li>
-      
       
       <hr class="sidebar-divider my-0">
 
@@ -230,6 +187,39 @@
         </div>
       </li>
       
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"  class="sidebar-divider my-0">
+
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCapacitacion" aria-expanded="true" aria-controls="collapseCapacitacion">
+          <i class="fas fa-laptop-code"></i>
+          <span>Gesti&oacute;n de capacitaci&oacute;n</span>
+        </a>
+        <div id="collapseCapacitacion" class="collapse" aria-labelledby="menuCapacitacion" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="collapse-item" th:href="@{/capacitaciones/}">Capacitaciones</a>
+          </div>
+        </div>
+      </li>
+      
+      <!-- Divider -->
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider my-0">
+
+      <!-- Nav Item - Recursos Collapse Menu -->
+      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEncuestas" aria-expanded="true" aria-controls="collapseEncuestas">
+<!--           <i class="fas fa-fw fa-id-card"></i> -->
+          <i class="far fa-question-circle"></i>
+          <span>Gesti&oacute;n de encuestas</span>
+        </a>
+        <div id="collapseEncuestas" class="collapse" aria-labelledby="menuEncuestas" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/flashClima}">Flash clima</a>
+          </div>
+        </div>
+      </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
