@@ -140,8 +140,8 @@
         <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-          	<a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER', 'ROLE_RH')" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
-          	<a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER', 'ROLE_RH' )" class="collapse-item" th:href="@{/miForecast/} + ${#authentication.getName()}">Mi forecast</a>
+          	<a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER')" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
+          	<a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER')" class="collapse-item" th:href="@{/miForecast/} + ${#authentication.getName()}">Mi forecast</a>
           	<a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/resumenForecast}">Resumen forecast</a>
             <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobacionHorasProyecto/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
 			<a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER', 'ROLE_ADMIN', 'ROLE_RH')" class="collapse-item" th:href="@{/misVacaciones/} + ${#authentication.getName()}">Mis vacaciones</a>

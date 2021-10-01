@@ -856,6 +856,42 @@ public class EmailController {
 			
 		}
 	
-	
+		//CRON Viernes 10:00 hora mexico
+		@Scheduled(cron="0 0 10 * * FRI", zone="America/Mexico_City")
+		public void enviaRecordatorioFlashClimaLunesJueves() {
+			Recurso recurso = recursoService.findOne(15L);
+			MailRequest request = new MailRequest();
+			request.setName(recurso.getDescRecurso());
+			request.setSubject("Recordatorio de flash clima");
+			request.setTo(recurso.getDescCorreoElectronico());
+			
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("nombreRecurso", request.getName());
+			model.put("mensaje", "<h3>Recuerda que debes actualizar la encuesta flash clima de los días Lunes a Jueves de la siguiente semana</h3>");
+			model.put("pie", "");
+			model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-time.png\">");
+			
+			MailResponse response = service.sendEmail(request, model);
+			System.out.println(response.getMessage());
+		}
+		
+		//CRON Lunes 10:00 hora mexico
+		@Scheduled(cron="0 0 10 * * MON", zone="America/Mexico_City")
+		public void enviaRecordatorioFlashClimaViernes() {
+			Recurso recurso = recursoService.findOne(15L);
+			MailRequest request = new MailRequest();
+			request.setName(recurso.getDescRecurso());
+			request.setSubject("Recordatorio de flash clima");
+			request.setTo(recurso.getDescCorreoElectronico());
+			
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("nombreRecurso", request.getName());
+			model.put("mensaje", "<h3>Recuerda que debes actualizar la encuesta flash clima del día Viernes</h3>");
+			model.put("pie", "");
+			model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-time.png\">");
+			
+			MailResponse response = service.sendEmail(request, model);
+			System.out.println(response.getMessage());
+		}
 	
 }
