@@ -190,7 +190,7 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<input type="submit" value="Cargar planeaci&oacute;n" class="btn btn-primary"/>
-								<a class="btn btn-secondary" type="button" th:href="@{/preventaProyectoContactoInfraestructura/} + ${proyecto.codProyecto}" >Cancelar</a>
+								<a class="btn btn-secondary" type="button" th:href="@{/preventaProyectoConsulta} + '/' + ${proyecto.codProyecto} + '/' + ${proyecto.codEstatusProyecto} + '/' + ${proyecto.codCliente}" >Cancelar</a>
 							</div>
 						</div>
 					</form>

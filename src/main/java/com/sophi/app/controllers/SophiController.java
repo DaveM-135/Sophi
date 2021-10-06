@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +18,14 @@ import com.sophi.app.Utiles;
 import com.sophi.app.models.entity.HistRespuestaAux;
 import com.sophi.app.models.entity.HistoricoRespuestaClima;
 import com.sophi.app.models.entity.PreguntaRespuestaClima;
+import com.sophi.app.models.entity.Proyecto;
+import com.sophi.app.models.entity.ProyectoRecurso;
+import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IHistoricoRespuestaClimaService;
 import com.sophi.app.models.service.IPreguntaClimaService;
 import com.sophi.app.models.service.IPreguntaRespuestaClimaService;
+import com.sophi.app.models.service.IProyectoRecursoService;
+import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.IRespuestaFlashService;
 
@@ -42,6 +48,17 @@ public class SophiController {
 	
 	@Autowired
 	private IHistoricoRespuestaClimaService historicoRespuestaClimaService;
+	
+	@Autowired
+	private IProyectoService proyectoService;
+	
+	@Autowired
+	private IProyectoRecursoService proyectoRecursoService;
+	
+	@Autowired
+	private IActividadService actividadService;
+	
+	Long codRecurso;
 	
 	@GetMapping({"/index","/","","/home"})
 	public String index(Map<String, Object> map) {
@@ -69,10 +86,52 @@ public class SophiController {
 		int totalActivos = 0;
 		totalActivos = recursoService.findRecursosActivos().size();
 		
+		Long codrecurso = codRecurso;
+		
+		List<Long> proyectoListId = new ArrayList<Long>();
+		HashMap<Long, String> proyectoList = new HashMap<Long, String>(); 
+		proyectoListId = actividadService.findListaProyectoByRecurso(codRecurso);
+		if (proyectoListId.size() > 0) {
+			for (Long id : proyectoListId) {
+				Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 2L);
+				if(proyecto == null) {
+					proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 1L);
+					if(proyecto != null){
+						proyectoList.put(id, proyecto.getDescProyecto());
+					}
+				} else if(proyecto != null){
+					proyectoList.put(id, proyecto.getDescProyecto());
+				}
+			}
+		} 
+		
+		List<ProyectoRecurso> proyectosRecurso = new ArrayList<ProyectoRecurso>();
+		proyectosRecurso = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(codRecurso);
+		if (proyectosRecurso.size() > 0) {
+			for (ProyectoRecurso proyectoRecurso : proyectosRecurso) {
+				Long idProyect = proyectoRecurso.getProyectoRecursoId().getCodProyecto();
+				Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(idProyect, 2L);
+				if (proyecto == null) {
+					proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(idProyect, 1L);
+					if (proyecto != null) {
+						proyectoList.put(idProyect,proyecto.getDescProyecto());
+					}
+				} else if (proyecto != null) {
+					proyectoList.put(idProyect,proyecto.getDescProyecto());
+				}
+				
+			}
+		}
+		
+		
+		Proyecto proyecto = proyectoService.findByCodProyecto(1L);
+		proyectoList.put(proyecto.getCodProyecto(),proyecto.getDescProyecto());
 		
 		map.put("respuestasFlash",resultados);
 		map.put("participacion", participacion);
 		map.put("totalActivos", totalActivos);
+		map.put("codRecurso", codrecurso);
+		map.put("proyectoList", proyectoList);
 		
 		return "index";
 	}
@@ -88,6 +147,7 @@ public class SophiController {
 	public String cargarDatosRecursoLogin(@PathVariable String login, Model model){
 		recursoService.findByDescCorreoElectronico(login);
 		model.addAttribute("recursoSesion", recursoService.findByDescCorreoElectronico(login));
+		codRecurso = recursoService.findByDescCorreoElectronico(login).getCodRecurso();
 		return "layout/layout :: dataSesion";
 	}
 	

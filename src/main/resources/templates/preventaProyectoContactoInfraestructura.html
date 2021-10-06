@@ -55,15 +55,6 @@
 <!-- 	                      <a class="btn btn-primary"  th:href="@{/formContacto}"  role="button"> <i class="fas fa-plus-circle fa-sm text-white-50"></i></a> -->
 	                      <a th:href="@{/dataCliente/} + ${proyecto.codCliente}" target="_blank">+ Agregar nuevo contacto <i class="fas fa-external-link-alt"></i></a>
 </div>                  </div>
-                  
-                  <div class="col-12 col-sm-6">
-						<label for="contacto">Tecnolog&iacute;a</label>
-						<div class="form-inline" >
-							<input type="text" style="width: 75%; margin-right: 10px;" th:value="${textoTec}" class="form-control" id="tecnologia" readonly="readonly">
-							<a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modalTecnologia" role="button"><i class="fas fa-plus-circle fa-sm text-white-50"></i></a>
-						</div>
-					</div>
-					
                 </div>
                 
 
@@ -73,7 +64,7 @@
 	                    <a class="btn btn-success" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button" style="margin-right: 10px;">Volver a cargar plan</a>
 	                  </div>
 	                  <div th:unless="${numAct > 0}" >
-	                    <a th:if="${proyecto.codEstatusProyecto != 1}" class="btn btn-primary" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button">Cargar plan</a>
+	                    <button th:if="${proyecto.codEstatusProyecto != 1}" class="btn btn-primary" id="cargarPlan">Cargar plan</button>
 	<!--                     <span> -->
 	<!--                     	<i class="fas fa-exclamation-triangle" style="color:orange; font-size:20px;"></i> Sin plan -->
 	<!--                   	</span> -->
@@ -116,10 +107,30 @@
 
                    </div>
                 </div>
-
-
         </div>
         <!-- /.container-fluid -->
+        
+        <!-- Begin Page Content -->
+        <div id="cargarCSV" class="container-fluid">
+
+          <h1 class="h3 mb-2 text-gray-800">Carga el plan de actividades</h1>
+				<div class="card shadow mb-4">
+					<div class="collapse show" id="collapseCardGenerales">
+						<div class="card-body">
+								<form method="POST" th:action="@{/subirPlan}" enctype="multipart/form-data">
+									<div class="form-group mt-2">
+										<label for="file">Selecciona tu plan en archivo .CSV <a data-toggle="modal" href="#modalLayout" style="font-size: 12px;"> <i class="fas fa-info-circle"></i> Layout</a></label> <input type="file"
+											name="archivoCsvPlan" class="form-control-file" id="archivoCsvPlan" accept=".csv">
+									</div>
+									<input name="codProyecto" type="hidden" th:value="${codProyecto}"></input>
+									<button type="submit" onclick="jsShowWindowLoad();" class="btn btn-primary">Aceptar</button>
+									<button type="button" class="btn btn-secondary" id="NoCargarPlan">Cancelar</button>
+								</form>
+
+							</div>
+				</div>
+		</div>
+      </div>
 
       </div>
       <!-- End of Main Content -->
@@ -142,52 +153,6 @@
 	<!-- ModalLogout -->
 	<footer th:replace="layout/layout :: modalLogout"></footer>
 	<!-- End ModalLogout -->
-
-
-  <!-- Modal Tecnologia -->
-  <div class="modal fade" id="modalTecnologia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tecnolog&iacute;a del proyecto</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">X</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Por favor, agrega las tecnolog&iacute;as del proyecto
-  <div class="row">
-        <div class="col-md-5">
-          <select name="from" id="undo_redo" class="form-control" size="13" multiple="multiple">
-            <option th:each="tecnologia : ${tecnologias}" th:value="${tecnologia.codDetalleInfraestructura}" th:text="${tecnologia.descDetalle}"/>
-          </select>
-        </div>
-        
-        <div class="col-md-2">
-          <button type="button" id="undo_redo_undo" class="btn btn-primary btn-block" >Deshacer</button>
-          <button type="button" id="undo_redo_rightAll" class="btn btn-primary btn-block" ><i class="fa fa-angle-double-right"></i></button>
-          <button type="button" id="undo_redo_rightSelected" class="btn btn-primary btn-block" ><i class="fa fa-angle-right"></i></button>
-          <button type="button" id="undo_redo_leftSelected" class="btn btn-primary btn-block" ><i class="fa fa-angle-left"></i></button>
-          <button type="button" id="undo_redo_leftAll" class="btn btn-primary btn-block" ><i class="fa fa-angle-double-left"></i></button>
-          <button type="button" id="undo_redo_redo" class="btn btn-primary btn-block">Rehacer</button>
-        </div>
-        
-        <div class="col-md-5">
-          <select name="to" id="undo_redo_to" class="form-control" size="13" multiple="multiple">
-          	<option th:each="a : ${tecAcept}" th:value="${a.codDetalleInfraestructura}" th:text="${a.descDetalle}"/>
-          </select>
-        </div>
-  </div>
-   <br>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary" data-dismiss="modal" id="guardarInfra" href="">Guardar</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  
   
 	<!-- Costo de recursos modal -->
 	<div class="modal fade" id="costoRecursosModal" tabindex="-1" role="dialog" aria-labelledby="costoRecursoModalLabel" aria-hidden="true">

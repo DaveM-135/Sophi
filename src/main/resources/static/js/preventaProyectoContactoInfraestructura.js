@@ -1,21 +1,4 @@
 $(document).ready(function() {
-
-	$('#undo_redo').multiselect();
-	$('#pr').hide();
-	$('#thp').hide();
-	$('#cp').hide();
-	$( "#preventa" ).prop( "checked", true );
-  
-	$( "#aceptarProyecto" ).click(function() {
-		$( "#preventa" ).prop( "disabled", true );
-		$('#pr').show('500');
-		$('#thp').show('500');
-		$('#cp').show('500');
- 	});
-  
-	$( "#cancelarProyecto" ).click(function() {
-		$( "#preventa" ).prop( "checked", true );
-	});
   
 	$("#nombreProyecto").keydown(function(event){
 		var codigo = $("#cliente").val();
@@ -38,10 +21,10 @@ $(document).ready(function() {
 		$("#codigoProyecto").val(codigo);
 	});
 	
-	$( "#guardarInfra" ).click(function() {
-		var codCliente=$('#codCliente').val();
+	$("#guardarInfra").click(function() {
+		var codCliente=$("#cliente").val();//$('#codCliente').val();
 		var codPRoyecto=$('#codProyecto').val();
-		var codEstatusProyecto=$('#codEstatusProyecto').val();
+		var codEstatusProyecto=$("#proyecto").val();//$('#codEstatusProyecto').val();
 		//alert("codCliente "+codCliente);
 		//alert("codPRoyecto "+codPRoyecto);
 		//alert("codEstatusProyecto "+codEstatusProyecto);
@@ -61,7 +44,7 @@ $(document).ready(function() {
         			});
 				});
         		
-				$( "#tecnologia" ).val(texto);
+				$("#tecnologia").val(texto);
         	}
     	})
 	});
@@ -85,9 +68,9 @@ function cargaformRecursosProyecto(){
 }
 
 function guardarCom() {
-		var codCliente=$('#codCliente').val();
+		var codCliente=$("#cliente").val();//$('#codCliente').val();
 		var codPRoyecto=$('#codProyecto').val();
-		var codEstatusProyecto=$('#codEstatusProyecto').val();
+		var codEstatusProyecto=$("#proyecto").val();//$('#codEstatusProyecto').val();
 		var codContacto=$('#contacto').val();
 		var codClasificacionProyecto=1;
 		

@@ -59,8 +59,10 @@ public class PlaneacionController {
 	
 	@GetMapping("/planeacionProyecto/{codProyecto}")
 	public String planeacionProyecto(@PathVariable Long codProyecto, Model model) {
+		//Proyecto proyecto = proyectoService.findByCodProyecto(codProyecto);
 		model.addAttribute("codProyecto", codProyecto);
 		return "formActividadesPlan";
+		//return "preventaProyectoConsulta/"+codProyecto+"/"+proyecto.getCodEstatusProyecto()+"/"+proyecto.getCodCliente();
 	}
 	
 	@PostMapping("/guardarPlan")
@@ -107,7 +109,8 @@ public class PlaneacionController {
 			
 			
 			flash.addFlashAttribute("success", "Plan cargado con éxito");
-			return "redirect:/preventaProyectoContactoInfraestructura/"+codProyecto;
+			//return "redirect:/preventaProyectoContactoInfraestructura/"+codProyecto;
+			return "redirect:/preventaProyectoConsulta/"+codProyecto+"/"+setValPlanProy .getCodEstatusProyecto()+"/"+setValPlanProy.getCodCliente();
 		} else {
 			flash.addFlashAttribute("error", "Error al cargar plan");
 			System.out.println("No cargo nada");

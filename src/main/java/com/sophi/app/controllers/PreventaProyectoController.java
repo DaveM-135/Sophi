@@ -921,7 +921,7 @@ public class PreventaProyectoController {
 			return "redirect:/listaProyectosTodo";
 		}else {
 			flash.addFlashAttribute("success", "Información actualizada con éxito");
-			return "redirect:/preventaProyectoContactoInfraestructura/"+proyecto.getCodProyecto();
+			return "redirect:/preventaProyectoConsulta/"+proyecto.getCodProyecto()+"/"+proyecto.getCodEstatusProyecto()+"/"+proyecto.getCodCliente();
 		}
 	}
 	

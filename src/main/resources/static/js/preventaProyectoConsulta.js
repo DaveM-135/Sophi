@@ -168,7 +168,7 @@ $(document).ready(function() {
 		$('#btnRegresarCierre').show('500');
  	});
   
-	$( "#cancelarProyecto" ).click(function() {
+	$("#cancelarProyecto").click(function() {
 		$( "#preventa" ).prop( "checked", true );
 	});
 	
@@ -201,12 +201,12 @@ $(document).ready(function() {
 //	});
 	
 	$( "#guardarInfra" ).click(function() {
-		var codCliente=$('#codCliente').val();
+		var codCliente=$("#cliente").val();//$('#codCliente').val();
 		var codPRoyecto=$('#codProyecto').val();
-		var codEstatusProyecto=$('#codEstatusProyecto').val();
-		alert("codCliente "+codCliente);
-		alert("codPRoyecto "+codPRoyecto);
-		alert("codEstatusProyecto "+codEstatusProyecto);
+		var codEstatusProyecto=$("#proyecto").val();//$('#codEstatusProyecto').val();
+		//alert("codCliente "+codCliente);
+		//alert("codPRoyecto "+codPRoyecto);
+		//alert("codEstatusProyecto "+codEstatusProyecto);
 		var texto="";
 		$.ajax({ 
 			url: "/eliminarInfra/" + codPRoyecto+ "/" +codEstatusProyecto+ "/" + codCliente,
@@ -251,6 +251,24 @@ $(document).ready(function() {
 	});
 	
 	calculoPrecio();
+	
+	$("#layout").hide();
+	
+	$("#muestraLayout").click(function(){
+		$("#layout").show();
+	});
+	
+	$("#ocultarLayout").click(function(){
+		$("#layout").hide();
+	});
+	
+	$("#NoCargarPlan").click(function(){
+		$("#layout").hide();
+	});
+	
+	$("#cerrarModalPlan").click(function(){
+		$("#layout").hide();
+	});
 
 });
 
@@ -269,7 +287,7 @@ function calculoPrecio(){
 	
 //	console.log(precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2}));
 	if (precioTotal != Number.Nan) {
-		$("#totalProyecto").html("Precio calculado: $" + precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2})+" (MXN)");
+		$("#totalProyecto").html("Precio piso: $" + precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2})+" (MXN)");
 	}
 	
 	

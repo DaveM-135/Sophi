@@ -5,6 +5,8 @@
 
 <body id="page-top">
   <input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
+  <input id="valCodRecurso" type="hidden" th:value="${codRecurso}"></input>
+  <!-- <input id="valCodRecurso" type="hidden" value="16"></input>-->
   <!-- Page Wrapper -->
   <div id="wrapper">
 
@@ -19,7 +21,7 @@
       <div id="content">
 
 		<header th:replace="layout/layout :: header"></header>
-
+		
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
@@ -109,23 +111,56 @@ start_date_dialog.ON_SELECT_FUNC = function(){
 							<p th:text="'Participaci&oacute;n ' + ${participacion} + ' de ' + ${totalActivos}" style="font-size: 12px;"></p>
 	     	 			</div>
               		</div>
-                   
-                   
-                   
-                   
-					
                   </div>
+                  
+                  <!--<div class="col-sm-4">
+                  	Aqu� va el dossier embebido
+                  </div>-->
+                  
                 </div>
                 <div class="row">
-                	<div class="col-sm-4">
+                	<div class="col-sm">
                 		<a class="twitter-timeline" href="https://twitter.com/Reforma?ref_src=twsrc%5Etfw">Tweets by Reforma</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                	</div>
-                	<div class="col-sm-4">
                 		<a class="twitter-timeline" href="https://twitter.com/MicroStrategy?ref_src=twsrc%5Etfw">Tweets by MicroStrategy</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                	</div>
-                	<div class="col-sm-4">
                 		<a class="twitter-timeline" href="https://twitter.com/el_pais?ref_src=twsrc%5Etfw">Tweets by el_pais</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-<!--                 		<a class="twitter-timeline" href="https://twitter.com/NewYorkTimes_es?ref_src=twsrc%5Etfw">Tweets by NewYorkTimes_es</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+<!--                 	<a class="twitter-timeline" href="https://twitter.com/NewYorkTimes_es?ref_src=twsrc%5Etfw">Tweets by NewYorkTimes_es</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+                	</div>
+                	<div class="col-sm">
+                		<!-- Begin Page Content -->
+			        <div class="container-fluid">
+			
+			          <!-- Page Heading -->
+			          <p id="fechaDiaActual"></p>
+			          <div class="pb-3">
+			              
+			          <a class="btn btn-primary" data-toggle="modal" data-target="#capHoraModal"  href="#" role="button">
+			          <i class="fas fa-calendar-plus fa-sm text-white-50"></i> Nueva captura</a>
+			          </div>
+			          
+			          <div class="card shadow mb-4">
+						
+						<div id="semanaDias">
+							<div class="list-group list-group-horizontal-sm">
+							  <a id="da0" href="#!" class="noLink list-group-item list-group-item-action" style="font-size: 12px; padding: 5px 5px;"><b>Dom</b><br><span id="d0"></span></a>
+							  <a id="da1" href="#!" class="noLink list-group-item list-group-item-action" style="font-size: 12px; padding: 5px 5px;"><b>Lun</b><br><span id="d1"></span></a>
+							  <a id="da2" href="#!" class="noLink list-group-item list-group-item-action" style="font-size: 12px; padding: 5px 5px;"><b>Mar</b><br><span id="d2"></span></a>
+							  <a id="da3" href="#!" class="noLink list-group-item list-group-item-action" style="font-size: 12px; padding: 5px 5px;"><b>Mie</b><br><span id="d3"></span></a>
+							  <a id="da4" href="#!" class="noLink list-group-item list-group-item-action" style="font-size: 12px; padding: 5px 5px;"><b>Jue</b><br><span id="d4"></span></a>
+							  <a id="da5" href="#!" class="noLink list-group-item list-group-item-action" style="font-size: 12px; padding: 5px 5px;"><b>Vie</b><br><span id="d5"></span></a>
+							  <a id="da6" href="#!" class="noLink list-group-item list-group-item-action" style="font-size: 12px; padding: 5px 5px;"><b>Sab</b><br><span id="d6"></span></a>
+							  <a id="da7" href="#!" class="noLink list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true"  style="font-size: 12px; padding: 5px 5px;">Total:<br><span id="dt" style="font-weight: 700;"></span></a>
+							</div>
+						</div>
+						
+						
+						<div id="detalleHorasCapturadas" style="font-size: 14px;">
+			<!-- 				Aqui va el detalle de las horas capturadas por fecha seleccionada			 -->
+						</div>
+			
+			          </div>
+						
+					</div>
+			        <!-- /.container-fluid -->
                 	</div>
                 </div>
                 </div>
@@ -162,11 +197,184 @@ start_date_dialog.ON_SELECT_FUNC = function(){
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
+  <div th:fragment="modalCapHora">
+ <!-- Logout Modal-->
+  <div class="modal fade" id="capHoraModal" tabindex="-1" role="dialog" aria-labelledby="capHoraModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          	<h5 class="modal-title" id="capHoraModalLabel">
+			    Captura de horas<br>
+			    <span style="font-size: 12px;" id="fechaModal">
+			        
+			    </span>
+			</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body" style="font-size: 14px;">
+		
+			<div class="row">
+				<div class="form-group col-12 col-md-12">
+					<div id="resultListProyecto">
+						<label class="col-form-label">Proyecto</label>
+						<div class="input-group">
+							<select class="custom-select" id="selectProyecto" style="font-size: 14px; padding: 0px 10px;">
+								<option th:each="entry : ${proyectoList}" th:value="${entry.key}" th:text="${entry.value}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-12 col-md-12">	
+					<div id="resultListActividadesPrimarias">
+						<!--aqui va listado de actividades primarias por proyecto y recurso -->
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-12 col-md-12">	
+					<div id="resultListActividadesSecundarias">
+						<!--aqui va listado de actividades por proyecto y recurso -->
+					</div>
+				</div>
+			</div>
+			
+<!-- 			<div class="row"> -->
+<!-- 				<div class="form-group col-12 col-md-12">	 -->
+					<div id="resultDetActividades">
+						<!--aqui va el complemento para el detalle de actividades -->
+					</div>
+<!-- 				</div> -->
+<!-- 			</div> -->
+			
+		
+<!--    	</form> onclick="validaForm();"--> 
+		</div>
+       <div class="modal-footer">
+    		<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          	<button type="submit" onclick="validaForm();" class="btn btn-primary">Aceptar</button>
+  		</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  	  <div th:fragment="modalCapHoraEdit">
+ <!-- Logout Modal-->
+  <div class="modal fade" id="capHoraModalEdit" tabindex="-1" role="dialog" aria-labelledby="capHoraModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          	<h5 class="modal-title" id="capHoraModalLabel">
+			    Editar captura de horas<br>
+			 
+			</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+		
+			<div class="row">
+				<div class="form-group col-12 col-md-12">
+					<div id="formEditCaptura">
+											
+					</div>
+				</div>
+			</div>
+			
+		</div>
+       <div class="modal-footer">
+    		<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          	<button onclick="validaFormEdit();" class="btn btn-primary" type="submit">Aceptar</button>
+  		</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div th:fragment="modalCapHoraCopia">
+  	<div class="modal fade" id="capHoraModalCopiar" tabindex="-1" role="dialog" aria-labelledby="capHoraModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          	<h5 class="modal-title" id="capHoraModalLabel">
+			    Copiar captura de horas<br>
+			 
+			</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+		
+			<div class="row">
+				<div class="form-group col-12 col-md-12">
+					<div id="formCopiarCaptura">
+											
+					</div>
+				</div>
+			</div>
+			
+		</div>
+       <div class="modal-footer">
+    		<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          	<button onclick="validaFormCopia();" class="btn btn-primary" type="submit">Pegar</button>
+  		</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+	<!-- Modal HTML -->
+	<div id="modalHorasCapturadas" class="modal fade">
+		<div class="modal-dialog modal-confirm modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="icon-box">
+						<i class="fas fa-download"></i>
+					</div>				
+					<h4 class="modal-title w-100">Selecciona el periodo:</h4>	
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="form-group col-6 col-md-6">
+							<label style="font-size: 14px;" class="col-form-label">Fecha inicio</label>
+							<input type="date" id="fecInicioReporte" max="" class="form-control required" onchange="valorInicio(this.value);" style="font-size: 14px; padding: 0px 10px;" />
+						</div>
+						<div class="form-group col-6 col-md-6">
+							<label style="font-size: 14px;" class="col-form-label">Fecha fin</label>
+							<input type="date" id="fecFinReporte" min="" class="form-control required" onchange="valorFinal(this.value);" style="font-size: 14px; padding: 0px 10px;" />
+						</div>
+					</div>
+					<div class="row" style="padding-top: 15px;">
+						<ul>
+							<li><a href="#" onclick="dwlPdf();"><i class="far fa-file-pdf"></i> descargar versi&oacute;n .pdf</a></li>
+							<li><a href="#" onclick="dwlXlsx();"><i class="far fa-file-excel"></i> descargar versi&oacute;n .xlsx</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-success btn-block" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div> 
 
 	  <!-- ModalLogout -->
       <footer th:replace="layout/layout :: modalLogout"></footer>
       <!-- End ModalLogout -->
-
+      
   <!-- Bootstrap core JavaScript-->
   <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
   <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
@@ -176,9 +384,75 @@ start_date_dialog.ON_SELECT_FUNC = function(){
 
   <!-- Custom scripts for all pages-->
   <script th:src="@{/js/sb-admin-2.min.js}"></script>
-  
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
-
+  <script th:src="@{/js/capHoras.js}"></script>
+	<script>
+		switch (new Date().getDay()){
+			case 0:
+				$("#da0").show();
+				$("#da1").hide();
+				$("#da2").hide();
+				$("#da3").hide();
+				$("#da4").hide();
+				$("#da5").hide();
+				$("#da6").hide();
+				break;
+			case 1:
+				$("#da0").hide();
+				$("#da1").show();
+				$("#da2").hide();
+				$("#da3").hide();
+				$("#da4").hide();
+				$("#da5").hide();
+				$("#da6").hide();
+				break;
+			case 2:
+				$("#da0").hide();
+				$("#da1").hide();
+				$("#da2").show();
+				$("#da3").hide();
+				$("#da4").hide();
+				$("#da5").hide();
+				$("#da6").hide();
+				break;
+			case 3:
+				$("#da0").hide();
+				$("#da1").hide();
+				$("#da2").hide();
+				$("#da3").show();
+				$("#da4").hide();
+				$("#da5").hide();
+				$("#da6").hide();
+				break;
+			case 4:
+				$("#da0").hide();
+				$("#da1").hide();
+				$("#da2").hide();
+				$("#da3").hide();
+				$("#da4").show();
+				$("#da5").hide();
+				$("#da6").hide();
+				break;
+			case 5:
+				$("#da0").hide();
+				$("#da1").hide();
+				$("#da2").hide();
+				$("#da3").hide();
+				$("#da4").hide();
+				$("#da5").show();
+				$("#da6").hide();
+				break;
+			case 6:
+				$("#da0").hide();
+				$("#da1").hide();
+				$("#da2").hide();
+				$("#da3").hide();
+				$("#da4").hide();
+				$("#da5").hide();
+				$("#da6").show();
+				break;
+		}
+	</script>
 
 </body>
 

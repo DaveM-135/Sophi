@@ -709,11 +709,59 @@
 						</div>
 					</div>
 				</div>
+				
+				<div class="card shadow mb-4">
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">Asigna tecnolog&iacute;as al proyecto</h6>
+					</div>
+					<div class="card-body">
+						<label for="contacto">Tecnolog&iacute;a</label>
+						<div class="form-inline" >
+							<input type="text" style="width: 75%; margin-right: 10px;" th:value="${textoTec}" class="form-control" id="tecnologia" readonly="readonly">
+							<a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modalTecnologia" role="button"><i class="fas fa-plus-circle fa-sm text-white-50"></i></a>
+						</div>
+					</div>
+				</div>
+				
+				<div class="card shadow mb-4">
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">Asigna contacto, recursos y plan al proyecto</h6>
+					</div>
+					<div class="card-body">
+						<label for="contacto">Contacto del proyecto</label>
+						<div class="d-flex justify-content-start">
+							<select class="form-control" id="contacto" style="width:70%; margin-right: 10px;">
+								<option value="-1">Sin contacto</option>
+								<option th:each="contacto : ${contactos}" th:value="${contacto.codContacto}" th:text="${contacto.descContacto}" th:selected="${contacto.codContacto==codCon}"/>
+							</select>
+							<a th:href="@{/dataCliente/} + ${proyecto.codCliente}" target="_blank">+ Agregar nuevo contacto <i class="fas fa-external-link-alt"></i></a>
+						</div>
+						<div class="mb-3 mt-3 d-flex justify-content-start">
+							<div th:if="${numAct > 0}">
+								<a class="btn btn-success" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button" style="margin-right: 10px;">Volver a cargar plan</a>
+							</div>
+			                <div th:unless="${numAct > 0}" >
+			                	<a type="button" href="#modalPlan" th:if="${proyecto.codEstatusProyecto != 1}" class="btn btn-primary" id="cargarPlan" data-toggle="modal">Cargar plan</a>
+			                  	<span th:if="${proyecto.codEstatusProyecto != 1}" style="margin-right: 10px; margin-left: 10px;">&Oacute; </span>
+			                   	<a class="btn btn-primary" data-toggle="modal" href="#modalAsignacion" onclick="cargaAsignacionRecursosProyecto(); return false;" >
+			                    	 Asignar recursos
+			                  	</a>
+			               </div>
+						</div>
+						<div class="mt-3 mb-3">
+		                	<a data-toggle="modal" href="#costoRecursosModal" onclick="cargaformRecursosProyecto(); return false;" ><i class="fas fa-cog"></i> costo de recursos</a>
+		                </div>
+		                <div class="mt-3 mb-3">
+	                      <button class="btn btn-primary" type="button" onclick="guardarCom()">Guardar Info</button>
+	                   </div>
+					</div>
+				</div>
+				
                 <div class=" d-flex justify-content-between">
 					<div >
 						<input sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')"
 							th:if="${proyecto.codEstatusProyecto == 1 or proyecto.codEstatusProyecto == 2}"
-							type="submit" value="Guardar y continuar"
+							type="submit" value="Guardar"
 							class="btn btn-primary" id="btnEnviar" /> <input
 							sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')"
 							type="submit" value="Aceptar" class="btn btn-secondary"
@@ -808,6 +856,73 @@
     </div>
   </div>
 
+<!-- Modal Tecnologia -->
+  <div class="modal fade" id="modalTecnologia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Tecnolog&iacute;a del proyecto</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">X</span>
+          </button>F
+        </div>
+        <div class="modal-body">
+          Por favor, agrega las tecnolog&iacute;as del proyecto
+  		<div class="row">
+	        <div class="col-md-5">
+	          <select name="from" id="undo_redo" class="form-control" size="13" multiple="multiple">
+	            <option th:each="tecnologia : ${tecnologias}" th:value="${tecnologia.codDetalleInfraestructura}" th:text="${tecnologia.descDetalle}"/>
+	          </select>
+	        </div>
+        
+	        <div class="col-md-2">
+	          <button type="button" id="undo_redo_undo" class="btn btn-primary btn-block" >Deshacer</button>
+	          <button type="button" id="undo_redo_rightAll" class="btn btn-primary btn-block" ><i class="fa fa-angle-double-right"></i></button>
+	          <button type="button" id="undo_redo_rightSelected" class="btn btn-primary btn-block" ><i class="fa fa-angle-right"></i></button>
+	          <button type="button" id="undo_redo_leftSelected" class="btn btn-primary btn-block" ><i class="fa fa-angle-left"></i></button>
+	          <button type="button" id="undo_redo_leftAll" class="btn btn-primary btn-block" ><i class="fa fa-angle-double-left"></i></button>
+	          <button type="button" id="undo_redo_redo" class="btn btn-primary btn-block">Rehacer</button>
+	        </div>
+        
+	        <div class="col-md-5">
+	          <select name="to" id="undo_redo_to" class="form-control" size="13" multiple="multiple">
+	          	<option th:each="a : ${tecAcept}" th:value="${a.codDetalleInfraestructura}" th:text="${a.descDetalle}"/>
+	          </select>
+	        </div>
+  		</div>
+  		<br>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <button class="btn btn-primary" type="button" data-dismiss="modal" id="guardarInfra" href="">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Costo de recursos modal -->
+	<div class="modal fade" id="costoRecursosModal" tabindex="-1" role="dialog" aria-labelledby="costoRecursoModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content" >
+				<div id="contentFormRecursoProyecto">
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Asignacion de recursos modal -->
+	<div class="modal fade" id="modalAsignacion" tabindex="-1" role="dialog" aria-labelledby="AsignacionRecursoModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" >
+				<div id="contentAsignacionRecursoProyecto">
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
  <div th:if="${proyecto.codEstatusProyecto == 2}">
   <!-- Modal Complemento -->
   <div class="modal fade" id="modalComplemento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -847,6 +962,35 @@
     </div>
   </div>
   </div>
+  
+  <!-- Modal Plan -->
+  <div class="modal fade" id="modalPlan" tabindex="-1" role="dialog" aria-labelledby="planModalLabel" aria-hidden="true">  	
+	<div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Subir Plan</h5>
+          <button id="cerrarModalPlan" class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        	<form method="POST" th:action="@{/subirPlan}" enctype="multipart/form-data">
+			<div class="form-group mt-2">
+				<label for="file">Selecciona tu plan en archivo .CSV <a id="muestraLayout" href="#" style="font-size: 12px;"> <i class="fas fa-info-circle"></i> Layout</a></label> <input type="file"name="archivoCsvPlan" class="form-control-file" id="archivoCsvPlan" accept=".csv">											
+			</div>
+			<input name="codProyecto" type="hidden" th:value="${codProyecto}"></input>
+			<button type="submit" onclick="jsShowWindowLoad();" class="btn btn-primary">Aceptar</button>
+			<button type="button" class="btn btn-secondary" id="NoCargarPlan" data-dismiss="modal">Cancelar</button>
+		</form>
+		<div id="layout" class="mt-4">
+			<h5 class="modal-title" id="exampleModalLabel">Layout plan de actividades .CSV</h5>
+			<button type="button" class="btn btn-secondary mt-2 mb-2" id="ocultarLayout">Ocultar</button>
+			<img style="width: 100%; margin: 0px;" th:src="@{/img/layoutPlanActividades.png}" alt="Layout plan de actividades">
+		</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Bootstrap core JavaScript-->
   <script src="../../../vendor/jquery/jquery.min.js"></script>
@@ -862,12 +1006,13 @@
   <script src="../../../vendor/chart.js/Chart.min.js"></script>
 
   <!-- Page level custom scripts -->
-<!--   <script src="../../../js/demo/chart-area-demo.js"></script> -->
-<!--   <script src="../../../js/demo/chart-pie-demo.js"></script> -->
   <script src="../../../js/preventaProyectoConsulta.js"></script>
+  <script th:src="@{/js/preventaProyectoContactoInfraestructura.js}"></script>
+  <script th:src="@{/js/loading.js}"></script>
   <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
   <script src="../../../js/multiselect.js"></script>
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
+  <script th:src="@{/js/asignacionRecursosProyecto.js}"></script>
   <script th:src="@{/js/tipofact.js}"></script>
   <script th:src="@{/js/switch.js}"></script>
 </body>
