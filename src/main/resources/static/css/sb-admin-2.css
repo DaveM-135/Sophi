@@ -11267,3 +11267,7 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+
+#collapseRecursos, #collapseClientes, #collapseProyectos, #collapseGastosTiempo, #collapseGastosCompra, #collapseDesempeno, #collapseCapacitacion, #collapseEncuestas {
+	z-index: 2;
+}
