@@ -325,7 +325,7 @@ public class VacacionesController {
 		//List<SolicitudVacaciones> listsv = new ArrayList<SolicitudVacaciones>();
 		Recurso recurso = new Recurso();
 		
-		for(DetalleSolicitud ds: listDS) {
+		/*for(DetalleSolicitud ds: listDS) {
 			año = (ds.getFecDiaSolicitado().getYear()+1900)*10000;
 			mes = (ds.getFecDiaSolicitado().getMonth()+1)*100;
 			dia = ds.getFecDiaSolicitado().getDate();
@@ -335,14 +335,14 @@ public class VacacionesController {
 				codRecursoAprob = ds.getSolicitudVacaciones().getCodRecurso();
 				listproyecto = proyectoService.findListaProyectosRecursoAprobadorTodos(codRecursoAprob);
 				listPR = proyectoRecursoService.findProyectoRecursoActivo(codRecurso);
-				//listsv = solicitudVacacionesService.findByCodRecurso(codRecursoAprob);
+				recurso = recursoService.findOne(codRecursoAprob);
 				
 				if(listproyecto != null && listPR != null && ds.getSolicitudVacaciones().getFecAprobacion() != null && ds.getSolicitudVacaciones().getFecCancelacion() == null) {
-					recurso = recursoService.findOne(codRecursoAprob);
+					System.out.println("Recurso: "+recurso.getDescRecurso());
 					return recurso.getDescRecurso()+" pidió este día de vacaciones";
 				}
 			}
-		}
+		}*/
 		
 		if (diasFestivos.size() > 0 ) {
 			String desc = "";
