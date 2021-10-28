@@ -133,11 +133,12 @@
 					<div sec:authorize="hasRole('ROLE_APROB')" id="asignarBKP">
 					<p>Escoge un recurso BKP: </p>
 					<select name="recurso_bkp" class="custom-select" id="filterRecursoBKP">
+						<option value="0" selected>-- Seleccione --</option>
 			        	<option th:each="aprobadorbkp:${listaAprobadores}" th:value="${aprobadorbkp.codRecurso}" th:text="${aprobadorbkp.descRecurso} + ' ' + ${aprobadorbkp.descApellidoPaterno}"></option>
 			    	</select>
 					</div>
 					<div sec:authorize="hasRole('ROLE_USER')" id="asignarBKP">
-					<input type="hidden" id="filterRecursoBKP" value="0">
+					<input type="hidden" id="filterRecursoBKP">
 					</div>
 				</div>
 				<div class="modal-footer" id="btn-control">
@@ -184,6 +185,7 @@
 	  
 	  if($("#valAprobador").val() != 1){
 		  $("#asignarBKP").hide();
+		  $("#filterRecursoBKP").val(0);
 	  }
   });
   
