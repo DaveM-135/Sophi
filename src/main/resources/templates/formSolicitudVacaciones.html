@@ -137,7 +137,7 @@
 			        	<option th:each="aprobadorbkp:${listaAprobadores}" th:value="${aprobadorbkp.codRecurso}" th:text="${aprobadorbkp.descRecurso} + ' ' + ${aprobadorbkp.descApellidoPaterno}"></option>
 			    	</select>
 					</div>
-					<div sec:authorize="hasRole('ROLE_USER')" id="asignarBKP">
+					<div sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_RH')" id="asignarBKP">
 					<input type="hidden" id="filterRecursoBKP">
 					</div>
 				</div>
