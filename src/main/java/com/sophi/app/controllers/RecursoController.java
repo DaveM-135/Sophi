@@ -233,13 +233,14 @@ public class RecursoController {
 	}
 	
 	@RequestMapping(value="/formRecurso", method = RequestMethod.POST)
-	public String guardarRecurso(@ModelAttribute Recurso recurso, Model model ,SessionStatus status) {
-		InputStream imgPath = null;
+	public String guardarRecurso(@ModelAttribute Recurso recurso, MultipartFile fotoPerfil, Model model ,SessionStatus status) {
+		//InputStream imgPath = null;
 		try {
 			//URL url = new URL("https://sophitech.herokuapp.com/img/defaultUser.png");
-			URL url = new URL("https://sophitech.herokuapp.com/img/fotos_nuevas/7_300x288.jpg");
-			imgPath = url.openStream ();
-			byte[] bytesFotoPerfil = IOUtils.toByteArray(imgPath);
+			//URL url = new URL("https://sophitech.herokuapp.com/img/fotos_nuevas/7_300x288.jpg");
+			//imgPath = url.openStream();
+			//byte[] bytesFotoPerfil = IOUtils.toByteArray(imgPath);
+			byte[] bytesFotoPerfil = fotoPerfil.getBytes();
 			recurso.setFoto(bytesFotoPerfil);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();

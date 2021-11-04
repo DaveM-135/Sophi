@@ -37,7 +37,13 @@
 					<!-- Card Content - Collapse -->
 					<div class="collapse show" id="collapseCardGenerales">
 						<div class="card-body">
-
+							<div class="form-group col-12 col-md-4">
+                                  <div class="custom-file">
+                                      <input type="file" name="fotoPerfil" class="custom-file-input" id="inputFotoPerfilFile">
+                                      <label class="custom-file-label">Foto personal</label>
+                                  </div>
+                              </div>
+                              <small th:if="${recurso.foto} != null" th:text="' Ya hay una foto asociada'" style="color: green;"></small>
 							<div class="row">
 								<div class="form-group col-12 col-md-4">
 									<label class="col-form-label">Nombre*</label>
@@ -184,7 +190,7 @@
   <script th:src="@{/js/demo/datatables-demo.js}"></script>
   
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
-  <script th:src="@{/js/phone.js}"></script>
+  <!-- <script th:src="@{/js/phone.js}"></script>-->
 
 </body>
 
