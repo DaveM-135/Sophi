@@ -33,7 +33,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="recurso : ${evaluacionDesempeno.recursosEvaluacion}" th:if="${recurso.valTipoEvaluador == 1 && recurso.codRecurso != 11 && recurso.codRecurso != 14 && recurso.codRecurso != 15}">
+								<tr th:each="recurso : ${evaluacionDesempeno.recursosEvaluacion}" th:if="${recurso.valTipoEvaluador == 1}">
 									<td th:text="${recurso.descRecurso}"></td>
 									<td th:text="${recurso.evaluadoresConcat}"></td>
 									<td><a class="" th:classappend="${recurso.valResultadoMetas} <= 60 ? 'semaforo1' : 
