@@ -279,6 +279,22 @@ function calculoPrecio(){
 	var riesgoPorcentaje = parse($("#riesgo").val());
 	var margenPorcentaje = parse($("#margen").val());
 	
+	if(costo === NaN){
+		costo = 0;
+	}
+	
+	if(gasto === NaN){
+		gasto = 0;
+	}
+	
+	if(riesgoPorcentaje === NaN){
+		riesgoPorcentaje = 0;
+	}
+	
+	if(margenPorcentaje === NaN){
+		margenPorcentaje = 0;
+	}
+	
 	var costogasto = gasto + costo;
 	var riesgoValor = riesgoPorcentaje / 100 * costogasto ;
 	var precio = costogasto + riesgoValor;
