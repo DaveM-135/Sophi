@@ -130,14 +130,14 @@
 					<p id="confirmacionSolicitud">
 						<!-- texto de confirmacion -->
 					</p>
-					<div sec:authorize="hasRole('ROLE_APROB')" id="asignarBKP">
+					<div sec:authorize="hasAnyRole('ROLE_APROB', 'ROLE_ADMIN')" id="asignarBKP">
 					<p>Escoge un recurso BKP: </p>
 					<select name="recurso_bkp" class="custom-select" id="filterRecursoBKP">
 						<option value="0" selected>-- Seleccione --</option>
 			        	<option th:each="aprobadorbkp:${listaAprobadores}" th:value="${aprobadorbkp.codRecurso}" th:text="${aprobadorbkp.descRecurso} + ' ' + ${aprobadorbkp.descApellidoPaterno}"></option>
 			    	</select>
 					</div>
-					<div sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_RH')" id="asignarBKP">
+					<div sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_RH')" id="asignarBKP">
 					<input type="hidden" id="filterRecursoBKP">
 					</div>
 				</div>

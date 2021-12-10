@@ -155,6 +155,31 @@ public class EmailController {
 		}
 	}
 	
+	//CRON Viernes 10:00 hora mexico
+		@Scheduled(cron="0 0 10 * * FRI", zone="America/Mexico_City")
+		public void enviaRecordatoriosFlashClima() {
+			List<Recurso> listRecursos = new ArrayList<Recurso>();
+			listRecursos = recursoService.findRecursosActivos();
+			if (listRecursos.size()>0) {
+				for (Recurso recurso : listRecursos) {
+					
+					MailRequest request = new MailRequest();
+					request.setName(recurso.getDescRecurso());
+					request.setSubject("Recordatorio de Flash Clima");
+					request.setTo(recurso.getDescCorreoElectronico());
+					
+					Map<String, Object> model = new HashMap<String, Object>();
+					model.put("nombreRecurso", request.getName());
+					model.put("mensaje", "<h3>Recuerda que hoy debes contestar la encuesta Flash Clima</h3>");
+					model.put("pie", "");
+					model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-time.png\">");
+					
+					MailResponse response = service.sendEmail(request, model);
+					System.out.println(response.getMessage());
+				}
+			}
+		}
+	
 	//CRON Miercoles 13:15 hora mexico
 	@Scheduled(cron="0 0 11 * * MON", zone="America/Mexico_City")
 	public void enviaAvisoHrsRechazdas() {
@@ -856,7 +881,7 @@ public class EmailController {
 			
 		}
 	
-		//CRON Viernes 10:00 hora mexico
+	//CRON Viernes 10:00 hora mexico
 		@Scheduled(cron="0 0 10 * * FRI", zone="America/Mexico_City")
 		public void enviaRecordatorioFlashClimaLunesJueves() {
 			Recurso recurso = recursoService.findOne(15L);

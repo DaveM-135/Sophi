@@ -279,45 +279,21 @@ function calculoPrecio(){
 	var riesgoPorcentaje = parse($("#riesgo").val());
 	var margenPorcentaje = parse($("#margen").val());
 	
-	if(isNaN(costo)){
-		costo = 0;
-	}
-	
-	if(isNaN(gasto)){
-		gasto = 0;
-	}
-	
-	if(isNaN(riesgoPorcentaje)){
-		riesgoPorcentaje = 0;
-	}
-	
-	if(isNaN(margenPorcentaje)){
-		margenPorcentaje = 0;
-	}
-	
 	var costogasto = gasto + costo;
 	var riesgoValor = riesgoPorcentaje / 100 * costogasto ;
 	var precio = costogasto + riesgoValor;
-	var margenValor = margenPorcentaje / 100 * precio; 
+	var margenValor = margenPorcentaje / 100 * precio;
 	var precioTotal = precio + margenValor;
 	
-	if(isNaN(costogasto)){
-		costogasto = 0;
-	}
-	
-	if(isNaN(riesgoValor)){
-		riesgoValor = 0;
-	}
-	
-	if(isNaN(precio)){
-		precio = 0;
-	}
-	
-	if(isNaN(margenValor)){
-		margenValor = 0;
-	}
+	var precioPropuesto = parse($("#precio").val()) + margenPorcentaje / 100 * parse($("#precio").val()) + riesgoPorcentaje / 100 * parse($("#precio").val());
 	
 //	console.log(precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2}));
+	if(!isNaN(precioPropuesto)){
+		$("#totalPropuesto").html("Precio propuesto: $" + precioPropuesto.toLocaleString("en-US", {minimumFractionDigits: 2})+" (MXN)");
+	} else {
+		$("#totalPropuesto").html("Precio propuesto: $0.00 (MXN)");
+	}
+	
 	if (!isNaN(precioTotal)) {
 		$("#totalProyecto").html("Precio piso: $" + precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2})+" (MXN)");
 	} else {
