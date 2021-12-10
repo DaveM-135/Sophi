@@ -279,19 +279,19 @@ function calculoPrecio(){
 	var riesgoPorcentaje = parse($("#riesgo").val());
 	var margenPorcentaje = parse($("#margen").val());
 	
-	if(costo === NaN){
+	if(isNaN(costo)){
 		costo = 0;
 	}
 	
-	if(gasto === NaN){
+	if(isNaN(gasto)){
 		gasto = 0;
 	}
 	
-	if(riesgoPorcentaje === NaN){
+	if(isNaN(riesgoPorcentaje)){
 		riesgoPorcentaje = 0;
 	}
 	
-	if(margenPorcentaje === NaN){
+	if(isNaN(margenPorcentaje)){
 		margenPorcentaje = 0;
 	}
 	
@@ -301,13 +301,28 @@ function calculoPrecio(){
 	var margenValor = margenPorcentaje / 100 * precio; 
 	var precioTotal = precio + margenValor;
 	
-//	console.log(precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2}));
-	if (precioTotal != Number.Nan) {
-		$("#totalProyecto").html("Precio piso: $" + precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2})+" (MXN)");
+	if(isNaN(costogasto)){
+		costogasto = 0;
 	}
 	
+	if(isNaN(riesgoValor)){
+		riesgoValor = 0;
+	}
 	
+	if(isNaN(precio)){
+		precio = 0;
+	}
 	
+	if(isNaN(margenValor)){
+		margenValor = 0;
+	}
+	
+//	console.log(precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2}));
+	if (!isNaN(precioTotal)) {
+		$("#totalProyecto").html("Precio piso: $" + precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2})+" (MXN)");
+	} else {
+		$("#totalProyecto").html("Precio piso: $0.00 (MXN)");
+	}
 }
 
 function parse(texto){
