@@ -266,10 +266,9 @@ public class VacacionesController {
 			Map<String, Object> modelBKP = new HashMap<String, Object>();
 			modelBKP.put("nombreRecurso", requestbkp.getName());
 			if(detallesSolicitud.size() > 1) {
-				//modelBKP.put("mensaje", "<h3>\""+ recurso.getDescRecurso() + " te ha asignado como recurso backup los días del "+dt.format(detallesSolicitud.get(0).getFecDiaSolicitado())+" al "+dt.format(detallesSolicitud.get(detallesSolicitud.size()-1).getFecDiaSolicitado())+"\"</h3>.");
 				String dias_vacaciones = "";
 				for(DetalleSolicitud ds: detallesSolicitud) {
-					dias_vacaciones += dt.format(ds).toString().concat(", ");
+					dias_vacaciones += dt.format(ds.getFecDiaSolicitado()).toString().concat(", ");
 				}
 				modelBKP.put("mensaje", "<h3>\""+ recurso.getDescRecurso() + " te ha asignado como recurso backup los días "+dias_vacaciones+"\"</h3>.");
 			} else {
@@ -444,7 +443,7 @@ public class VacacionesController {
 		return "listaVacaciones :: listaDetalleVacaciones";
 	}
 	
-	@Scheduled(cron="0 0 6 ? * 1,2,3,4,5", zone="America/Mexico_City")
+	@Scheduled(cron="0 0 6 ? * MON,TUE,WED,THU,FRI", zone="America/Mexico_City")
 	public void cambioRecursoBKP() {
 		System.out.println("Entrando a cambiar rol aprob por BKP y/o viceversa");
 		Long codSolicitud, codRecurso, codRecursoAprob, codRecursoAprobBKP;

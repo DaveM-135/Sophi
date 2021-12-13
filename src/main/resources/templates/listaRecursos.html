@@ -57,7 +57,7 @@
           	<div class="container">
           		<div class="row">
           			<div th:attr="name=${recurso.valActivo == 1} ? 'activo' : 'baja'" class="col-lg-4 col-xl-3 col-md-6 col-sm-6" style="padding: 0 10px 10px 0;" th:each="recurso: ${recursos}">
-						<div class="profile-card card shadow text-center position-relative overflow-hidden" style="border-radius: 15px !important; padding: 20px;">
+						<div th:if="${recurso.codRecurso != 39}" class="profile-card card shadow text-center position-relative overflow-hidden" style="border-radius: 15px !important; padding: 20px;">
 							<div class="banner"></div>
 							<img th:if="${recurso.foto} != null" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}" class="img-profile imgPrevCircleRecurso mx-auto mb-3">
 <!-- 							img-profile imgPrevCircleRecurso -->

@@ -882,7 +882,7 @@ public class EmailController {
 		}
 	
 	//CRON Viernes 10:00 hora mexico
-		@Scheduled(cron="0 0 10 * * 1,2,3,4", zone="America/Mexico_City")
+		@Scheduled(cron="0 0 10 * * MON,TUE,WED,THU", zone="America/Mexico_City")
 		public void enviaRecordatorioFlashClimaLunesJueves() {
 			Recurso recurso = recursoService.findOne(15L);
 			MailRequest request = new MailRequest();
