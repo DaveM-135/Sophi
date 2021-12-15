@@ -52,12 +52,17 @@ $(document).ready(function() {
 });
 
 function enviarCostoRecurso(){
+	var codCliente=$("#cliente").val();
+	var codPRoyecto=$('#codProyecto').val();
+	var codEstatusProyecto=$("#proyecto").val();
+	
 	$.ajax({
 		type: "POST",
 		url: "/formCostoRecursoProyecto",
 		data: $("#costoRecursoProyectoForm").serialize(),
 		success: function(){
 			$("#costoRecursosModal").modal('hide');
+			location.href = '/preventaProyectoConsulta/'+codPRoyecto+'/'+codEstatusProyecto+"/"+codCliente;
 		}
 	});
 }
@@ -68,9 +73,9 @@ function cargaformRecursosProyecto(){
 }
 
 function guardarCom() {
-		var codCliente=$("#cliente").val();//$('#codCliente').val();
+		var codCliente=$("#cliente").val();
 		var codPRoyecto=$('#codProyecto').val();
-		var codEstatusProyecto=$("#proyecto").val();//$('#codEstatusProyecto').val();
+		var codEstatusProyecto=$("#proyecto").val();
 		var codContacto=$('#contacto').val();
 		var codClasificacionProyecto=1;
 		

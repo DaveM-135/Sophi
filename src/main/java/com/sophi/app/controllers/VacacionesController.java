@@ -285,21 +285,23 @@ public class VacacionesController {
 		//Mail Notificacion INICIO 
 		Recurso recurso = recursoService.findOne(codRecurso);
 		Recurso recursoAprobador = recursoService.findByDescCorreoElectronico(mailAprobador);
-		MailRequest request = new MailRequest();
-		System.out.println(recursoAprobador.getDescRecurso());
-		request.setName(recursoAprobador.getDescRecurso());
-		request.setSubject("Nueva solicitud de vacaciones");
-		request.setTo(recursoAprobador.getDescCorreoElectronico());
-		
-		Map<String, Object> modelM = new HashMap<String, Object>();
-		modelM.put("nombreRecurso", request.getName());
-		modelM.put("mensaje", "<h3>Nueva solicitud de vacaciones por responder de \""+ recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno() + "\"</h3>.");
-		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-banca.png\">");
-		modelM.put("btnLink", "<a href=\"https://sophitech.herokuapp.com/aprobacionVacaciones/" +mailAprobador+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ver detalle</a>");
-		modelM.put("pie", "");
-		
-		MailResponse response = service.sendEmailEvaluador(request, modelM);
-		System.out.println(response.getMessage());
+		if(recursoAprobador.getCodRecurso() != recurso.getCodRecurso()) {
+			MailRequest request = new MailRequest();
+			System.out.println(recursoAprobador.getDescRecurso());
+			request.setName(recursoAprobador.getDescRecurso());
+			request.setSubject("Nueva solicitud de vacaciones");
+			request.setTo(recursoAprobador.getDescCorreoElectronico());
+			
+			Map<String, Object> modelM = new HashMap<String, Object>();
+			modelM.put("nombreRecurso", request.getName());
+			modelM.put("mensaje", "<h3>Nueva solicitud de vacaciones por responder de \""+ recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno() + "\"</h3>.");
+			modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-banca.png\">");
+			modelM.put("btnLink", "<a href=\"https://sophitech.herokuapp.com/aprobacionVacaciones/" +mailAprobador+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ver detalle</a>");
+			modelM.put("pie", "");
+			
+			MailResponse response = service.sendEmailEvaluador(request, modelM);
+			System.out.println(response.getMessage());
+		}
 		//Mail Notificacion FIN 
 		}
 		
@@ -309,39 +311,51 @@ public class VacacionesController {
 	
 	@GetMapping({"/validarDiaLaboralVacacionesAprobador"})
 	@ResponseBody
-	public String validarDiaLaboralVacacionesAprobador(@RequestParam Long codDia, @RequestParam Long codRecurso, Model model) {
+	public String validarDiaLaboralVacacionesAprobador(@RequestParam Long codDia, @RequestParam Long codRecurso, @RequestParam String aprobadores, Model model) {
 		List<DiaFestivo> diasFestivos = null;
 		diasFestivos = diaFestivoService.findEsNoLaboral(codDia);
 		
-		List<DetalleSolicitud> listDS = new ArrayList<DetalleSolicitud>();
-		listDS = detalleSolicitudService.findAll();
-		
-		int año, mes, dia, codFechaSolicitado;
 		Long codRecursoAprob;
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 		
-		List<Proyecto> listproyecto = new ArrayList<Proyecto>();
-		List<ProyectoRecurso> listPR = new ArrayList<ProyectoRecurso>();
-		//List<SolicitudVacaciones> listsv = new ArrayList<SolicitudVacaciones>();
-		Recurso recurso = new Recurso();
+		String[] arrayAprob = aprobadores.split(",");
+		String fecSolicitadoStr = codDia.toString();
 		
-		/*for(DetalleSolicitud ds: listDS) {
-			año = (ds.getFecDiaSolicitado().getYear()+1900)*10000;
-			mes = (ds.getFecDiaSolicitado().getMonth()+1)*100;
-			dia = ds.getFecDiaSolicitado().getDate();
-			codFechaSolicitado = año+mes+dia;
-			
-			if(codFechaSolicitado == codDia) {
-				codRecursoAprob = ds.getSolicitudVacaciones().getCodRecurso();
-				listproyecto = proyectoService.findListaProyectosRecursoAprobadorTodos(codRecursoAprob);
-				listPR = proyectoRecursoService.findProyectoRecursoActivo(codRecurso);
-				recurso = recursoService.findOne(codRecursoAprob);
+		String fecSolicitadoAnio = fecSolicitadoStr.substring(0, 4);
+		String fecSolicitadoMes = fecSolicitadoStr.substring(4, 6);
+		String fecSolicitadoDia = fecSolicitadoStr.substring(6, 8);
+		
+		String fecSolicitadoStrFmt = fecSolicitadoAnio + "-" + fecSolicitadoMes + "-" + fecSolicitadoDia;
+		
+		System.out.println(fecSolicitadoStrFmt);
+		Date fecha = null;
+		try {
+			fecha = dateFormatter.parse(fecSolicitadoStrFmt);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(String a: arrayAprob) {
+			codRecursoAprob = recursoService.findByDescCorreoElectronico(a).getCodRecurso();
+			if(codRecursoAprob != codRecurso && codRecursoAprob != 11) {
 				
-				if(listproyecto != null && listPR != null && ds.getSolicitudVacaciones().getFecAprobacion() != null && ds.getSolicitudVacaciones().getFecCancelacion() == null) {
-					System.out.println("Recurso: "+recurso.getDescRecurso());
-					return recurso.getDescRecurso()+" pidió este día de vacaciones";
+				List<SolicitudVacaciones> listsv = new ArrayList<SolicitudVacaciones>();
+				listsv = solicitudVacacionesService.findByCodRecurso(codRecursoAprob);
+				
+				for(SolicitudVacaciones sv: listsv) {
+					List<DetalleSolicitud> listds = new ArrayList<DetalleSolicitud>();
+					listds = detalleSolicitudService.findByCodSolicitud(sv.getCodSolicitud());
+					
+					for(DetalleSolicitud ds: listds) {
+						if(ds.getFecDiaSolicitado().toString().equals(fecSolicitadoStrFmt)) {
+							return "El recurso aprobador de proyecto pidió este día de vacaciones";
+						}
+					}
 				}
 			}
-		}*/
+			
+		}
 		
 		if (diasFestivos.size() > 0 ) {
 			String desc = "";

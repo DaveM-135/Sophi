@@ -219,7 +219,8 @@ renderCalendar(month, year)
 	            		$.ajax({
 	            			url: "/validarDiaLaboralVacacionesAprobador",
 	            			data: {codDia:eventDate,
-								   codRecurso: $("#codRecurso").val()},
+								   codRecurso: $("#codRecurso").val(),
+								   aprobadores: $("#aprobadores").val()},
 	            			success: function(result){
 	            				if( result === "0"){
 	    	            			showEvent(eventDay + ' ' +todaysDate, eventDate );
@@ -245,7 +246,7 @@ renderCalendar(month, year)
             $('#event').addClass('d-none');
         })
 		
-		$(document).on('click', '.showEvent', function(){
+		/*$(document).on('click', '.showEvent', function(){
             $('.showEvent').removeClass('active');
             $('#event').removeClass('d-none');
             $(this).addClass('active');
@@ -270,7 +271,7 @@ renderCalendar(month, year)
 		            }
 		        });	
 			}
-        })
+        })*/
     })
 
             

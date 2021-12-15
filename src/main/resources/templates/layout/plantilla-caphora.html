@@ -180,7 +180,7 @@
 							<td style="text-align: center;" th:id="'opcs_'+${solicitud.codSolicitud}">
 								<a  th:if="${solicitud.fecAprobacion == null and solicitud.fecRechazo == null and solicitud.fecCancelacion == null}" th:id="'aprSol_'+${solicitud.codSolicitud}" th:onclick="aprobarSolicitud([[${solicitud.codSolicitud}]]); return false;" href="#" class="badge badge-success">Aprobar  <i class="far fa-check-circle"></i></a>
 								<a  th:if="${solicitud.fecAprobacion == null and solicitud.fecRechazo == null and solicitud.fecCancelacion == null}" th:id="'recSol_'+${solicitud.codSolicitud}" th:onclick="rechazarSolicitud([[${solicitud.codSolicitud}]]); return false;" href="#" class="badge badge-danger">Rechazar  <i class="far fa-times-circle"></i></a>
-								<a  th:if="${solicitud.fecAprobacion != null and solicitud.fecCancelacion == null}" th:id="'canSol_'+${solicitud.codSolicitud}" th:onclick="cancelarSolicitud([[${solicitud.codSolicitud}]]); return false;" href="#" class="badge badge-danger">Cancelar  <i class="far fa-times-circle"></i></a>
+								<a  th:if="${solicitud.fecAprobacion != null and solicitud.fecCancelacion == null and solicitud.fecAprobacion > #dates.createNow()}" th:id="'canSol_'+${solicitud.codSolicitud}" th:onclick="cancelarSolicitud([[${solicitud.codSolicitud}]]); return false;" href="#" class="badge badge-danger">Cancelar  <i class="far fa-times-circle"></i></a>
 							</td>
 						</tr>						
 					</tbody>
