@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +17,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.sophi.app.Utiles;
+import com.sophi.app.models.dao.IUsuarioDao;
 import com.sophi.app.models.entity.HistRespuestaAux;
 import com.sophi.app.models.entity.HistoricoRespuestaClima;
 import com.sophi.app.models.entity.PreguntaRespuestaClima;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.ProyectoRecurso;
+import com.sophi.app.models.entity.Usuario;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IHistoricoRespuestaClimaService;
 import com.sophi.app.models.service.IPreguntaClimaService;
@@ -28,6 +32,7 @@ import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.IRespuestaFlashService;
+import com.sophi.app.models.service.JpaUserDetailsService;
 
 import javassist.bytecode.analysis.Util;
 
@@ -58,8 +63,6 @@ public class SophiController {
 	@Autowired
 	private IActividadService actividadService;
 	
-	Long codRecurso;
-	
 	@GetMapping({"/index","/","","/home"})
 	public String index(Map<String, Object> map) {
 		
@@ -86,8 +89,13 @@ public class SophiController {
 		int totalActivos = 0;
 		totalActivos = recursoService.findRecursosActivos().size();
 		
-		Long codrecurso = codRecurso;
+		map.put("respuestasFlash",resultados);
+		map.put("participacion", participacion);
+		map.put("totalActivos", totalActivos);
 		
+		
+		
+		Long codRecurso = recursoService.findByDescCorreoElectronico("usuario_demo@sophitech.mx").getCodRecurso();
 		List<Long> proyectoListId = new ArrayList<Long>();
 		HashMap<Long, String> proyectoList = new HashMap<Long, String>(); 
 		proyectoListId = actividadService.findListaProyectoByRecurso(codRecurso);
@@ -126,11 +134,6 @@ public class SophiController {
 		
 		Proyecto proyecto = proyectoService.findByCodProyecto(1L);
 		proyectoList.put(proyecto.getCodProyecto(),proyecto.getDescProyecto());
-		
-		map.put("respuestasFlash",resultados);
-		map.put("participacion", participacion);
-		map.put("totalActivos", totalActivos);
-		map.put("codRecurso", codrecurso);
 		map.put("proyectoList", proyectoList);
 		
 		return "index";
@@ -147,7 +150,6 @@ public class SophiController {
 	public String cargarDatosRecursoLogin(@PathVariable String login, Model model){
 		recursoService.findByDescCorreoElectronico(login);
 		model.addAttribute("recursoSesion", recursoService.findByDescCorreoElectronico(login));
-		codRecurso = recursoService.findByDescCorreoElectronico(login).getCodRecurso();
 		return "layout/layout :: dataSesion";
 	}
 	
@@ -163,7 +165,5 @@ public class SophiController {
 	public String mstrForecast(Model model) {
 		return "mstr/mstrForecast";
 	}
-	
-	
 
 }

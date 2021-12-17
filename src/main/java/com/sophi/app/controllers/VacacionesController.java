@@ -338,7 +338,7 @@ public class VacacionesController {
 		
 		for(String a: arrayAprob) {
 			codRecursoAprob = recursoService.findByDescCorreoElectronico(a).getCodRecurso();
-			if(codRecursoAprob != codRecurso && codRecursoAprob != 11) {
+			if(codRecursoAprob != codRecurso && codRecursoAprob != 11 && codRecurso !=3) {
 				
 				List<SolicitudVacaciones> listsv = new ArrayList<SolicitudVacaciones>();
 				listsv = solicitudVacacionesService.findByCodRecurso(codRecursoAprob);

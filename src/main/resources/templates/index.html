@@ -5,7 +5,6 @@
 
 <body id="page-top">
   <input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
-  <input id="valCodRecurso" type="hidden" th:value="${codRecurso}"></input>
   <!-- <input id="valCodRecurso" type="hidden" value="16"></input>-->
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -169,7 +168,6 @@ start_date_dialog.ON_SELECT_FUNC = function(){
 			          </div>
 						
 					</div>
-			        <!-- /.container-fluid -->
 			        <a class="twitter-timeline" href="https://twitter.com/el_pais?ref_src=twsrc%5Etfw">Tweets by el_pais</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 	                 	<a class="twitter-timeline" href="https://twitter.com/NewYorkTimes_es?ref_src=twsrc%5Etfw">Tweets by NewYorkTimes_es</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 	</div>
@@ -181,7 +179,6 @@ start_date_dialog.ON_SELECT_FUNC = function(){
           </div>
 
         </div>
-        <!-- /.container-fluid -->
         
       </div>
       <!-- End of Main Content -->
@@ -396,74 +393,7 @@ start_date_dialog.ON_SELECT_FUNC = function(){
   <!-- Custom scripts for all pages-->
   <script th:src="@{/js/sb-admin-2.min.js}"></script>
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
-  <script th:src="@{/js/capHoras.js}"></script>
-	<script>
-		switch (new Date().getDay()){
-			case 0:
-				$("#da0").show();
-				$("#da1").hide();
-				$("#da2").hide();
-				$("#da3").hide();
-				$("#da4").hide();
-				$("#da5").hide();
-				$("#da6").hide();
-				break;
-			case 1:
-				$("#da0").hide();
-				$("#da1").show();
-				$("#da2").hide();
-				$("#da3").hide();
-				$("#da4").hide();
-				$("#da5").hide();
-				$("#da6").hide();
-				break;
-			case 2:
-				$("#da0").hide();
-				$("#da1").hide();
-				$("#da2").show();
-				$("#da3").hide();
-				$("#da4").hide();
-				$("#da5").hide();
-				$("#da6").hide();
-				break;
-			case 3:
-				$("#da0").hide();
-				$("#da1").hide();
-				$("#da2").hide();
-				$("#da3").show();
-				$("#da4").hide();
-				$("#da5").hide();
-				$("#da6").hide();
-				break;
-			case 4:
-				$("#da0").hide();
-				$("#da1").hide();
-				$("#da2").hide();
-				$("#da3").hide();
-				$("#da4").show();
-				$("#da5").hide();
-				$("#da6").hide();
-				break;
-			case 5:
-				$("#da0").hide();
-				$("#da1").hide();
-				$("#da2").hide();
-				$("#da3").hide();
-				$("#da4").hide();
-				$("#da5").show();
-				$("#da6").hide();
-				break;
-			case 6:
-				$("#da0").hide();
-				$("#da1").hide();
-				$("#da2").hide();
-				$("#da3").hide();
-				$("#da4").hide();
-				$("#da5").hide();
-				$("#da6").show();
-				break;
-		}
-	</script>
+  <script th:src="@{/js/capHoras_Ini.js}"></script>
 
 </body>
 
