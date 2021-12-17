@@ -77,7 +77,9 @@ public class RecursoGastoController {
 //					proRec.getProyectoRecursoId().getCodProyecto(),
 //					proRec.getProyectoRecursoId().getCodEstatusProyecto(),
 //					proRec.getProyectoRecursoId().getCodCliente()));
-			listaProyecto.add(proyectoService.findByCodProyecto(proRec.getProyectoRecursoId().getCodProyecto()));
+			if(!proRec.getProyectoRecursoId().getCodEstatusProyecto().equals(3L) || !proRec.getProyectoRecursoId().getCodEstatusProyecto().equals(4L)) {
+				listaProyecto.add(proyectoService.findByCodProyecto(proRec.getProyectoRecursoId().getCodProyecto()));
+			}
 		}
 
 		System.out.println("CodRecurso " + codRecurso);
@@ -252,7 +254,9 @@ public class RecursoGastoController {
 
 		for (ProyectoRecurso proRec : listaProRec) {
 			
-			listaProyecto.add(proyectoService.findByCodProyecto(proRec.getProyectoRecursoId().getCodProyecto()));
+			if(!proRec.getProyectoRecursoId().getCodEstatusProyecto().equals(3L) || !proRec.getProyectoRecursoId().getCodEstatusProyecto().equals(4L)) {
+				listaProyecto.add(proyectoService.findByCodProyecto(proRec.getProyectoRecursoId().getCodProyecto()));
+			}
 		}
 
 		

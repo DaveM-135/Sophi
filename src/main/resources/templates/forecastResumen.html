@@ -45,6 +45,14 @@
 				<i class="fas fa-plus fa-sm text-white-50"></i> Nuevo registro
 			</a>
 			</div>
+			
+			<div class="d-sm-flex align-items-center justify-content-between mb-1">
+				<div class="row">
+					<div class="col">
+						<a id="muestraAyudaForecast" data-toggle="modal" href="#modalAyudaForecast" style="font-size: 12px;"> <i class="fas fa-info-circle"></i> Ayuda</a>
+					</div>
+				</div>
+			</div>
 					<!-- Content Row -->
 			<div class="row">
 	            
@@ -248,11 +256,30 @@
   		</div>
 	</div>
   
-  
-  
-  
-  
-  
+  <div class="modal fade" id="modalAyudaForecast" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalAyudaForecastLabel" aria-hidden="true">
+		<div class="modal-dialog modal-" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalAyudaForecastLabel">Ayuda forecast</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+ 				</div>
+				<div class="modal-body">
+					<div id="divAyudaForecast">
+						<span>Horas H&aacute;biles: Horas Billable, Prductivity, etc...</span>
+						<br /><br />
+						<span>Horas Inh&aacute;biles: Horas de d&iacute;as festivos, d&iacute;as de vacaciones, etc..</span>
+						<br /><br />
+						<span>Horas Planeadas: Horas H&aacute;biles + Horas Inh&aacute;biles</span>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+				</div>
+    		</div>
+  		</div>
+	</div>  
   
 
   <!-- Scroll to Top Button--> <div class="st-actionContainer right-bottom" id="btnFlash"> <div class="st-btn-container right-bottom" onclick="flashSurvey(); return false;"> <div class="st-button-main"><i class="fa fa-bolt" aria-hidden="true"></i></div> </div> </div>
@@ -287,6 +314,10 @@
   $(document).ready(function() {
 		
 	  definePeriodos();
+	  
+	  $("#muestraAyudaForecast").click(function(){
+		 $("#modalAyudaForecast").toggle(); 
+	  });
 	  
 	  $("#inicioActividad").on(
 				"change",

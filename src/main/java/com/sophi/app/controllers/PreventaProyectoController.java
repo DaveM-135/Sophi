@@ -912,17 +912,8 @@ public class PreventaProyectoController {
 		proyectoService.save(proyecto);
 		
 		flash.addFlashAttribute("success", "Proyecto guardado con éxito");
-		
-		//redirijo dependiendo
-		if(proyecto.getCodEstatusProyecto() == 3 || proyecto.getCodEstatusProyecto() == 4) {
-			List<Proyecto> listaProyectoTodo = proyectoService.findAll();
-			flash.addFlashAttribute("success", "Información actualizada con éxito");
-			model.addAttribute("proyectos", listaProyectoTodo);
-			return "redirect:/listaProyectosTodo";
-		}else {
-			flash.addFlashAttribute("success", "Información actualizada con éxito");
-			return "redirect:/preventaProyectoConsulta/"+proyecto.getCodProyecto()+"/"+proyecto.getCodEstatusProyecto()+"/"+proyecto.getCodCliente();
-		}
+		flash.addFlashAttribute("success", "Información actualizada con éxito");
+		return "redirect:/listaProyectosTodo";
 	}
 	
 	@RequestMapping(value = "/preventaProyectoContactoInfraestructura/{codProyecto}", method = RequestMethod.GET)
