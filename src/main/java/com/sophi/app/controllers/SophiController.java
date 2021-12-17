@@ -11,6 +11,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +35,6 @@ import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.IRespuestaFlashService;
-import com.sophi.app.models.service.JpaUserDetailsService;
 
 import javassist.bytecode.analysis.Util;
 
@@ -66,6 +68,8 @@ public class SophiController {
 	@GetMapping({"/index","/","","/home"})
 	public String index(Map<String, Object> map) {
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
 		int fechaParametro = new Utiles().getFechaViernes();
 		long total = 0;
 		
@@ -93,9 +97,7 @@ public class SophiController {
 		map.put("participacion", participacion);
 		map.put("totalActivos", totalActivos);
 		
-		
-		
-		Long codRecurso = recursoService.findByDescCorreoElectronico("usuario_demo@sophitech.mx").getCodRecurso();
+		Long codRecurso = recursoService.findByDescCorreoElectronico(auth.getName()).getCodRecurso();
 		List<Long> proyectoListId = new ArrayList<Long>();
 		HashMap<Long, String> proyectoList = new HashMap<Long, String>(); 
 		proyectoListId = actividadService.findListaProyectoByRecurso(codRecurso);
