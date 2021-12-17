@@ -336,25 +336,26 @@ public class VacacionesController {
 			e.printStackTrace();
 		}
 		
-		for(String a: arrayAprob) {
-			codRecursoAprob = recursoService.findByDescCorreoElectronico(a).getCodRecurso();
-			if(codRecursoAprob != codRecurso && codRecursoAprob != 11 && codRecurso !=3) {
-				
-				List<SolicitudVacaciones> listsv = new ArrayList<SolicitudVacaciones>();
-				listsv = solicitudVacacionesService.findByCodRecurso(codRecursoAprob);
-				
-				for(SolicitudVacaciones sv: listsv) {
-					List<DetalleSolicitud> listds = new ArrayList<DetalleSolicitud>();
-					listds = detalleSolicitudService.findByCodSolicitud(sv.getCodSolicitud());
+		if(new Utiles().getFechaActual().getMonth() != 12) {
+			for(String a: arrayAprob) {
+				codRecursoAprob = recursoService.findByDescCorreoElectronico(a).getCodRecurso();
+				if(codRecursoAprob != codRecurso && codRecursoAprob != 11 && codRecurso !=3) {
 					
-					for(DetalleSolicitud ds: listds) {
-						if(ds.getFecDiaSolicitado().toString().equals(fecSolicitadoStrFmt)) {
-							return "El recurso aprobador de proyecto pidió este día de vacaciones";
+					List<SolicitudVacaciones> listsv = new ArrayList<SolicitudVacaciones>();
+					listsv = solicitudVacacionesService.findByCodRecurso(codRecursoAprob);
+					
+					for(SolicitudVacaciones sv: listsv) {
+						List<DetalleSolicitud> listds = new ArrayList<DetalleSolicitud>();
+						listds = detalleSolicitudService.findByCodSolicitud(sv.getCodSolicitud());
+						
+						for(DetalleSolicitud ds: listds) {
+							if(ds.getFecDiaSolicitado().toString().equals(fecSolicitadoStrFmt)) {
+								return "El recurso aprobador de proyecto pidió este día de vacaciones";
+							}
 						}
 					}
 				}
 			}
-			
 		}
 		
 		if (diasFestivos.size() > 0 ) {
