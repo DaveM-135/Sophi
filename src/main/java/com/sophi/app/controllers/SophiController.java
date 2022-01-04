@@ -1,18 +1,12 @@
 package com.sophi.app.controllers;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,13 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.sophi.app.Utiles;
-import com.sophi.app.models.dao.IUsuarioDao;
 import com.sophi.app.models.entity.HistRespuestaAux;
-import com.sophi.app.models.entity.HistoricoRespuestaClima;
-import com.sophi.app.models.entity.PreguntaRespuestaClima;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.ProyectoRecurso;
-import com.sophi.app.models.entity.Usuario;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IHistoricoRespuestaClimaService;
 import com.sophi.app.models.service.IPreguntaClimaService;
@@ -35,8 +25,6 @@ import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.IRespuestaFlashService;
-
-import javassist.bytecode.analysis.Util;
 
 @Controller
 public class SophiController {

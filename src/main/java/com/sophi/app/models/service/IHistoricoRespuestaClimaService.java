@@ -1,6 +1,5 @@
 package com.sophi.app.models.service;
 
-import java.util.Date;
 import java.util.List;
 
 import com.sophi.app.models.entity.HistRespuestaAux;

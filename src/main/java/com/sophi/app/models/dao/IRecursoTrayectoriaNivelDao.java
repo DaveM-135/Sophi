@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 import com.sophi.app.models.entity.RecursoTrayectoriaNivel;
-import com.sophi.app.models.entity.RecursoTrayectoriaProyecto;
 
 public interface IRecursoTrayectoriaNivelDao extends CrudRepository<RecursoTrayectoriaNivel, Long> {
 	

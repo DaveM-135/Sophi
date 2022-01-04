@@ -1,7 +1,6 @@
 package com.sophi.app.controllers;
 
 import java.text.Format;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,16 +20,11 @@ import com.sophi.app.Utiles;
 import com.sophi.app.mail.dto.MailRequest;
 import com.sophi.app.mail.dto.MailResponse;
 import com.sophi.app.mail.service.EmailService;
-import com.sophi.app.models.entity.AprobacionHoras;
-import com.sophi.app.models.entity.AprobacionHorasDto;
-import com.sophi.app.models.entity.AuxActividadHorasRecurso;
 import com.sophi.app.models.entity.CapHora;
-import com.sophi.app.models.entity.DetalleRecursoHoras;
 import com.sophi.app.models.entity.DetalleSolicitud;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.ProyectoRecurso;
 import com.sophi.app.models.service.IActividadService;
-import com.sophi.app.models.service.IAprobacionHorasService;
 import com.sophi.app.models.service.ICapHoraService;
 import com.sophi.app.models.service.IDetalleSolicitudService;
 import com.sophi.app.models.service.IProyectoRecursoService;
@@ -40,26 +34,15 @@ import com.sophi.app.models.service.IRecursoVacacionesService;
 import com.sophi.app.models.service.IRolService;
 import com.sophi.app.models.service.ISolicitudVacacionesService;
 import com.sophi.app.models.service.ISubtareaService;
-import com.sophi.app.models.service.RecursoVacacionesServiceImpl;
-import com.sophi.app.models.service.RolServiceImpl;
-
-import javassist.bytecode.analysis.Util;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -70,9 +53,6 @@ public class AprobacionVacacionesController {
 	
 	@Autowired
 	private ISolicitudVacacionesService solicitudVacacionesService;
-
-    @Autowired
-    private IAprobacionHorasService aprobacionHorasService;
 
     @Autowired
     private IRecursoService recursoService;

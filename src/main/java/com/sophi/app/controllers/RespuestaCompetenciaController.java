@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sophi.app.models.dao.ICapHoraDao;
-import com.sophi.app.models.entity.LiderProyectoEvaluacion;
 import com.sophi.app.models.entity.RecursoEvaluacion;
 import com.sophi.app.models.entity.RecursoEvaluador;
 import com.sophi.app.models.entity.RespuestaCompetencia;

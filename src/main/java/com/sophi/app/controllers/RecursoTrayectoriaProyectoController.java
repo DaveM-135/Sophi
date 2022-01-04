@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sophi.app.models.entity.Conocimientos;
 import com.sophi.app.models.entity.DetalleConocimientosProyecto;
 import com.sophi.app.models.entity.RecursoTrayectoriaProyecto;
 import com.sophi.app.models.service.IConocimientoService;

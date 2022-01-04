@@ -12,45 +12,31 @@ import java.util.List;
 
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.entity.Rol;
-import com.sophi.app.models.entity.AprobacionHoras;
-import com.sophi.app.models.entity.AprobacionHorasDto;
 import com.sophi.app.models.entity.AuxActividadHorasRecurso;
 import com.sophi.app.models.entity.CapHora;
 import com.sophi.app.models.entity.DetalleRecursoHoras;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.ProyectoRecurso;
 import com.sophi.app.models.service.IActividadService;
-import com.sophi.app.models.service.IAprobacionHorasService;
 import com.sophi.app.models.service.ICapHoraService;
 import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.IRolService;
 import com.sophi.app.models.service.ISubtareaService;
-import com.sophi.app.models.service.RolServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
 public class AprobacionHorasProyectoController {
-
-    @Autowired
-    private IAprobacionHorasService aprobacionHorasService;
 
     @Autowired
     private IRecursoService recursoService;

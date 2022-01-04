@@ -1,10 +1,7 @@
 package com.sophi.app.models.entity;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

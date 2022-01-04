@@ -3,7 +3,6 @@ package com.sophi.app.controllers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,25 +21,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.models.entity.Equipo;
 import com.sophi.app.models.entity.Herramienta;
-import com.sophi.app.models.entity.Recurso;
-import com.sophi.app.models.entity.RecursoCapacitacion;
 import com.sophi.app.models.service.IEquipoService;
 import com.sophi.app.models.service.IHerramientaService;
-import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.ITipoHerramientaService;
 
 @Controller
 public class HerramientaController {
-	
-	@Autowired
-	private IRecursoService recursoService;
 	
 	@Autowired
 	private IHerramientaService herramientaService;

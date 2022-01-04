@@ -3,8 +3,6 @@ package com.sophi.app.models.service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
-
 import com.sophi.app.models.entity.EvaluacionDesempeno;
 
 public interface IEvaluacionDesempenoService {

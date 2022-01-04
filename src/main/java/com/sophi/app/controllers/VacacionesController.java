@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -41,8 +40,6 @@ import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.IRecursoVacacionesService;
 import com.sophi.app.models.service.IRolService;
 import com.sophi.app.models.service.ISolicitudVacacionesService;
-import com.sophi.app.models.service.RecursoVacacionesServiceImpl;
-import com.sophi.app.models.service.RolServiceImpl;
 
 @Controller
 public class VacacionesController {
@@ -219,7 +216,6 @@ public class VacacionesController {
 					try {
 						detalle.setFecDiaSolicitado(format.parse(codDia));
 					} catch (ParseException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					detallesSolicitud.add(detalle);
@@ -332,11 +328,10 @@ public class VacacionesController {
 		try {
 			fecha = dateFormatter.parse(fecSolicitadoStrFmt);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		if(new Utiles().getFechaActual().getMonth() != 12) {
+		if(new Utiles().getFechaActual().getMonth()+1 != 12) {
 			for(String a: arrayAprob) {
 				codRecursoAprob = recursoService.findByDescCorreoElectronico(a).getCodRecurso();
 				if(codRecursoAprob != codRecurso && codRecursoAprob != 11 && codRecurso !=3) {

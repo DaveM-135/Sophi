@@ -13,15 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sophi.app.models.entity.Conocimientos;
-import com.sophi.app.models.entity.DetalleConocimientosProyecto;
 import com.sophi.app.models.entity.RecursoTrayectoriaNivel;
-import com.sophi.app.models.entity.RecursoTrayectoriaProyecto;
 import com.sophi.app.models.service.IConocimientoService;
 import com.sophi.app.models.service.IDetalleConocimientoProyectoService;
 import com.sophi.app.models.service.IExperienciaService;
 import com.sophi.app.models.service.IRecursoTrayectoriaNivelService;
-import com.sophi.app.models.service.IRecursoTrayectoriaProyectoService;
 
 @Controller
 public class RecursoTrayectoriaNivelController {

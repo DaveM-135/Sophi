@@ -1,7 +1,6 @@
 package com.sophi.app.controllers;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -14,24 +13,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.io.source.ByteArrayOutputStream;
-import com.sophi.app.models.entity.Recurso;
-import com.sophi.app.models.service.IRecursoService;
 
 @Controller
 public class ResultadoEvaluacionPDF {
 
 	@Autowired
 	ServletContext servletContext;
-	
-	@Autowired
-	private IRecursoService recursoService;
 
 	private final TemplateEngine templateEngine;
 

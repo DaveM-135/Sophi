@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sophi.app.models.dao.RespuestaMeta;
 import com.sophi.app.models.entity.EvaluacionDesempeno;
-import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.service.IEvaluacionDesempenoService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.IRespuestaMetasService;

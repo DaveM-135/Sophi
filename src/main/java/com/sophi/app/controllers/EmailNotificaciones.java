@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.sophi.app.mail.dto.MailRequest;
 import com.sophi.app.mail.dto.MailResponse;
 import com.sophi.app.mail.service.EmailService;
-import com.sophi.app.models.entity.AprobacionGastos;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.entity.RecursoGasto;

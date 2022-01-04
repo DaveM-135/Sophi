@@ -42,14 +42,12 @@ import com.sophi.app.models.entity.DetalleProyectoInfraestructuraId;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.ProyectoRecurso;
 import com.sophi.app.models.entity.Recurso;
-import com.sophi.app.models.entity.RecursoTrayectoriaProyecto;
 import com.sophi.app.models.entity.Rol;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IAgendaService;
 import com.sophi.app.models.service.IAreaComercialService;
 import com.sophi.app.models.service.IClasificacionProyectoService;
 import com.sophi.app.models.service.IClienteService;
-import com.sophi.app.models.service.IConocimientoService;
 import com.sophi.app.models.service.IDetalleClienteAreaComercialService;
 import com.sophi.app.models.service.IDetalleClienteInfraestructuraService;
 import com.sophi.app.models.service.IDetalleConocimientoProyectoService;
@@ -121,9 +119,6 @@ public class PreventaProyectoController {
 	
 	@Autowired
 	private IRecursoTrayectoriaProyectoService recursoTrayectoriaProyectoService;
-	
-	@Autowired
-	private IConocimientoService conocimientoService;
 	
 	@Autowired
 	private IDetalleConocimientoProyectoService detalleConocimientoProyectoService;

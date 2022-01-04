@@ -26,12 +26,10 @@ import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.entity.RecursoEvaluacion;
 import com.sophi.app.models.entity.RecursoEvaluador;
 import com.sophi.app.models.entity.RespuestaCompetencia;
-import com.sophi.app.models.service.ICapHoraService;
 import com.sophi.app.models.service.IEvaluacionDesempenoService;
 import com.sophi.app.models.service.IPerfilRecursoService;
 import com.sophi.app.models.service.IRecursoEvaluacionService;
 import com.sophi.app.models.service.IRecursoService;
-import com.sophi.app.models.service.IRecursosEvaluadoresService;
 import com.sophi.app.models.service.IRespuestaCompetenciaService;
 import com.sophi.app.models.service.IRespuestaMetasService;
 import com.sophi.app.models.service.RecursosEvaluadoresServiceImpl;
@@ -59,9 +57,6 @@ public class DesempenoController {
 	
 	@Autowired
 	private IRespuestaMetasService respuestaMetaService;
-	
-	@Autowired
-	private ICapHoraService capHoraService;
 	
 	@RequestMapping(value = "/misEvaluaciones")
 	public String misEvaluaciones(Map<String, Object> model) {
