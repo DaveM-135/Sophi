@@ -1,9 +1,21 @@
 $(document).ready(function() {
+	let anio = new Date().getYear()+1900;
+	let mes = new Date().getMonth()+1;
+	let dia = new Date().getDate();
+
+	mes = (mes.length !== 1) ? '0'+mes:mes;
+	dia = (dia.length !== 1) ? '0'+dia:dia;
+
+	let sysdate = anio+'-'+mes+'-'+dia;
 	
 	if($("#cancelado").attr("checked")){
 		$("input").prop("disabled", true);
 		$("textarea").prop("disabled", true);
 		$("select").prop("disabled", true);
+	}
+
+	if($('#fechaFin').val() > sysdate){
+		$('#modalProyectoACerrado .modal-body').append('Cerrar&aacute;s el proyecto antes de su fecha de finalización, ¿Tambi&eacute; est&aacute;s de acuerdo?');
 	}
 	
 	$("#presupuesto").on({
