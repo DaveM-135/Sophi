@@ -1,6 +1,7 @@
 package com.sophi.app.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,8 @@ public class SophiController {
 	
 	@Autowired
 	private IActividadService actividadService;
+
+	Date fechaActual = new Utiles().getFechaActual();
 	
 	@GetMapping({"/index","/","","/home"})
 	public String index(Map<String, Object> map) {
@@ -95,10 +98,18 @@ public class SophiController {
 				if(proyecto == null) {
 					proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 1L);
 					if(proyecto != null){
-						proyectoList.put(id, proyecto.getDescProyecto());
+						if(proyecto.getFecIncioProyecto() == null || proyecto.getFecFinProyecto() == null){
+							proyectoList.put(id, proyecto.getDescProyecto());
+						} else if(!fechaActual.before(proyecto.getFecIncioProyecto()) || !fechaActual.after(proyecto.getFecFinProyecto())){
+							proyectoList.put(id, proyecto.getDescProyecto());
+						}
 					}
 				} else if(proyecto != null){
-					proyectoList.put(id, proyecto.getDescProyecto());
+					if(proyecto.getFecIncioProyecto() == null || proyecto.getFecFinProyecto() == null){
+						proyectoList.put(id, proyecto.getDescProyecto());
+					} else if(!fechaActual.before(proyecto.getFecIncioProyecto()) || !fechaActual.after(proyecto.getFecFinProyecto())){
+						proyectoList.put(id, proyecto.getDescProyecto());
+					}
 				}
 			}
 		} 
@@ -112,10 +123,18 @@ public class SophiController {
 				if (proyecto == null) {
 					proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(idProyect, 1L);
 					if (proyecto != null) {
-						proyectoList.put(idProyect,proyecto.getDescProyecto());
+						if(proyecto.getFecIncioProyecto() == null || proyecto.getFecFinProyecto() == null){
+							proyectoList.put(idProyect, proyecto.getDescProyecto());
+						} else if(!fechaActual.before(proyecto.getFecIncioProyecto()) || !fechaActual.after(proyecto.getFecFinProyecto())){
+							proyectoList.put(idProyect, proyecto.getDescProyecto());
+						}
 					}
 				} else if (proyecto != null) {
-					proyectoList.put(idProyect,proyecto.getDescProyecto());
+					if(proyecto.getFecIncioProyecto() == null || proyecto.getFecFinProyecto() == null){
+						proyectoList.put(idProyect, proyecto.getDescProyecto());
+					} else if(!fechaActual.before(proyecto.getFecIncioProyecto()) || !fechaActual.after(proyecto.getFecFinProyecto())){
+						proyectoList.put(idProyect, proyecto.getDescProyecto());
+					}
 				}
 				
 			}

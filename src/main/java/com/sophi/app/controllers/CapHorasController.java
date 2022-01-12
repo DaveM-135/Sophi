@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sophi.app.Utiles;
 import com.sophi.app.models.entity.Actividad;
 import com.sophi.app.models.entity.CapHora;
 import com.sophi.app.models.entity.Proyecto;
@@ -69,6 +70,8 @@ public class CapHorasController {
 	Long codActividad, codActividad_u;
 	String descComentarioDetalle, descComentarioDetalle_u;
 	float valDuracionReportada, valDuracionReportada_u;
+
+	Date fechaActual = new Utiles().getFechaActual();
 	
 	@GetMapping("/capHoras/{email}")
 	public String capHoras(@PathVariable(value="email") String email, Model model) {
@@ -83,10 +86,18 @@ public class CapHorasController {
 				if(proyecto == null) {
 					proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 1L);
 					if(proyecto != null){
-						proyectoList.put(id, proyecto.getDescProyecto());
+						if(proyecto.getFecIncioProyecto() == null || proyecto.getFecFinProyecto() == null){
+							proyectoList.put(id,proyecto.getDescProyecto());
+						} else if(!fechaActual.before(proyecto.getFecIncioProyecto()) || !fechaActual.after(proyecto.getFecFinProyecto())){
+							proyectoList.put(id,proyecto.getDescProyecto());
+						}
 					}
 				} else if(proyecto != null){
-					proyectoList.put(id, proyecto.getDescProyecto());
+					if(proyecto.getFecIncioProyecto() == null || proyecto.getFecFinProyecto() == null){
+						proyectoList.put(id,proyecto.getDescProyecto());
+					} else if(!fechaActual.before(proyecto.getFecIncioProyecto()) || !fechaActual.after(proyecto.getFecFinProyecto())){
+						proyectoList.put(id,proyecto.getDescProyecto());
+					}
 				}
 			}
 		} 
@@ -100,10 +111,18 @@ public class CapHorasController {
 				if (proyecto == null) {
 					proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(idProyect, 1L);
 					if (proyecto != null) {
-						proyectoList.put(idProyect,proyecto.getDescProyecto());
+						if(proyecto.getFecIncioProyecto() == null || proyecto.getFecFinProyecto() == null){
+							proyectoList.put(idProyect,proyecto.getDescProyecto());
+						} else if(!fechaActual.before(proyecto.getFecIncioProyecto()) || !fechaActual.after(proyecto.getFecFinProyecto())){
+							proyectoList.put(idProyect,proyecto.getDescProyecto());
+						}
 					}
 				} else if (proyecto != null) {
-					proyectoList.put(idProyect,proyecto.getDescProyecto());
+					if(proyecto.getFecIncioProyecto() == null || proyecto.getFecFinProyecto() == null){
+						proyectoList.put(idProyect,proyecto.getDescProyecto());
+					} else if(!fechaActual.before(proyecto.getFecIncioProyecto()) || !fechaActual.after(proyecto.getFecFinProyecto())){
+						proyectoList.put(idProyect,proyecto.getDescProyecto());
+					}
 				}
 				
 			}
