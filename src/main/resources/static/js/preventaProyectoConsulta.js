@@ -15,7 +15,7 @@ $(document).ready(function() {
 	}
 
 	if($('#fechaFin').val() > sysdate){
-		$('#modalProyectoACerrado .modal-body').append('Cerrar&aacute;s el proyecto antes de su fecha de finalización, ¿Tambi&eacute; est&aacute;s de acuerdo?');
+		$('#modalProyectoACerrado .modal-body').html('<p>Cambiar&aacute;s el estatus del proyecto a cerrado, esta operaci&oacute;n no se podr&aacute; recuperar. ¿Est&aacute;s de acuerdo?</p><p>Cerrar&aacute;s el proyecto antes de su fecha de finalización, ¿Tambi&eacute; est&aacute;s de acuerdo?</p>');
 	}
 	
 	$("#presupuesto").on({
