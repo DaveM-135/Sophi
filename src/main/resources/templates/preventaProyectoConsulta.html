@@ -748,7 +748,8 @@
 						</div>
 						<div class="mb-3 mt-3 d-flex justify-content-start">
 							<div th:if="${numAct > 0}">
-								<a class="btn btn-success" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button" style="margin-right: 10px;">Volver a cargar plan</a>
+								<!--<a class="btn btn-success" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button" style="margin-right: 10px;">Volver a cargar plan</a>-->
+								<a class="btn btn-success" href="#modalPlan" role="button" style="margin-right: 10px;" data-toggle="modal">Volver a cargar plan</a>
 							</div>
 			                <div th:unless="${numAct > 0}" >
 			                	<a type="button" href="#modalPlan" th:if="${proyecto.codEstatusProyecto != 1}" class="btn btn-primary" id="cargarPlan" data-toggle="modal">Cargar plan</a>

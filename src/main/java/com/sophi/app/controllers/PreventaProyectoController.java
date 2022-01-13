@@ -711,6 +711,8 @@ public class PreventaProyectoController {
 //				listaRecursosLider.add(recursoLider);
 //			}
 //		}
+
+		Long numActividades = actividadService.countByCodProyecto(proyecto.getCodProyecto());
 		
 		Cliente cp = clienteService.findOne(proyecto.getCodCliente());
 		modelM.put("proyecto", proyecto);
@@ -731,6 +733,7 @@ public class PreventaProyectoController {
 		model.addAttribute("recursosAprobador", listaRecursosAprobador);
 		model.addAttribute("tecTam", listaDISel.size());
 		model.addAttribute("clasificacionesProyecto", clasificacionproyectoService.findAll());
+		model.addAttribute("numAct",numActividades);
 		return "preventaProyectoConsulta";
     }
 	
