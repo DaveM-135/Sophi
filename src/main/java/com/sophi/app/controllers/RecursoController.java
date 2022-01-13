@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -233,14 +234,19 @@ public class RecursoController {
 	
 	@RequestMapping(value="/formRecurso", method = RequestMethod.POST)
 	public String guardarRecurso(@ModelAttribute Recurso recurso, MultipartFile fotoPerfil, Model model ,SessionStatus status) {
-		//InputStream imgPath = null;
+		InputStream imgPath = null;
+		byte[] bytesFotoPerfil = null;
 		try {
-			//URL url = new URL("https://sophitech.herokuapp.com/img/defaultUser.png");
-			//URL url = new URL("https://sophitech.herokuapp.com/img/fotos_nuevas/7_300x288.jpg");
-			//imgPath = url.openStream();
-			//byte[] bytesFotoPerfil = IOUtils.toByteArray(imgPath);
-			byte[] bytesFotoPerfil = fotoPerfil.getBytes();
-			recurso.setFoto(bytesFotoPerfil);
+			if(fotoPerfil == null){
+				URL url = new URL("https://sophitech.herokuapp.com/img/defaultUser.png");
+				//URL url = new URL("https://sophitech.herokuapp.com/img/fotos_nuevas/7_300x288.jpg");
+				imgPath = url.openStream();
+				bytesFotoPerfil = IOUtils.toByteArray(imgPath);
+				recurso.setFoto(bytesFotoPerfil);
+			} else {
+				bytesFotoPerfil = fotoPerfil.getBytes();
+				recurso.setFoto(bytesFotoPerfil);
+			}
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (IOException e) {
