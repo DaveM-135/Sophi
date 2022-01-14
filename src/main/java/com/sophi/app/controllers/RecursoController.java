@@ -237,7 +237,7 @@ public class RecursoController {
 		InputStream imgPath = null;
 		byte[] bytesFotoPerfil = null;
 		try {
-			if(fotoPerfil == null){
+			if(fotoPerfil.getSize() == 0){
 				URL url = new URL("https://sophitech.herokuapp.com/img/defaultUser.png");
 				//URL url = new URL("https://sophitech.herokuapp.com/img/fotos_nuevas/7_300x288.jpg");
 				imgPath = url.openStream();
