@@ -25,6 +25,8 @@ import com.sophi.app.models.entity.MesHabil;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.entity.ResumenForecastGeneral;
+import com.sophi.app.models.entity.Rol;
+import com.sophi.app.models.entity.Usuario;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.ICapHoraService;
 import com.sophi.app.models.service.IDetalleForecastService;
@@ -33,6 +35,7 @@ import com.sophi.app.models.service.IMesHabilService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.ISubtareaService;
+import com.sophi.app.models.service.IUsuarioService;
 
 @Controller
 public class EmailController {
@@ -45,6 +48,9 @@ public class EmailController {
 	
 	@Autowired
 	private IRecursoService recursoService;
+
+	@Autowired
+	private IUsuarioService usuarioService;
 	
 	@Autowired
 	private ICapHoraService capHoraService;
@@ -134,20 +140,28 @@ public class EmailController {
 		listRecursos = recursoService.findRecursosActivos();
 		if (listRecursos.size()>0) {
 			for (Recurso recurso : listRecursos) {
+				Usuario usuario = usuarioService.findByDescUsuario(recurso.getDescCorreoElectronico());
+				List<Rol> user_roles = usuario.getRoles();
 				
-				MailRequest request = new MailRequest();
-				request.setName(recurso.getDescRecurso());
-				request.setSubject("Recordatorio de captura");
-				request.setTo(recurso.getDescCorreoElectronico());
-				
-				Map<String, Object> model = new HashMap<String, Object>();
-				model.put("nombreRecurso", request.getName());
-				model.put("mensaje", "<h3>Recuerda que hoy debes capturar tus horas en la plataforma</h3>");
-				model.put("pie", "Evita que tu esfuerzo se vaya a la banca");
-				model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-time.png\">");
-				
-				MailResponse response = service.sendEmail(request, model);
-				System.out.println(response.getMessage());
+				if(user_roles.size() > 0){
+					for(Rol rol: user_roles){
+						if(rol.getDescRol() == "ROLE_USER" || rol.getDescRol() == "ROLE_APROB"){
+							MailRequest request = new MailRequest();
+							request.setName(recurso.getDescRecurso());
+							request.setSubject("Recordatorio de captura");
+							request.setTo(recurso.getDescCorreoElectronico());
+							
+							Map<String, Object> model = new HashMap<String, Object>();
+							model.put("nombreRecurso", request.getName());
+							model.put("mensaje", "<h3>Recuerda que hoy debes capturar tus horas en la plataforma</h3>");
+							model.put("pie", "Evita que tu esfuerzo se vaya a la banca");
+							model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-time.png\">");
+							
+							MailResponse response = service.sendEmail(request, model);
+							System.out.println(response.getMessage());
+						}
+					}
+				}
 			}
 		}
 	}
