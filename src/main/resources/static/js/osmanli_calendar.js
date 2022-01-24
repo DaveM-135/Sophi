@@ -125,9 +125,11 @@ renderCalendar: function(startDay, totalDays, currentDate, inicioMes, finMes) {
 	    					if (data[diaFestivo].codTipoDiaFestivo === 1){
 //	    						$day.addClass('d-flex justify-content-between');
 		    					$day.append('&nbsp;&nbsp;<i class="far fa-calendar-times calendarioSophi" data-toggle="tooltip" data-placement="top" title="' + data[diaFestivo].descDiaFestivo + '"></i>');
+                  $day.css('background-color','#3CE59D');
 	    					} else if(data[diaFestivo].codTipoDiaFestivo === 2){
 //	    						$day.addClass('d-flex justify-content-between');
 		    					$day.append('&nbsp;&nbsp;<i class="fas fa-birthday-cake calendarioSophi" data-toggle="tooltip" data-placement="top" title="' + data[diaFestivo].descDiaFestivo + '"></i>');
+                  $day.css('background-color','#3CE59D');
 	    					}
 	    					
 	    				}

@@ -36,11 +36,11 @@
                 <h3 style="color: #292f33; font-weight: 500;" >Buen d&iacute;a</h3>
 <!--                 <a target="_blank" href="https://hotelmix.es/weather/mexico-city-18199"><img src="https://w.bookcdn.com/weather/picture/21_18199_1_4_ecf0f1_250_bdc3c7_9da2a6_ffffff_1_2071c9_ffffff_0_6.png?scode=124&domid=583&anc_id=27248" /></a> -->
 <!-- <div id="cont_db08042677fe06aa806202f89ab06a73"><script type="text/javascript" async src="https://www.theweather.com/wid_loader/db08042677fe06aa806202f89ab06a73"></script></div> -->
-                 
-                 <div class="crop">
-                 <img src="https://www.theweather.com/wimages/foto04074011a4f67154cb89c13f44f01321.png">
-                 </div>
-                 
+
+					<div class="crop">
+						<img src="https://www.theweather.com/wimages/foto04074011a4f67154cb89c13f44f01321.png">
+					</div>
+
                  </div>
                  <div class="row">
                   <div class="col-sm-6">
@@ -90,9 +90,9 @@ start_date_dialog.ON_SELECT_FUNC = function(){
 				  
 				  <div class="col-sm-6">
                    
-                   <div class="card mb-4" style="margin-top: 27px;">
-<!--                 		<div class="card-header" th:text=${titulo}> -->
-<!--                 		</div> -->
+                   <!--<div class="card mb-4" style="margin-top: 27px;">
+                 		<div class="card-header" th:text=${titulo}>
+                		</div>
                 		<div class="card-body"  style="text-align: center;">
                   			<p style="font-weight: 600;">As&iacute; estuvo el clima la semana pasada</p>
                   			<div class="sv__point-wrapper">
@@ -109,31 +109,34 @@ start_date_dialog.ON_SELECT_FUNC = function(){
 							</div>
 							<p th:text="'Participaci&oacute;n ' + ${participacion} + ' de ' + ${totalActivos}" style="font-size: 12px;"></p>
 	     	 			</div>
-              		</div>
+              		</div>-->
+					<div class="container">
+						<div class="row">
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/K_CzwBUxMBc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						</div>
+					</div>
                   </div>
                   
-                  <!--<div class="col-sm-4">
-                  	Aqu� va el dossier embebido
-                  </div>-->
+				<div sec:authorize="hasRole('ROLE_ADMIN')" id="dossierContainer" style="width: 1400px; height: 1200px;"></div>
                   
                 </div>
                 <div class="row" sec:authorize="hasRole('ROLE_ADMIN')">
                 	<div class="col-sm">
-                		<!--<a class="twitter-timeline" href="https://twitter.com/Reforma?ref_src=twsrc%5Etfw">Tweets by Reforma</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
+						<a class="twitter-timeline" href="https://twitter.com/projecttips?ref_src=twsrc%5Etfw">Tweets by Project Tips</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						<a class="twitter-timeline" href="https://twitter.com/Microstrategy?ref_src=twsrc%5Etfw">Tweets by Microstrategy</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						<a class="twitter-timeline" href="https://twitter.com/CNN?ref_src=twsrc%5Etfw">Tweets by CNN</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                	</div>
+					<div class="col-sm">
+						<a class="twitter-timeline" href="https://twitter.com/El_Universal_Mx?ref_src=twsrc%5Etfw">Tweets by El Universal</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 						<a class="twitter-timeline" href="https://twitter.com/trello?ref_src=twsrc%5Etfw">Tweets by Trello</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                	</div>
-                	<div class="col-sm">
-                		<!--<a class="twitter-timeline" href="https://twitter.com/el_pais?ref_src=twsrc%5Etfw">Tweets by el_pais</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
-						<a class="twitter-timeline" href="https://twitter.com/DataCamp?ref_src=twsrc%5Etfw">Tweets by DataCamp</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                	</div>
-                	<div class="col-sm">
-                		<a class="twitter-timeline" href="https://twitter.com/MicroStrategy?ref_src=twsrc%5Etfw">Tweets by MicroStrategy</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                	</div>
+						<a class="twitter-timeline" href="https://twitter.com/miro?ref_src=twsrc%5Etfw">Tweets by Miro</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+					</div>
                 </div>
                 <div class="row" sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_APROB', 'ROLE_RH')">
                 	<div class="col-sm">
-                		<a class="twitter-timeline" href="https://twitter.com/trello?ref_src=twsrc%5Etfw">Tweets by Trello</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                		<a class="twitter-timeline" href="https://twitter.com/DataCamp?ref_src=twsrc%5Etfw">Tweets by DataCamp</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                		<a class="twitter-timeline" href="https://twitter.com/projecttips?ref_src=twsrc%5Etfw">Tweets by Project Tips</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						<a class="twitter-timeline" href="https://twitter.com/Microstrategy?ref_src=twsrc%5Etfw">Tweets by Microstrategy</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						<a class="twitter-timeline" href="https://twitter.com/CNN?ref_src=twsrc%5Etfw">Tweets by CNN</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 	</div>
                 	<div class="col-sm">
                 		<!-- Begin Page Content -->
@@ -170,8 +173,9 @@ start_date_dialog.ON_SELECT_FUNC = function(){
 			          </div>
 						
 					</div>
-			        <a class="twitter-timeline" href="https://twitter.com/el_pais?ref_src=twsrc%5Etfw">Tweets by el_pais</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-	                <a class="twitter-timeline" href="https://twitter.com/NewYorkTimes_es?ref_src=twsrc%5Etfw">Tweets by NewYorkTimes_es</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+			        <a class="twitter-timeline" href="https://twitter.com/El_Universal_Mx?ref_src=twsrc%5Etfw">Tweets by El Universal</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+					<a class="twitter-timeline" href="https://twitter.com/trello?ref_src=twsrc%5Etfw">Tweets by Trello</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+					<a class="twitter-timeline" href="https://twitter.com/miro?ref_src=twsrc%5Etfw">Tweets by Miro</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 	</div>
                 </div>
                 </div>
@@ -397,6 +401,8 @@ start_date_dialog.ON_SELECT_FUNC = function(){
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
   <script th:src="@{/js/capHoras_Ini.js}"></script>
 
+  <script sec:authorize="hasRole('ROLE_ADMIN')" src="https://analytics.guay.digital/MicroStrategyLibrary/javascript/embeddinglib.js"></script>
+  <script sec:authorize="hasRole('ROLE_ADMIN')" th:src="@{/js/embedmstr.js}"></script>
 </body>
 
 </html>
