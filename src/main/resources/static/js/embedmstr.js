@@ -1,6 +1,6 @@
 baseRestURL = "https://analytics.guay.digital/MicroStrategyLibrary";
 projectID   = "FE1BF18D4A3E6C7376EFD69ED8BD79C4";
-dossierID   = "CD60E23247F554F13024F69FEB8DAA50";
+dossierID   = "38C204614524304BEE191B88257D348F";
 /* since in this case we want dossier to load automatically for everyone we will use a demo user */
 username    = "desarrollo";
 password    = "plataforma2020";

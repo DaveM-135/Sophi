@@ -112,31 +112,31 @@ start_date_dialog.ON_SELECT_FUNC = function(){
               		</div>-->
 					<div class="container">
 						<div class="row">
-							<iframe width="560" height="315" src="https://www.youtube.com/embed/K_CzwBUxMBc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/XIMmGymRRTQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
 					</div>
                   </div>
                   
-				<div sec:authorize="hasRole('ROLE_ADMIN')" id="dossierContainer" style="width: 1400px; height: 1200px;"></div>
-                  
                 </div>
                 <div class="row" sec:authorize="hasRole('ROLE_ADMIN')">
                 	<div class="col-sm">
-						<a class="twitter-timeline" href="https://twitter.com/projecttips?ref_src=twsrc%5Etfw">Tweets by Project Tips</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						<div id="dossierContainer" style="width: 600px; height: 600px;"></div>
+						<!--<a class="twitter-timeline" href="https://twitter.com/projecttips?ref_src=twsrc%5Etfw">Tweets by Project Tips</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
 						<a class="twitter-timeline" href="https://twitter.com/Microstrategy?ref_src=twsrc%5Etfw">Tweets by Microstrategy</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-						<a class="twitter-timeline" href="https://twitter.com/CNN?ref_src=twsrc%5Etfw">Tweets by CNN</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						<!--<a class="twitter-timeline" href="https://twitter.com/CNN?ref_src=twsrc%5Etfw">Tweets by CNN</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
                 	</div>
 					<div class="col-sm">
 						<a class="twitter-timeline" href="https://twitter.com/El_Universal_Mx?ref_src=twsrc%5Etfw">Tweets by El Universal</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-						<a class="twitter-timeline" href="https://twitter.com/trello?ref_src=twsrc%5Etfw">Tweets by Trello</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-						<a class="twitter-timeline" href="https://twitter.com/miro?ref_src=twsrc%5Etfw">Tweets by Miro</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						<!--<a class="twitter-timeline" href="https://twitter.com/trello?ref_src=twsrc%5Etfw">Tweets by Trello</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						<a class="twitter-timeline" href="https://twitter.com/miro?ref_src=twsrc%5Etfw">Tweets by Miro</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
 					</div>
                 </div>
                 <div class="row" sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_APROB', 'ROLE_RH')">
                 	<div class="col-sm">
-                		<a class="twitter-timeline" href="https://twitter.com/projecttips?ref_src=twsrc%5Etfw">Tweets by Project Tips</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						<div id="dossierContainer" style="width: 600px; height: 600px;"></div>
+						<!--<a class="twitter-timeline" href="https://twitter.com/projecttips?ref_src=twsrc%5Etfw">Tweets by Project Tips</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
 						<a class="twitter-timeline" href="https://twitter.com/Microstrategy?ref_src=twsrc%5Etfw">Tweets by Microstrategy</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-						<a class="twitter-timeline" href="https://twitter.com/CNN?ref_src=twsrc%5Etfw">Tweets by CNN</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						<!--<a class="twitter-timeline" href="https://twitter.com/CNN?ref_src=twsrc%5Etfw">Tweets by CNN</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
                 	</div>
                 	<div class="col-sm">
                 		<!-- Begin Page Content -->
@@ -174,8 +174,8 @@ start_date_dialog.ON_SELECT_FUNC = function(){
 						
 					</div>
 			        <a class="twitter-timeline" href="https://twitter.com/El_Universal_Mx?ref_src=twsrc%5Etfw">Tweets by El Universal</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-					<a class="twitter-timeline" href="https://twitter.com/trello?ref_src=twsrc%5Etfw">Tweets by Trello</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-					<a class="twitter-timeline" href="https://twitter.com/miro?ref_src=twsrc%5Etfw">Tweets by Miro</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+					<!--<a class="twitter-timeline" href="https://twitter.com/trello?ref_src=twsrc%5Etfw">Tweets by Trello</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+					<a class="twitter-timeline" href="https://twitter.com/miro?ref_src=twsrc%5Etfw">Tweets by Miro</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
                 	</div>
                 </div>
                 </div>
@@ -401,8 +401,8 @@ start_date_dialog.ON_SELECT_FUNC = function(){
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
   <script th:src="@{/js/capHoras_Ini.js}"></script>
 
-  <script sec:authorize="hasRole('ROLE_ADMIN')" src="https://analytics.guay.digital/MicroStrategyLibrary/javascript/embeddinglib.js"></script>
-  <script sec:authorize="hasRole('ROLE_ADMIN')" th:src="@{/js/embedmstr.js}"></script>
+  <script src="https://analytics.guay.digital/MicroStrategyLibrary/javascript/embeddinglib.js"></script>
+  <script th:src="@{/js/embedmstr.js}"></script>
 </body>
 
 </html>
