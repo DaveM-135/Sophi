@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.sophi.app.Utiles;
 import com.sophi.app.mail.dto.MailRequest;
 import com.sophi.app.mail.dto.MailResponse;
 import com.sophi.app.mail.service.EmailService;
@@ -45,7 +46,7 @@ public class WebinarController {
 		model.put("nombreRecurso", request.getName());
 		model.put("mensaje", "<h3>Gracias por registrarte a nuestro webinar.<br><br>Posteriormente recibir&aacute;s un correo electr&oacute;nico<br>con el link de acceso al evento.</h3>");
 		model.put("pie", "Sophitech | MicroStrategy");
-		model.put("imagen","<img data-cfsrc=\"images/webinar.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-webinar.png\">");
+		model.put("imagen","<img data-cfsrc=\"images/webinar.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-webinar.png\">");
 		
 		MailResponse response = service.sendEmailConfirmacionWebinar(request, model);
 		System.out.println(response.getMessage());

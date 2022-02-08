@@ -335,8 +335,8 @@ public class EvaluacionProyectoController {
 		Map<String, Object> modelM = new HashMap<String, Object>();
 		modelM.put("nombreRecurso", request.getName());
 		modelM.put("mensaje", "<h3>Has sido asignado como evaluador del proyecto \""+ proy.getDescProyecto() + "\"</h3>.");
-		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-status.png\">");
-		modelM.put("btnLink", "<a href=\"https://sophitech.herokuapp.com/evaluacionProyectoEvaluador/" +codProyecto+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ir a la evaluación</a>");
+		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-status.png\">");
+		modelM.put("btnLink", "<a href=\"https://"+new Utiles().getHostName()+".com/evaluacionProyectoEvaluador/" +codProyecto+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ir a la evaluación</a>");
 		modelM.put("pie", "");
 		
 		MailResponse response = service.sendEmailEvaluador(request, modelM);
@@ -372,8 +372,8 @@ public class EvaluacionProyectoController {
 		Map<String, Object> modelM = new HashMap<String, Object>();
 		modelM.put("nombreRecurso", request.getName());
 		modelM.put("mensaje", "<h3>La etapa de evaluación del proyecto \""+ proy.getDescProyecto() + "\" ha terminado, requerimos tu validación final para el cierre del proyecto.<br> En el siguiente enlace encontraras la evaluación actual: </h3>.");
-		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-status.png\">");
-		modelM.put("btnLink", "<a href=\"https://sophitech.herokuapp.com/evaluacionProyectoEvaluador/" +codProyecto+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Cerrar evaluación</a>");
+		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-status.png\">");
+		modelM.put("btnLink", "<a href=\"https://"+new Utiles().getHostName()+".com/evaluacionProyectoEvaluador/" +codProyecto+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Cerrar evaluación</a>");
 		modelM.put("pie", "");
 		
 		MailResponse response = service.sendEmailEvaluador(request, modelM);

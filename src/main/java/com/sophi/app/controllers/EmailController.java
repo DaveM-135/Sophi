@@ -105,7 +105,7 @@ public class EmailController {
 			model.put("mensaje", "<h3>Te invitamos a nuestro webinar Revoluci&oacute;n anal&iacute;tica para retail el dia de ma&ntilde;ana 20 de Abril de 12:00 a 13:00 hrs.<br>Esperamos tu apoyo y tu asistencia.</h3><br><h5>Da clic en siguiente bot&oacute;n para entrar al webinar</h5>");
 			model.put("nombreRecurso", request.getName());
 			model.put("pie", "");
-			model.put("imagen","<img data-cfsrc=\"images/webinar.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-webinar.png\">");
+			model.put("imagen","<img data-cfsrc=\"images/webinar.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-webinar.png\">");
 			MailResponse response = inviteService.sendEmail(request, model);
 			System.out.println(response.getMessage());
 		}
@@ -133,7 +133,7 @@ public class EmailController {
 	}
 	
 	
-	//CRON Lun-Vier 10:00 hora mexico
+	//CRON Viernes 10:00 hora mexico
 	@Scheduled(cron="0 0 10 * * MON,TUE,WED,THU,FRI", zone="America/Mexico_City")
 	public void enviaRecordatorios() {
 		List<Recurso> listRecursos = new ArrayList<Recurso>();
@@ -155,7 +155,7 @@ public class EmailController {
 							model.put("nombreRecurso", request.getName());
 							model.put("mensaje", "<h3>Recuerda que hoy debes capturar tus horas en la plataforma</h3>");
 							model.put("pie", "Evita que tu esfuerzo se vaya a la banca");
-							model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-time.png\">");
+							model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-time.png\">");
 							
 							MailResponse response = service.sendEmail(request, model);
 							System.out.println(response.getMessage());
@@ -183,7 +183,7 @@ public class EmailController {
 					model.put("nombreRecurso", request.getName());
 					model.put("mensaje", "<h3>Recuerda que hoy debes contestar la encuesta Flash Clima</h3>");
 					model.put("pie", "");
-					model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-time.png\">");
+					model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-time.png\">");
 					
 					MailResponse response = service.sendEmail(request, model);
 					System.out.println(response.getMessage());
@@ -220,7 +220,7 @@ public class EmailController {
 				model.put("nombreRecurso", request.getName());
 				model.put("mensaje","<h3>" + detalleRecursoHoras.getRechazadas() + " horas fueron rechazadas la semana pasada, revisa tu captura en la plataforma</h3>");
 				model.put("pie", "");
-				model.put("imagen","<img data-cfsrc=\"images/rechazo.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-rechazo.png\">");
+				model.put("imagen","<img data-cfsrc=\"images/rechazo.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-rechazo.png\">");
 				
 				MailResponse response = service.sendEmail(request, model);
 				System.out.println(response.getMessage());
@@ -264,7 +264,7 @@ public class EmailController {
 				model.put("nombreRecurso", request.getName());
 				model.put("mensaje", "<h3>Recuerda que hoy debes aprobar las horas de la semana</h3>");
 				model.put("pie", "");
-				model.put("imagen","<img data-cfsrc=\"images/aprob.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-aprobacion.png\">");
+				model.put("imagen","<img data-cfsrc=\"images/aprob.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-aprobacion.png\">");
 				
 				MailResponse response = service.sendEmail(request, model);
 				System.out.println(response.getMessage());
@@ -363,7 +363,7 @@ public class EmailController {
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("nombreRecurso", request.getName());
 				model.put("mensaje", "<h3>Resumen de horas del " + objSDF.format(fecInicial) + " al " + objSDF.format(fecFinal) +"</h3>" + tablaDetalle.toString());
-				model.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-status.png\">");
+				model.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-status.png\">");
 				model.put("pie", "");
 				
 				MailResponse response = service.sendEmail(request, model);
@@ -447,7 +447,7 @@ public class EmailController {
 						Map<String, Object> model = new HashMap<String, Object>();
 						model.put("nombreRecurso", request.getName());
 						model.put("mensaje", "<h3>Resumen de horas del proyecto \""+ proyecto.getDescProyecto() + "\" del " + objSDF.format(fecInicial) + " al " + objSDF.format(fecFinal) +"</h3>" + tablaDetalle.toString());
-						model.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-status.png\">");
+						model.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-status.png\">");
 						model.put("pie", "");
 						
 						MailResponse response = service.sendEmail(request, model);
@@ -508,7 +508,7 @@ public class EmailController {
 	    				model.put("nombreRecurso", request.getName());
 	    				model.put("mensaje", "<h3>Recuerda que debes capturar tu forecast del mes de "+ nombreMes +" en la plataforma</h3>");
 	    				model.put("pie", "Evita que tu esfuerzo se vaya a la banca");
-	    				model.put("imagen","<img data-cfsrc=\"images/forecast.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-forecast.png\">");
+	    				model.put("imagen","<img data-cfsrc=\"images/forecast.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-forecast.png\">");
 	    				
 	    				MailResponse response = service.sendEmail(request, model);
 	    				System.out.println(response.getMessage());
@@ -537,7 +537,7 @@ public class EmailController {
 				model.put("nombreRecurso", request.getName());
 				model.put("mensaje", "<h3>La fecha de t&eacute;rmino del proyecto " + proyecto.getDescProyecto()+" ha vencido, es necesario cerrar el proyecto lo antes posible en la plataforma</h3>");
 				model.put("pie", "");
-				model.put("imagen","<img data-cfsrc=\"images/dashboard.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-dashboard.png\">");
+				model.put("imagen","<img data-cfsrc=\"images/dashboard.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-dashboard.png\">");
 				
 				MailResponse response = service.sendEmail(request, model);
 				System.out.println(response.getMessage());
@@ -562,7 +562,7 @@ public class EmailController {
 			model.put("nombreRecurso", request.getName());
 			model.put("mensaje", "<h3>Resumen forecast de los próximos meses</h3><br>" + tablaMailForecast());
 			model.put("pie", "");
-			model.put("imagen","<img data-cfsrc=\"images/forecast.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-forecast.png\">");
+			model.put("imagen","<img data-cfsrc=\"images/forecast.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-forecast.png\">");
 			
 			MailResponse response = service.sendEmail(request, model);
 			System.out.println(response.getMessage());
@@ -905,7 +905,7 @@ public class EmailController {
 			model.put("nombreRecurso", request.getName());
 			model.put("mensaje", "<h3>Recuerda que debes actualizar la encuesta flash clima de los días Lunes a Jueves de la siguiente semana</h3>");
 			model.put("pie", "");
-			model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-time.png\">");
+			model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-time.png\">");
 			
 			MailResponse response = service.sendEmail(request, model);
 			System.out.println(response.getMessage());
@@ -924,7 +924,7 @@ public class EmailController {
 			model.put("nombreRecurso", request.getName());
 			model.put("mensaje", "<h3>Recuerda que debes actualizar la encuesta flash clima del día Viernes</h3>");
 			model.put("pie", "");
-			model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-time.png\">");
+			model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-time.png\">");
 			
 			MailResponse response = service.sendEmail(request, model);
 			System.out.println(response.getMessage());

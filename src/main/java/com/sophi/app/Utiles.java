@@ -64,6 +64,8 @@ public class Utiles {
 		
 	}
 	
-
+	public String getHostName() {
+		return "sophitech.herokuapp";
+	}
 
 }

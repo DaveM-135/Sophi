@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.sophi.app.Utiles;
 import com.sophi.app.mail.dto.MailRequest;
 import com.sophi.app.mail.dto.MailResponse;
 import com.sophi.app.mail.service.EmailService;
@@ -269,7 +270,7 @@ public class PlaneacionController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("nombreRecurso", request.getName());
 		model.put("mensaje", "<h3>Has sido asignado al proyecto \""+ proy.getDescProyecto() + "\", puedes revisar tus actividades en la plataforma en la seccion \"Mis actividades\".</h3>");
-		model.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-status.png\">");
+		model.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-status.png\">");
 		model.put("pie", "");
 		
 		MailResponse response = service.sendEmail(request, model);

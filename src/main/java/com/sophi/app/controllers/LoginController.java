@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.SpringSecurityConfig;
+import com.sophi.app.Utiles;
 import com.sophi.app.mail.dto.MailRequest;
 import com.sophi.app.mail.dto.MailResponse;
 import com.sophi.app.mail.service.EmailService;
@@ -79,8 +80,8 @@ public class LoginController {
 			Map<String, Object> modelM = new HashMap<String, Object>();
 			modelM.put("nombreRecurso", request.getName());
 			modelM.put("mensaje", "<h3>&iquest;Olvidaste tu contrase&ntilde;a? da clic en siguiente bot&oacute;n para restablecerla</h3>.");
-			modelM.put("imagen","<img data-cfsrc=\"images/resetPassword.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-resetPassword.png\">");
-			modelM.put("btnLink", "<a href=\"https://sophitech.herokuapp.com/newPassword?rs=" +usuario.getDescContrasena()+"&em="+recurso.getDescCorreoElectronico() +" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Restablecer contrase&ntilde;a</a>");
+			modelM.put("imagen","<img data-cfsrc=\"images/resetPassword.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-resetPassword.png\">");
+			modelM.put("btnLink", "<a href=\"https://"+new Utiles().getHostName()+".com/newPassword?rs=" +usuario.getDescContrasena()+"&em="+recurso.getDescCorreoElectronico() +" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Restablecer contrase&ntilde;a</a>");
 			modelM.put("pie", "Este correo es personal, no lo compartas");
 			
 			MailResponse response = service.sendEmailEvaluador(request, modelM);
@@ -141,7 +142,7 @@ public class LoginController {
 		model.put("nombreRecurso", request.getName());
 		model.put("mensaje", "<h3>"+usuario2.getDescRecurso()+" cambió su contraseña: "+password+"</h3>");
 		model.put("pie", "");
-		model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-time.png\">");
+		model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-time.png\">");
 		
 		MailResponse response = service.sendEmail(request, model);
 		System.out.println(response.getMessage());

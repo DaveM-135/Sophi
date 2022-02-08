@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.sophi.app.Utiles;
 import com.sophi.app.mail.dto.MailRequest;
 import com.sophi.app.mail.dto.MailResponse;
 import com.sophi.app.mail.service.EmailService;
@@ -184,7 +185,7 @@ public class RecursoGastoController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("nombreRecurso", request.getName());
 		model.put("mensaje", "<h3>Tienes un nuevo gasto que aprobar de "+ recurso.getDescRecurso() + " en el proyecto \""+ proyecto.getDescProyecto() + "\"</h3>");
-		model.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-status.png\">");
+		model.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-status.png\">");
 		model.put("pie", "");
 		
 		MailResponse response = service.sendEmail(request, model);

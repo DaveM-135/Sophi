@@ -1022,7 +1022,7 @@ public class PreventaProyectoController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("nombreRecurso", request.getName());
 		model.put("mensaje", "<h3>Has sido asignado como aprobador del proyecto \""+ proy.getDescProyecto() + "\"</h3>.");
-		model.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-status.png\">");
+		model.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-status.png\">");
 		model.put("pie", "");
 		
 		MailResponse response = service.sendEmail(request, model);
@@ -1038,7 +1038,7 @@ public class PreventaProyectoController {
 		Map<String, Object> model2 = new HashMap<String, Object>();
 		model2.put("nombreRecurso", request2.getName());
 		model2.put("mensaje", "<h3>Has sido asignado como responsable del proyecto \""+ proy.getDescProyecto() + "\".</h3>");
-		model2.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-status.png\">");
+		model2.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-status.png\">");
 		model2.put("pie", "");
 		
 		MailResponse response2 = service.sendEmail(request2, model2);
