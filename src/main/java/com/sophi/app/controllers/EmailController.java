@@ -20,6 +20,7 @@ import com.sophi.app.mail.service.InviteEmailService;
 import com.sophi.app.models.entity.CapHora;
 import com.sophi.app.models.entity.DetalleForecast;
 import com.sophi.app.models.entity.DetalleRecursoHoras;
+import com.sophi.app.models.entity.InviteContacto;
 import com.sophi.app.models.entity.MesHabil;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.Recurso;
@@ -71,6 +72,66 @@ public class EmailController {
 	
 	@Autowired
 	private IInviteContactoService inviteContactoService;
+	
+//	@Scheduled(cron="0 30 11 * * *", zone="America/Mexico_City")
+	public void enviaInvitacionWebinar() {
+		List<InviteContacto> listaContactosInvite = new ArrayList<InviteContacto>();
+		listaContactosInvite = inviteContactoService.findAll();
+		for (InviteContacto inviteContacto : listaContactosInvite) {
+			MailRequest request = new MailRequest();
+			request.setName(inviteContacto.getNombre());
+			request.setSubject("Revolución Analítica para retail");
+			request.setTo(inviteContacto.getEmail());
+			
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("nombre_invite", request.getName());
+			
+			MailResponse response = inviteService.sendEmail(request, model);
+			System.out.println(response.getMessage());
+		}
+	}
+	
+//	@Scheduled(cron="0 53 18 * * *", zone="America/Mexico_City")
+	public void enviaLinkWebinar() {
+		List<InviteContacto> listaContactosInvite = new ArrayList<InviteContacto>();
+		listaContactosInvite = inviteContactoService.findAll();
+		for (InviteContacto inviteContacto : listaContactosInvite) {
+			MailRequest request = new MailRequest();
+			request.setName(inviteContacto.getNombre());
+			request.setSubject("Revolución Analítica para retail");
+			request.setTo(inviteContacto.getEmail());
+			
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("mensaje", "<h3>Te invitamos a nuestro webinar Revoluci&oacute;n anal&iacute;tica para retail el dia de ma&ntilde;ana 20 de Abril de 12:00 a 13:00 hrs.<br>Esperamos tu apoyo y tu asistencia.</h3><br><h5>Da clic en siguiente bot&oacute;n para entrar al webinar</h5>");
+			model.put("nombreRecurso", request.getName());
+			model.put("pie", "");
+			model.put("imagen","<img data-cfsrc=\"images/webinar.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-webinar.png\">");
+			MailResponse response = inviteService.sendEmail(request, model);
+			System.out.println(response.getMessage());
+		}
+	}
+	
+	
+//	@Scheduled(cron="0 16 10 * * *", zone="America/Mexico_City")  
+	public void enviaInvitacionWebinarFarmacias() {
+		List<InviteContacto> listaContactosInvite = new ArrayList<InviteContacto>();
+		listaContactosInvite = inviteContactoService.findAll();
+		for (InviteContacto inviteContacto : listaContactosInvite) {
+			MailRequest request = new MailRequest();
+			request.setName(inviteContacto.getNombre());
+			request.setSubject("Revolución Analítica");
+			request.setTo(inviteContacto.getEmail());
+			
+			Map<String, Object> model = new HashMap<String, Object>();
+//			model.put("mensaje", "<h3>Te invitamos a nuestro webinar Revoluci&oacute;n anal&iacute;tica para retail el dia de ma&ntilde;ana 20 de Abril de 12:00 a 13:00 hrs.<br>Esperamos tu apoyo y tu asistencia.</h3><br><h5>Da clic en siguiente bot&oacute;n para entrar al webinar</h5>");
+//			model.put("nombreRecurso", request.getName());
+//			model.put("pie", "");
+//			model.put("imagen","<img data-cfsrc=\"images/webinar.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-webinar.png\">");
+			MailResponse response = inviteService.sendEmailFarmacias(request, model);
+			System.out.println(response.getMessage());
+		}
+	}
+	
 	
 	//CRON Viernes 10:00 hora mexico
 	@Scheduled(cron="0 0 10 * * MON,TUE,WED,THU,FRI", zone="America/Mexico_City")
@@ -832,8 +893,8 @@ public class EmailController {
 		}
 	
 	//CRON Viernes 10:00 hora mexico
-		//@Scheduled(cron="0 0 10 * * MON,TUE,WED,THU", zone="America/Mexico_City")
-		/*public void enviaRecordatorioFlashClimaLunesJueves() {
+		@Scheduled(cron="0 0 10 * * MON,TUE,WED,THU", zone="America/Mexico_City")
+		public void enviaRecordatorioFlashClimaLunesJueves() {
 			Recurso recurso = recursoService.findOne(15L);
 			MailRequest request = new MailRequest();
 			request.setName(recurso.getDescRecurso());
@@ -848,12 +909,12 @@ public class EmailController {
 			
 			MailResponse response = service.sendEmail(request, model);
 			System.out.println(response.getMessage());
-		}*/
+		}
 		
 		//CRON Lunes 10:00 hora mexico
-		//@Scheduled(cron="0 0 10 * * MON", zone="America/Mexico_City")
-		/*public void enviaRecordatorioFlashClimaViernes() {
-			//Recurso recurso = recursoService.findOne(15L);
+		@Scheduled(cron="0 0 10 * * MON", zone="America/Mexico_City")
+		public void enviaRecordatorioFlashClimaViernes() {
+			Recurso recurso = recursoService.findOne(15L);
 			MailRequest request = new MailRequest();
 			request.setName(recurso.getDescRecurso());
 			request.setSubject("Recordatorio de flash clima");
@@ -867,6 +928,6 @@ public class EmailController {
 			
 			MailResponse response = service.sendEmail(request, model);
 			System.out.println(response.getMessage());
-		}*/
+		}
 	
 }
