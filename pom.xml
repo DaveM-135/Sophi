@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sophi</groupId>
-	<artifactId>BasileoH</artifactId>
+	<artifactId>Sophi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Basileo Hector</name>
-	<description>Basileo Hector</description>
+	<name>Sophitech</name>
+	<description>Sophitech</description>
 
 <!-- 	<properties> -->
 <!-- 		<java.version>11</java.version> -->
