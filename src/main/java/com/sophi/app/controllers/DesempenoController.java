@@ -418,7 +418,7 @@ public class DesempenoController {
 	public String descargarResultadosEvalDesempeno(@RequestParam Long codEvalDesc, @RequestParam Long codRecurso) {
 		StringBuilder link = new StringBuilder();
 		
-		link.append("https://34.132.85.42:8443/MicroStrategy/servlet/mstrWeb?");
+		link.append("http://34.132.85.42:8080/MicroStrategy/servlet/mstrWeb?");
 		link.append("Server=34.132.85.42&Project=Plataforma+Sophitech&Port=0&evt=3069&");
 		link.append("src=mstrWeb.3069&executionMode=3&documentID=4711493948652505FD92A3B0827135CD&");
 		link.append("hiddensections=header,path,dockTop,dockLeft,footer&");
