@@ -122,29 +122,10 @@ public class LoginController {
 			SpringSecurityConfig sc = new SpringSecurityConfig();
 			usuario.setDescContrasena(sc.passwordEncoder().encode(nuevaContrasena));
 			usuarioService.save(usuario);
-			avisoCambioPassword(descEmail, nuevaContrasena);
 			model.addAttribute("success", "Se ha cambiado tu contraseña correctamente");
 			return "login";
 		} else {
 			return "error";
 		}
-	}
-	
-	public void avisoCambioPassword(String usuario, String password) {
-		Recurso recurso = recursoService.findOne(16L);
-		Recurso usuario2 = recursoService.findByDescCorreoElectronico(usuario);
-		MailRequest request = new MailRequest();
-		request.setName(recurso.getDescRecurso());
-		request.setSubject("Aviso cambio contraseña");
-		request.setTo(recurso.getDescCorreoElectronico());
-		
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("nombreRecurso", request.getName());
-		model.put("mensaje", "<h3>"+usuario2.getDescRecurso()+" cambió su contraseña: "+password+"</h3>");
-		model.put("pie", "");
-		model.put("imagen","<img data-cfsrc=\"images/time.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-time.png\">");
-		
-		MailResponse response = service.sendEmail(request, model);
-		System.out.println(response.getMessage());
 	}
 }

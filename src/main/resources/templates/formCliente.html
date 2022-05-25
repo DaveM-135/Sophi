@@ -66,14 +66,14 @@
 	                                        </div>
 	                                        <div class="form-group col-12 col-md-3">
 	                                            <label class="col-form-label">R.F.C. con homoclave:</label>
-	                                            <input type="text" th:field="*{descRFC}" class="form-control" th:errorClass="form-control alert-danger" oninvalid="setCustomValidity('RFC con homoclave inv\u00E1lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"/>
+	                                            <input type="text" th:field="*{descRFC}" class="form-control" th:errorClass="form-control alert-danger" oninvalid="setCustomValidity('RFC con homoclave inv\u00E1lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="([A-Z,ï¿½,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"/>
 	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descRFC')}" th:errors="*{descRFC}"></small>
 	                                        </div>
 	                                    </div>
 	                                    <div class="row">
 	                                        <div class="form-group col-12 col-md-2">
 	                                            <label class="col-form-label">Facturaci&oacute;n anual (MXN):</label>
-	                                            <input type="text" th:field="*{impFacturacionAnual}" min=0.0 max=99999999.0 class="form-control" th:errorClass="form-control alert-danger" placeholder="$" oninvalid="setCustomValidity('Presupuesto inv\u00E1lido')" onchange="try{setCustomValidity('')}catch(e){}"/>
+	                                            <input type="text" th:field="*{impFacturacionAnual}" min=0.0 max=999999999999.0 class="form-control" th:errorClass="form-control alert-danger" placeholder="$" oninvalid="setCustomValidity('Presupuesto inv\u00E1lido')" onchange="try{setCustomValidity('')}catch(e){}"/>
 	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('impFacturacionAnual')}" th:errors="*{impFacturacionAnual}"></small>
 	                                        </div>
 	                                        <div class="form-group col-12 col-md-3">
