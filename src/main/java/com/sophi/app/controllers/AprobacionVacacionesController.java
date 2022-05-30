@@ -159,7 +159,7 @@ public class AprobacionVacacionesController {
     	
     	//Se obtiene los recurso de los proyectos solicitados
     	for (Long clvPro : proyectos) {
-    			listProyectoRecurso.addAll(proyectoRecursoService.findByProyectoRecursoIdCodProyecto(clvPro));
+    		listProyectoRecurso.addAll(proyectoRecursoService.findByProyectoRecursoIdCodProyecto(clvPro));
 		}
     	
     	//si existen recursos en los proyectos
@@ -167,15 +167,17 @@ public class AprobacionVacacionesController {
 			if (todos.equals("si")) {
 				HashSet<Long> recursosUnicos = new HashSet<Long>();
 				for (ProyectoRecurso proyectoRecurso : listProyectoRecurso) {
-					recursosUnicos.add(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
+					Recurso recursoAux = recursoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
+					if(recursoAux.getValActivo().equals(1L)) {
+						recursosUnicos.add(recursoAux.getCodRecurso());
+					}
 				}
-				if(recursosUnicos.size()>0) {
+				if(recursosUnicos.size()>0) {					
 					for (Long codR : recursosUnicos) {
 					RecursoVacaciones recursoVacaciones = recursoVacacionesService.findById(codR);
 					Recurso recurso = recursoService.findOne(recursoVacaciones.getCodRecurso());
 					
 						if (recurso.getValActivo().equals(1L) && !recurso.getCodRecurso().equals(codRecursoSesion)) {
-						
 							recursoVacaciones.setNombreRecurso(recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno());
 							
 							List<SolicitudVacaciones> listaSolicitudes = new ArrayList<>();
@@ -195,6 +197,7 @@ public class AprobacionVacacionesController {
 					}
 				}
 			} else {
+				System.out.println("Caso contrario");
 				for (ProyectoRecurso proyectoRecurso : listProyectoRecurso) {
 					RecursoVacaciones recursoVacaciones = recursoVacacionesService.findById(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
 					Recurso recurso = recursoService.findOne(recursoVacaciones.getCodRecurso());
@@ -497,8 +500,5 @@ public class AprobacionVacacionesController {
     	}
     	
     }
-    
-    
-    
 
 }

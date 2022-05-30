@@ -1,4 +1,4 @@
-baseRestURL = "https://34.132.85.42:8443/MicroStrategyLibrary";
+baseRestURL = "https://basileo-mstr.com:8080/MicroStrategyLibrary";
 projectID   = "FE1BF18D4A3E6C7376EFD69ED8BD79C4";
 dossierID   = "38C204614524304BEE191B88257D348F";
 /* since in this case we want dossier to load automatically for everyone we will use a demo user */
