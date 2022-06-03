@@ -551,41 +551,4 @@ public class CapHorasIniController {
 		
 		return "layout/capHora :: copiaDetActividades";
 	}
-	
-	@RequestMapping(value="/getReporteHorasCapturadasXLSXIni")
-	@ResponseBody
-	public String getReporteHorasCapturadasXLSX(@RequestParam String fInicio, @RequestParam String fFin, @RequestParam String rec, Model model) {
-		StringBuilder link = new StringBuilder();
-		link.append("https://34.132.85.42:8443/MicroStrategy/servlet/mstrWeb?");
-		link.append("Server=34.132.85.42&Project=Plataforma+Sophitech&Port=0&evt=3069&");
-		link.append("src=mstrWeb.3069&executionMode=4&documentID=2775E8ED433F77D1DAC036920E4E3BD7&");
-		link.append("hiddensections=header,path,dockTop,dockLeft,footer&");
-		link.append("valuePromptAnswers=");
-		link.append(fInicio);
-		link.append("%5e");
-		link.append(fFin);
-		link.append("%5e");
-		link.append(rec);
-		link.append("&uid=desarrollo&pwd=plataforma2020");
-		return link.toString();
-	}
-	
-	@RequestMapping(value="/getReporteHorasCapturadasPdfIni")
-	@ResponseBody
-	public String getReporteHorasCapturadasPdf(@RequestParam String fInicio, @RequestParam String fFin, @RequestParam String rec, Model model) {
-		StringBuilder link = new StringBuilder();
-		link.append("https://34.132.85.42:8443/MicroStrategy/servlet/mstrWeb?");
-		link.append("Server=34.132.85.42&Project=Plataforma+Sophitech&Port=0&evt=3069&");
-		link.append("src=mstrWeb.3069&executionMode=3&documentID=D3A4D1CE4AC846278208B3AAF745DD7A&");
-		link.append("hiddensections=header,path,dockTop,dockLeft,footer&");
-		link.append("valuePromptAnswers=");
-		link.append(fInicio);
-		link.append("%5e");
-		link.append(fFin);
-		link.append("%5e");
-		link.append(rec);
-		link.append("&uid=desarrollo&pwd=plataforma2020");
-		return link.toString();
-	}
-
 }
