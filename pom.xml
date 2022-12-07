@@ -11,7 +11,7 @@
 	<groupId>com.sophi</groupId>
 	<artifactId>Sophi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>Sophitech</name>
 	<description>Sophitech</description>
 
