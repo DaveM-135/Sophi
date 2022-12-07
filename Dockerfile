@@ -1,2 +1,5 @@
-FROM tomcat:9.0.70-jdk8
-COPY Sophi-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/
+FROM openjdk:8
+WORKDIR /home
+ADD Sophi-0.0.1-SNAPSHOT.jar ./
+EXPOSE 8080
+CMD java -jar Sophi-0.0.1-SNAPSHOT.jar
