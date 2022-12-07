@@ -1,5 +1,2 @@
-FROM openjdk:8
-WORKDIR /home
-ADD Sophi-0.0.1-SNAPSHOT.jar ./
-EXPOSE 8080
-CMD java -jar Sophi-0.0.1-SNAPSHOT.jar
+FROM jetty:9.4.49-jre8-alpine
+ADD Sophi.war /var/lib/jetty/webapps
