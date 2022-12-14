@@ -1,4 +1,2 @@
-FROM openjdk:8
-WORKDIR /home
-COPY Sophi.jar ./
-CMD java -jar Sophi.jar
+FROM jetty:9.4.50-jre8-alpine
+COPY /target/Sophi.war /var/lib/jetty/webapps
