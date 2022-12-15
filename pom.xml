@@ -11,7 +11,7 @@
 	<groupId>com.sophi</groupId>
 	<artifactId>Sophi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>Sophitech</name>
 	<description>Sophitech</description>
 
@@ -53,7 +53,7 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jetty</artifactId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
 		</dependency>
 
 		<dependency>
