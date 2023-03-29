@@ -26,7 +26,7 @@ public class CompetenciasPerfiles implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "cod_perfilCompetencia")
+	@Column(name = "cod_perfil_competencia")
 	private Long codPerfilCompetencia;
 	
 	@Column(name = "desc_definicion")

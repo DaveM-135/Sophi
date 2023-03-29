@@ -26,7 +26,7 @@ public class MetasPerfiles implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "cod_perfilMeta")
+	@Column(name = "cod_perfil_meta")
 	private Long codPerfilMeta;
 	
 	@Column(name = "val_porcentaje")

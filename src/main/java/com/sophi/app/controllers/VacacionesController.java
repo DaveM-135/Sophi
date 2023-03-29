@@ -292,7 +292,7 @@ public class VacacionesController {
 			modelM.put("nombreRecurso", request.getName());
 			modelM.put("mensaje", "<h3>Nueva solicitud de vacaciones por responder de \""+ recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno() + "\"</h3>.");
 			modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-banca.png\">");
-			modelM.put("btnLink", "<a href=\"https://"+new Utiles().getHostName()+".com/aprobacionVacaciones/" +mailAprobador+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ver detalle</a>");
+			modelM.put("btnLink", "<a href=\"http://"+new Utiles().getHostName()+".com/aprobacionVacaciones/" +mailAprobador+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ver detalle</a>");
 			modelM.put("pie", "");
 			
 			MailResponse response = service.sendEmailEvaluador(request, modelM);

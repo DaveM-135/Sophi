@@ -1,25 +1,19 @@
 package com.sophi.app;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 import com.sophi.app.models.service.JpaUserDetailsService;
 
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-@Configuration
-public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
-	
-	 @Autowired
-	 private JpaUserDetailsService userDetailsService;
-	 
-	 @Autowired
-	 private BCryptPasswordEncoder passwordEncoder;
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+public class SpringSecurityConfig {
 		
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -27,9 +21,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 
 	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/css/**","/js/**","/img/**","/scss/**","/vendor/**","/sendingEmail","/resetPassword","/newPassword**","/registroWebinar**","/fotoRecursoPerfil/**").permitAll()
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.csrf().disable().authorizeRequests().antMatchers("/css/**","/js/**","/img/**","/scss/**","/vendor/**","/sendingEmail","/resetPassword","/newPassword**","/registroWebinar**","/fotoRecursoPerfil/**").permitAll()
 //		.antMatchers("/**").hasAnyRole("USER")
 //		.antMatchers("/listaClientes/**").hasAnyRole("ROLE_ADMIN","ROLE_LIDER")
 //		.antMatchers("/agenda").hasAnyRole("ROLE_ADMIN","ROLE_LIDER")
@@ -38,7 +32,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 //		.antMatchers("/misActividades/**").hasAnyRole("ROLE_LIDER","ROLE_USER")
 //		.antMatchers("/aprobacionhoras/**").hasAnyRole("ROLE_LIDER","ROLE_ADMIN")
 //		.antMatchers("/aprobaciongastos/**").hasAnyRole("ROLE_LIDER","ROLE_ADMIN")
-		.anyRequest().authenticated()
+		.anyRequest().authenticated().and().httpBasic()
+		.and()
+		.sessionManagement()
 		.and()
 			.formLogin()
 				.loginPage("/login")
@@ -47,17 +43,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 			.logout().permitAll()
 		.and()
 			.exceptionHandling().accessDeniedPage("/accessDenied");
+
+		return http.build();
 	}
 
-
-	
-	@Autowired
-	public void configurerGlobal(AuthenticationManagerBuilder builder) throws Exception {
-		builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-//		String[ ] pass = {"QZA3zk4P","cNV5WFjB"};
-//		for (String p : pass) {
-//			System.out.println(p + " - " + passwordEncoder.encode(p));
-//		}
+	@Bean
+	public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder passwordEncoder, JpaUserDetailsService userDetailsService) 
+	  throws Exception {
+	    return http.getSharedObject(AuthenticationManagerBuilder.class)
+	      .userDetailsService(userDetailsService)
+	      .passwordEncoder(passwordEncoder)
+	      .and()
+	      .build();
 	}
 	
 }

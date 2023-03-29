@@ -65,7 +65,7 @@ public class Utiles {
 	}
 	
 	public String getHostName() {
-		return "sophitech.herokuapp";
+		return "34.132.85.42:8081";
 	}
 
 }
