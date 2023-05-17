@@ -65,7 +65,7 @@ public class Utiles {
 	}
 	
 	public String getHostName() {
-		return "34.132.85.42:8081";
+		return "35.235.100.42:8081";
 	}
 
 }
