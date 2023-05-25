@@ -71,6 +71,8 @@ public class VacacionesController {
 	@Autowired
 	private IDetalleSolicitudService detalleSolicitudService;
 
+	Date fecha = null;
+
 	@GetMapping({"/misVacaciones/{mail}"})
 	public String listadoVacaciones(@PathVariable String mail, Model model) {
 		
@@ -324,7 +326,6 @@ public class VacacionesController {
 		String fecSolicitadoStrFmt = fecSolicitadoAnio + "-" + fecSolicitadoMes + "-" + fecSolicitadoDia;
 		
 		System.out.println(fecSolicitadoStrFmt);
-		Date fecha = null;
 		try {
 			fecha = dateFormatter.parse(fecSolicitadoStrFmt);
 		} catch (ParseException e) {

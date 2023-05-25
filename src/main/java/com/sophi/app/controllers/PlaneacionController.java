@@ -97,10 +97,10 @@ public class PlaneacionController {
 			proyectoRecursoService.saveAll(listaRecursosAsignados);
 			
 			//Envio de noificacion al recurso de nueva asignacion a proyecto
-			for (ProyectoRecurso proyectoRecurso : listaRecursosAsignados) {
-				Recurso recurso = recursoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
-				Proyecto proyecto = proyectoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodProyecto());
-			}
+			//for (ProyectoRecurso proyectoRecurso : listaRecursosAsignados) {
+				//Recurso recurso = recursoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
+				//Proyecto proyecto = proyectoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodProyecto());
+			//}
 			
 			Proyecto setValPlanProy = proyectoService.findOne(codProyecto);
 			setValPlanProy.setValPlan(1L);

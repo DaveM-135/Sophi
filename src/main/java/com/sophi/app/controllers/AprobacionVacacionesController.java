@@ -362,52 +362,48 @@ public class AprobacionVacacionesController {
     	List<Proyecto> listaProyectoRecursoBKP = new ArrayList<Proyecto>();
 		listaProyectoRecursoBKP = proyectoService.findListaProyectosRecursoAprobadorTodos(solicitud.getCodRecurso());
     	
-    	if (solicitud != null) {
-    		solicitud.setFecRechazo(new Utiles().getFechaActual());
-    		solicitud.setFecCancelacion(null);
-    		solicitud.setFecAprobacion(null);
-    		solicitud.setCodRecursoAprobador(codRecurso);
-    		
-    		RecursoVacaciones recursoVacaciones = null;
-    		recursoVacaciones = recursoVacacionesService.findById(solicitud.getCodRecurso());
-    		if(recursoVacaciones != null) {
+    	solicitud.setFecRechazo(new Utiles().getFechaActual());
+		solicitud.setFecCancelacion(null);
+		solicitud.setFecAprobacion(null);
+		solicitud.setCodRecursoAprobador(codRecurso);
+		
+		RecursoVacaciones recursoVacaciones = null;
+		recursoVacaciones = recursoVacacionesService.findById(solicitud.getCodRecurso());
+		if(recursoVacaciones != null) {
 //    			recursoVacaciones.setValAprobado(recursoVacaciones.getValAprobado() + solicitud.getValDiasSolicitados());
-    			recursoVacaciones.setValDisponibles(recursoVacaciones.getValDisponibles() + solicitud.getValDiasSolicitados());
-    			recursoVacacionesService.save(recursoVacaciones);
-    		}
-    		
-    		solicitudVacacionesService.save(solicitud);
-    		
-    		if(listaProyectoRecursoBKP != null) {
-    			for(Proyecto proyecto: listaProyectoRecursoBKP) {
-    				proyecto.setCodRecursoAprobadorBKP(null);
-    				proyectoService.save(proyecto);
-    			}
-    		}
-    		
-    		//Mail Notificacion INICIO 
-    		Recurso recurso = recursoService.findOne(solicitud.getCodRecurso());
-    		Recurso recursoAprobador = recursoService.findOne(codRecurso);
-    		MailRequest request = new MailRequest();
-    		request.setName(recurso.getDescRecurso());
-    		request.setSubject("Respuesta de tu solicitud de vacaciones");
-    		request.setTo(recurso.getDescCorreoElectronico());
-    		
-    		Map<String, Object> modelM = new HashMap<String, Object>();
-    		modelM.put("nombreRecurso", request.getName());
-    		modelM.put("mensaje", "<h3>"+recursoAprobador.getDescRecurso() + " ha rechazado tu solicitud de vacaciones.</h3>.");
-    		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-banca.png\">");
-    		modelM.put("btnLink", "<a href=\"https://"+new Utiles().getHostName()+".com/misVacaciones/" +recurso.getDescCorreoElectronico()+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ver detalle</a>");
-    		modelM.put("pie", "");
-    		
-    		MailResponse response = service.sendEmailEvaluador(request, modelM);
-    		System.out.println(response.getMessage());
-    		//Mail Notificacion FIN 
-    		
-    		return "ok";
-    	} else {
-    		return "noOK";
-    	}
+			recursoVacaciones.setValDisponibles(recursoVacaciones.getValDisponibles() + solicitud.getValDiasSolicitados());
+			recursoVacacionesService.save(recursoVacaciones);
+		}
+		
+		solicitudVacacionesService.save(solicitud);
+		
+		if(listaProyectoRecursoBKP != null) {
+			for(Proyecto proyecto: listaProyectoRecursoBKP) {
+				proyecto.setCodRecursoAprobadorBKP(null);
+				proyectoService.save(proyecto);
+			}
+		}
+		
+		//Mail Notificacion INICIO 
+		Recurso recurso = recursoService.findOne(solicitud.getCodRecurso());
+		Recurso recursoAprobador = recursoService.findOne(codRecurso);
+		MailRequest request = new MailRequest();
+		request.setName(recurso.getDescRecurso());
+		request.setSubject("Respuesta de tu solicitud de vacaciones");
+		request.setTo(recurso.getDescCorreoElectronico());
+		
+		Map<String, Object> modelM = new HashMap<String, Object>();
+		modelM.put("nombreRecurso", request.getName());
+		modelM.put("mensaje", "<h3>"+recursoAprobador.getDescRecurso() + " ha rechazado tu solicitud de vacaciones.</h3>.");
+		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-banca.png\">");
+		modelM.put("btnLink", "<a href=\"https://"+new Utiles().getHostName()+".com/misVacaciones/" +recurso.getDescCorreoElectronico()+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ver detalle</a>");
+		modelM.put("pie", "");
+		
+		MailResponse response = service.sendEmailEvaluador(request, modelM);
+		System.out.println(response.getMessage());
+		//Mail Notificacion FIN 
+		
+		return "ok";
     	
     }
     
@@ -422,50 +418,46 @@ public class AprobacionVacacionesController {
     	List<Proyecto> listaProyectoRecursoBKP = new ArrayList<Proyecto>();
 		listaProyectoRecursoBKP = proyectoService.findListaProyectosRecursoAprobadorTodos(solicitud.getCodRecurso());
 		
-    	if (solicitud != null) {
-    		solicitud.setFecCancelacion(new Utiles().getFechaActual());
-    		solicitud.setCodRecursoAprobador(codRecurso);
-    		
-    		RecursoVacaciones recursoVacaciones = null;
-    		recursoVacaciones = recursoVacacionesService.findById(solicitud.getCodRecurso());
-    		if(recursoVacaciones != null) {
-    			recursoVacaciones.setValAprobado(recursoVacaciones.getValAprobado() - solicitud.getValDiasSolicitados());
-    			recursoVacaciones.setValDisponibles(recursoVacaciones.getValDisponibles() + solicitud.getValDiasSolicitados());
-    			recursoVacacionesService.save(recursoVacaciones);
-    		}
-    		
-    		solicitudVacacionesService.save(solicitud);
-    		
-    		if(listaProyectoRecursoBKP != null) {
-    			for(Proyecto proyecto: listaProyectoRecursoBKP) {
-    				proyecto.setCodRecursoAprobadorBKP(null);
-    				proyectoService.save(proyecto);
-    			}
-    		}
-    		
-    		//Mail Notificacion INICIO 
-    		Recurso recurso = recursoService.findOne(solicitud.getCodRecurso());
-    		Recurso recursoAprobador = recursoService.findOne(codRecurso);
-    		MailRequest request = new MailRequest();
-    		request.setName(recurso.getDescRecurso());
-    		request.setSubject("Respuesta de tu solicitud de vacaciones");
-    		request.setTo(recurso.getDescCorreoElectronico());
-    		
-    		Map<String, Object> modelM = new HashMap<String, Object>();
-    		modelM.put("nombreRecurso", request.getName());
-    		modelM.put("mensaje", "<h3>"+recursoAprobador.getDescRecurso() + " ha cancelado tu solicitud de vacaciones.</h3>.");
-    		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-banca.png\">");
-    		modelM.put("btnLink", "<a href=\"https://"+new Utiles().getHostName()+".com/misVacaciones/" +recurso.getDescCorreoElectronico()+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ver detalle</a>");
-    		modelM.put("pie", "");
-    		
-    		MailResponse response = service.sendEmailEvaluador(request, modelM);
-    		System.out.println(response.getMessage());
-    		//Mail Notificacion FIN 
-    		
-    		return "ok";
-    	} else {
-    		return "noOK";
-    	}
+    	solicitud.setFecCancelacion(new Utiles().getFechaActual());
+		solicitud.setCodRecursoAprobador(codRecurso);
+		
+		RecursoVacaciones recursoVacaciones = null;
+		recursoVacaciones = recursoVacacionesService.findById(solicitud.getCodRecurso());
+		if(recursoVacaciones != null) {
+			recursoVacaciones.setValAprobado(recursoVacaciones.getValAprobado() - solicitud.getValDiasSolicitados());
+			recursoVacaciones.setValDisponibles(recursoVacaciones.getValDisponibles() + solicitud.getValDiasSolicitados());
+			recursoVacacionesService.save(recursoVacaciones);
+		}
+		
+		solicitudVacacionesService.save(solicitud);
+		
+		if(listaProyectoRecursoBKP != null) {
+			for(Proyecto proyecto: listaProyectoRecursoBKP) {
+				proyecto.setCodRecursoAprobadorBKP(null);
+				proyectoService.save(proyecto);
+			}
+		}
+		
+		//Mail Notificacion INICIO 
+		Recurso recurso = recursoService.findOne(solicitud.getCodRecurso());
+		Recurso recursoAprobador = recursoService.findOne(codRecurso);
+		MailRequest request = new MailRequest();
+		request.setName(recurso.getDescRecurso());
+		request.setSubject("Respuesta de tu solicitud de vacaciones");
+		request.setTo(recurso.getDescCorreoElectronico());
+		
+		Map<String, Object> modelM = new HashMap<String, Object>();
+		modelM.put("nombreRecurso", request.getName());
+		modelM.put("mensaje", "<h3>"+recursoAprobador.getDescRecurso() + " ha cancelado tu solicitud de vacaciones.</h3>.");
+		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://"+new Utiles().getHostName()+".com/img/img-banca.png\">");
+		modelM.put("btnLink", "<a href=\"https://"+new Utiles().getHostName()+".com/misVacaciones/" +recurso.getDescCorreoElectronico()+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ver detalle</a>");
+		modelM.put("pie", "");
+		
+		MailResponse response = service.sendEmailEvaluador(request, modelM);
+		System.out.println(response.getMessage());
+		//Mail Notificacion FIN 
+		
+		return "ok";
     	
     }
     
@@ -478,26 +470,22 @@ public class AprobacionVacacionesController {
     	List<Proyecto> listaProyectoRecursoBKP = new ArrayList<Proyecto>();
 		listaProyectoRecursoBKP = proyectoService.findListaProyectosRecursoAprobadorTodos(solicitud.getCodRecurso());
     	
-    	if (solicitud != null) {
-    		RecursoVacaciones recursoVacaciones = null;
-    		recursoVacaciones = recursoVacacionesService.findById(solicitud.getCodRecurso());
-    		if(recursoVacaciones != null) {
-    			recursoVacaciones.setValDisponibles(recursoVacaciones.getValDisponibles() + solicitud.getValDiasSolicitados());
-    			recursoVacacionesService.save(recursoVacaciones);
-    		}
-    		solicitudVacacionesService.delete(solicitud);
-    		
-    		if(listaProyectoRecursoBKP != null) {
-    			for(Proyecto proyecto: listaProyectoRecursoBKP) {
-    				proyecto.setCodRecursoAprobadorBKP(null);
-    				proyectoService.save(proyecto);
-    			}
-    		}
-    		
-    		return "ok";
-    	} else {
-    		return "noOK";
-    	}
+    	RecursoVacaciones recursoVacaciones = null;
+		recursoVacaciones = recursoVacacionesService.findById(solicitud.getCodRecurso());
+		if(recursoVacaciones != null) {
+			recursoVacaciones.setValDisponibles(recursoVacaciones.getValDisponibles() + solicitud.getValDiasSolicitados());
+			recursoVacacionesService.save(recursoVacaciones);
+		}
+		solicitudVacacionesService.delete(solicitud);
+		
+		if(listaProyectoRecursoBKP != null) {
+			for(Proyecto proyecto: listaProyectoRecursoBKP) {
+				proyecto.setCodRecursoAprobadorBKP(null);
+				proyectoService.save(proyecto);
+			}
+		}
+		
+		return "ok";
     	
     }
 

@@ -20,8 +20,8 @@ import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.ProyectoRecurso;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IHistoricoRespuestaClimaService;
-import com.sophi.app.models.service.IPreguntaClimaService;
-import com.sophi.app.models.service.IPreguntaRespuestaClimaService;
+//import com.sophi.app.models.service.IPreguntaClimaService;
+//import com.sophi.app.models.service.IPreguntaRespuestaClimaService;
 import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
@@ -33,11 +33,11 @@ public class SophiController {
 	@Autowired
 	private IRecursoService recursoService;
 	
-	@Autowired
-	private IPreguntaRespuestaClimaService preguntaRespuestaClimaService;
+	/*@Autowired
+	private IPreguntaRespuestaClimaService preguntaRespuestaClimaService;*/
 	
-	@Autowired
-	private IPreguntaClimaService preguntaClimaService;
+	/*@Autowired
+	private IPreguntaClimaService preguntaClimaService;*/
 	
 	@Autowired
 	private IRespuestaFlashService respuestaFlashService;
