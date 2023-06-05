@@ -37,12 +37,19 @@ public class Utiles {
 
 		Calendar currentDate = Calendar.getInstance();
 		currentDate.setTimeZone(TimeZone.getTimeZone("America/Mexico_City"));
-		
-		
-		Date date = new Date(currentDate.get(Calendar.YEAR) - 1900, currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE));
+
+		//Date date = new Date(currentDate.get(Calendar.YEAR) - 1900, currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE));
+		Date date = currentDate.getTime();
 		
 		return date;
+	}
+
+	public Calendar getFechaActualCal() {
+
+		Calendar currentDate = Calendar.getInstance();
+		currentDate.setTimeZone(TimeZone.getTimeZone("America/Mexico_City"));
 		
+		return currentDate;
 	}
 	
 	

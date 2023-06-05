@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -332,7 +333,7 @@ public class VacacionesController {
 			e.printStackTrace();
 		}
 		
-		if(new Utiles().getFechaActual().getMonth()+1 != 12) {
+		if(new Utiles().getFechaActualCal().get(Calendar.MONTH)+1 != 12) {
 			for(String a: arrayAprob) {
 				codRecursoAprob = recursoService.findByDescCorreoElectronico(a).getCodRecurso();
 				if(codRecursoAprob != codRecurso && codRecursoAprob != 11 && codRecurso !=3) {
