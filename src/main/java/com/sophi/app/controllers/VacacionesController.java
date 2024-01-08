@@ -95,7 +95,7 @@ public class VacacionesController {
 			}
 		}
 		
-		model.addAttribute("codRecurso", recurso.getCodRecurso());
+		//model.addAttribute("codRecurso", recurso.getCodRecurso());
 		model.addAttribute("recursoVacaciones", recursoVacaciones);
 		model.addAttribute("listaSolicitudes", listaSolicitudes);
 		return "listaVacaciones";
